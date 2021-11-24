@@ -1,7 +1,9 @@
 version: '3.8'
 services:
   web:
-    build: ./
+    build:
+      context: ./sfu-exchange-project
+      dockerfile: Dockerfile
     command: python3 manage.py runserver 0.0.0.0:8080
     volumes:
       - ./sfu-exchange-project/:/usr/src/sfu-exchange-project/
