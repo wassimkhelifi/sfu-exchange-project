@@ -12,3 +12,9 @@
 3. Run `docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear`
 4. Navigate to `http://localhost:1337`
 4. Once finished, run `docker-compose -f docker-compose.prod.yml down -v`
+
+
+# Create Superuser
+
+1. Run `docker exec -it container_id python manage.py createsuperuser`
+- Replace `container_id` with the id of the web container
