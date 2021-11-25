@@ -30,10 +30,13 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
+# Redefine User model
+AUTH_USER_MODEL = 'exchange.User'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'exchange.apps.ExchangeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

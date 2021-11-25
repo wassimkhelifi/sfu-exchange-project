@@ -14,7 +14,6 @@
 4. Once finished, run `docker-compose -f docker-compose.prod.yml down -v`
 
 
-# Create Superuser
-
-1. Run `docker exec -it container_id python manage.py createsuperuser`
-- Replace `container_id` with the id of the web container
+# Database setup 
+1. Start up the docker containers from the [Run Development](#Run development) instructions 
+2. Create superuser account for admin page: `docker-compose exec web python manage.py createsuperuser`
