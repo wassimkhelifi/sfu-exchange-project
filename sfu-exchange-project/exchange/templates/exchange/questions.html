@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions.css' %}" />
+  </head>
+  <body>
+    <div class="questions-grid">
+      <div class="header-grid">
+        <img src="{% static 'exchange/sfu_logo.png' %}" />
+        <input type="text" placeholder="Search a question..." name="search" />
+        <button type="button">My Profile</button>
+      </div>
+      <div class="all-questions-grid">
+        <h1>All Questions</h1>
+        {% if questions_list %}
+          <ul>
+            {% for question in questions_list %}
+              <li>
+                <div class="question-detail-grid">
+                  <div class="vote-grid">
+                    <svg width="36" height="36">
+                      <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
+                    </svg>
+                  </div>
+                  <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}">{{ question.title }}</a>
+                  <div class="question-description">{{ question.question_text }}</div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
