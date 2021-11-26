@@ -14,3 +14,4 @@
 # Database setup 
 1. Start up the docker containers from the [Run Development](#Run development) instructions 
 2. Create superuser account for admin page: `docker-compose exec web python manage.py createsuperuser`
+3. OPTIONAL: To generate the dummy data run: `docker exec sfu-exchange-project_web_1  python manage.py seed_database`. Note: In order to play around with different users, every user has the password: `password`. 

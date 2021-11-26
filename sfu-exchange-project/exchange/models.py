@@ -4,14 +4,19 @@ from django.db.models.deletion import CASCADE
 
 
 class Faculty(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
 
-class Role(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=65)
-    descrption = models.CharField(max_length=256)
+    def __str__(self) -> str:
+        return self.name
 
+class Role(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=65)
+    description = models.CharField(max_length=256)
+    
+    def __str__(self) -> str:
+        return self.name
 
 # Create your models here.
 class User(AbstractUser):
@@ -26,7 +31,7 @@ class User(AbstractUser):
 
 
 class Notification(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     read = models.BooleanField(default=False)
     url = models.CharField(max_length=256)
     notification_text = models.TextField(max_length=500, blank=False)
@@ -36,14 +41,18 @@ class Notification(models.Model):
     # Relationships
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return self.notification_text
 
 class Tag(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
 
+    def __str__(self) -> str:
+        return self.name 
 
 class Question(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255, null=False)
     question_text = models.TextField(max_length=2000, null=False)
     votes = models.IntegerField(default=0, null=False)
@@ -56,8 +65,11 @@ class Question(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
 
+    def __str__(self) -> str:
+        return self.title
+
 class Answer(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     answer_text = models.TextField(max_length=2000, null=False)
     votes = models.IntegerField(default=0, null=False)
     anonymous = models.BooleanField(default=False, null=False)
@@ -69,9 +81,11 @@ class Answer(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return f"Q: {self.question_id} - A: {self.answer_text}"
 
 class Comment(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     comment_text = models.TextField(max_length=2000, null=False)
     votes = models.IntegerField(default=0, null=False)
     anonymous = models.BooleanField(default=False, null=False)
@@ -82,3 +96,6 @@ class Comment(models.Model):
      # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     answer_id = models.ForeignKey(Answer, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"A: {self.answer_id} - C: {self.comment_text}"
