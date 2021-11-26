@@ -3,8 +3,47 @@
   right: 0; 
   left: 0;
   bottom: 0;
+
+  display: grid;
+  grid-template-areas: 
+    'header header header header header header'
+    'menu menu questions questions questions questions'
+    'menu menu questions questions questions questions';
+  grid-gap: 2px;
+
 }
 
 .header-grid {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  width: 100%;
+  grid-area: header;
   background-color: #CC0633;
+}
+
+.all-questions-grid {
+  grid-area: questions;
+}
+
+.menu-grid {
+  grid-area: menu;
+}
+
+.question-detail-grid {
+  display: grid;
+  grid-template-areas:
+    'vote question question'
+    'vote question question'
+    'vote question question';
+  grid-gap: 2px;
+}
+
+.vote-grid {
+  grid-area: vote;
+}
+
+.question-grid {
+  grid-area: question;
+  padding-top: 20px;
 }

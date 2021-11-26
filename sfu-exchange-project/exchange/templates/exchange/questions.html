@@ -2,15 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions.css' %}" />
   </head>
   <body>
     <div class="questions-grid">
-      <div class="header-grid">
-        <img src="{% static 'exchange/sfu_logo.png' %}" />
-        <input type="text" placeholder="Search a question..." name="search" />
-        <button type="button">My Profile</button>
-      </div>
+      <div class="header-grid">Header</div>
       <div class="all-questions-grid">
         <h1>All Questions</h1>
         {% if questions_list %}
@@ -19,17 +16,33 @@
               <li>
                 <div class="question-detail-grid">
                   <div class="vote-grid">
-                    <svg width="36" height="36">
-                      <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
-                    </svg>
+                    <p>&#9651;</p>
+                    <p>&#9661;</p>
                   </div>
-                  <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}">{{ question.title }}</a>
-                  <div class="question-description">{{ question.question_text }}</div>
+                  <div class="question-grid">
+                    <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}">{{ question.title }}</a>
+                    <div class="question-description">{{ question.question_text }}</div>
+                  </div>
                 </div>
               </li>
             {% endfor %}
           </ul>
+        {% else %}
+          <p>No questions available in database</p>
         {% endif %}
+      </div>
+      <div class="menu-grid">
+        <ul>
+          <li>
+            <a class="questions-link" href="/exchange/questions/">Questions</a>
+          </li>
+          <li>
+            <a class="users-link" href="/exchange/users/">Users</a>
+          </li>
+          <li>
+            <a class="tags-link" href="/exchange/tags/">Tags</a>
+          </li>
+        </ul>
       </div>
     </div>
   </body>

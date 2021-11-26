@@ -1,0 +1,8 @@
+.header-grid {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  width: 100%;
+  grid-area: header;
+  background-color: #CC0633;
+}
