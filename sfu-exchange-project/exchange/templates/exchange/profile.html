@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <link 
+        rel="stylesheet", 
+        type="text/css", 
+        href="{% static 'exchange/shared.css' %}"
+    >
+    <link 
+        rel="stylesheet", 
+        type="text/css", 
+        href="{% static 'exchange/profile.css' %}"
+    >
+</head>
+<body>
+    <div class="profile_grid">
+        <div class="grid_header">Header</div>
+        <div class="grid_user_pane">
+            <div class="grid_user_pane_inner">
+                <div class="grid_user_pane_img">
+                    <img src="{% static user.img %}">
+                </div>
+                <div class="grid_user_pane_content">
+                    <h1>{{ user.name }}</h1>
+                    <h4>{{ user.email }}</h2>
+                    <p>{{ user.bio }}</p>
+                    <p>Member since: {{ user.date_joined }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid_user_stats">
+            <h1>Statistics</h1>
+            <hr>
+            <ul>
+                <li>{{ user.points }} Points</li>
+                <li>{{ user.questions }} Questions</li>
+                <li>{{ user.answers }} Answers</li>
+                <li>{{ user.comments }} Comments</li>
+            </ul>
+        </div>
+        <div class="grid_user_tags">
+            <h1>Top Tags</h1>
+            <hr>
+            <div class="grid_user_tags_tags">
+                {% for tag in tags %}
+                <span>{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="grid_user_posts">
+            <h1>Top Questions</h1>
+            <hr>
+            <div class="grid_user_posts_posts">
+                {% for question in questions %}
+                <div>
+                    <h4>{{ question.title}} - {{ question.votes}} votes</h4>
+                    <p>{{ question.question_text }}</p>
+                    <hr>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
