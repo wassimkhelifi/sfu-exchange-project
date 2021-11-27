@@ -1,0 +1,14 @@
+/* CSS Variables */
+:root {
+    --sfu-red: #CC0633;
+}
+
+html { height: 100%; }
+body { min-height: 100%; }
+hr { width: calc(100% - 30px) }
+
+.grid_header {
+    grid-row: 1;
+    grid-column: 1 / 9;
+    background-color: var(--sfu-red);
+}
