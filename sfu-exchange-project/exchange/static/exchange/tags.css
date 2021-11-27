@@ -1,0 +1,47 @@
+body {
+  font-family: "Noto Sans";
+}
+
+header {
+  background-color: var(--sfu-red);
+}
+
+main {
+  padding: 20px;
+}
+
+.tags-container {
+  display: flex;
+  flex-direction: column;
+  /* background-color: green; */
+}
+
+.tags-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+  /* background-color: blue; */
+  list-style-type: none;
+}
+
+.tag-item {
+  /* background-color: yellow; */
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 120px;
+  max-width: 240px;
+}
+
+.tag-content {
+  padding: 10px;
+}
+
+.tag-name {
+  background-color: rgba(0, 252, 252, 0.171);
+  color: rgb(38, 0, 252);
+  font-weight: bold;
+  padding: 0.25em 0.5em;
+}
