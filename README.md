@@ -24,6 +24,8 @@
 
 - The application can be prepulated with [dummy data](#Database setup) while endpoints are being developed
 
+- For further reference on the schema, please view the 'database-schema.png' file.
+
 - A number of basic routes are set up in html/css with Boostrap enhancements to come later:
 
   - http://localhost:8080/ (Login)
