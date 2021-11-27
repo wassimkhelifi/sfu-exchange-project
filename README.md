@@ -2,15 +2,18 @@
 
 1. Run `docker-compose up -d --build`
 2. Navigate to `http://localhost:8080`
-3. Once finished, run `docker-compose down -v`
+3. Any credentials will work for the login page.
+4. Once finished, run `docker-compose down -v`
+5. Proceed to the database setup section.
 
 # Run production
 
 1. Run `docker-compose -f docker-compose.prod.yml up -d --build`
 2. Navigate to `http://localhost:1337`
 3. Once finished, run `docker-compose -f docker-compose.prod.yml down -v`
+4. Proceed to the database setup section.
 
-# Database setup
+# Database setup (required)
 
 1. Start up the docker containers from the [Run Development](#Run development) instructions
 2. Create superuser account for admin page: `docker-compose exec web python manage.py createsuperuser`
@@ -26,12 +29,17 @@
 
 - For further reference on the schema, please view the 'database-schema.png' file.
 
+- Please make sure to pull from master.
+
+- The production deployment is set up with nginx and gunicorn. Please note that the app has not been thoroughly tested in a production setting so there may be bugs. As such, the development build is currently preferred.
+
 - A number of basic routes are set up in html/css with Boostrap enhancements to come later:
 
   - http://localhost:8080/ (Login)
   - http://localhost:8080/exchange/profile/
   - http://localhost:8080/exchange/questions/
   - http://localhost:8080/exchange/register
+  - http://localhost:8080/exchange/tags
   - http://localhost:8080/admin (need to create a super user to update users, questions, answers etc)
 
 - The profile, questions list and individual question pages based on our Figma designs:
