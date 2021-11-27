@@ -1,18 +1,16 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "base.html" %}
+  {% block head %}
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}" />
-  </head>
-  <body>
-    <div class="question-detail-grid">
-      <div class="header-grid">Header</div>
-      <div class="question-grid">
-        <h1>{{ question.title }}</h1>
-        <h2>{{ question.question_text }}</h2>
-        <p>{{ question.created_at }}</p>
-      </div>
+  {% endblock %}
+{% block title %}Question Detail{% endblock %}
+{% block content %}
+  <div class="question-detail-grid">
+    <div class="header-grid">Header</div>
+    <div class="question-grid">
+      <h1>{{ question.title }}</h1>
+      <h2>{{ question.question_text }}</h2>
+      <p>{{ question.created_at }}</p>
     </div>
-  </body>
-</html>
+  </div>
+{% endblock %}

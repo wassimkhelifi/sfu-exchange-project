@@ -1,49 +1,47 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "base.html" %}
+  {% block head %}
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions.css' %}" />
-  </head>
-  <body>
-    <div class="questions-grid">
-      <div class="header-grid">Header</div>
-      <div class="all-questions-grid">
-        <h1>All Questions</h1>
-        {% if questions_list %}
-          <ul>
-            {% for question in questions_list %}
-              <li>
-                <div class="question-detail-grid">
-                  <div class="vote-grid">
-                    <p>&#9651;</p>
-                    <p>&#9661;</p>
-                  </div>
-                  <div class="question-grid">
-                    <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}">{{ question.title }}</a>
-                    <div class="question-description">{{ question.question_text }}</div>
-                  </div>
-                </div>
-              </li>
-            {% endfor %}
-          </ul>
-        {% else %}
-          <p>No questions available in database</p>
-        {% endif %}
-      </div>
-      <div class="menu-grid">
+  {% endblock %}
+{% block title %}Questions{% endblock %}
+{% block content %}
+  <div class="questions-grid">
+    <div class="header-grid">Header</div>
+    <div class="all-questions-grid">
+      <h1>All Questions</h1>
+      {% if questions_list %}
         <ul>
-          <li>
-            <a class="questions-link" href="/exchange/questions/">Questions</a>
-          </li>
-          <li>
-            <a class="users-link" href="/exchange/users/">Users</a>
-          </li>
-          <li>
-            <a class="tags-link" href="/exchange/tags/">Tags</a>
-          </li>
+          {% for question in questions_list %}
+            <li>
+              <div class="question-detail-grid">
+                <div class="vote-grid">
+                  <p>&#9651;</p>
+                  <p>&#9661;</p>
+                </div>
+                <div class="question-grid">
+                  <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}">{{ question.title }}</a>
+                  <div class="question-description">{{ question.question_text }}</div>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
         </ul>
-      </div>
+      {% else %}
+        <p>No questions available in database</p>
+      {% endif %}
     </div>
-  </body>
-</html>
+    <div class="menu-grid">
+      <ul>
+        <li>
+          <a class="questions-link" href="/exchange/questions/">Questions</a>
+        </li>
+        <li>
+          <a class="users-link" href="/exchange/users/">Users</a>
+        </li>
+        <li>
+          <a class="tags-link" href="/exchange/tags/">Tags</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}
