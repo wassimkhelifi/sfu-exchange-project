@@ -1,0 +1,61 @@
+.header {
+  background-color: var(--sfu-red);
+}
+
+.header p {
+  font-size: 30pt;
+  font-weight: 100;
+  font-family: "Noto Sans";
+  color: white;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40vw;
+}
+
+form p {
+  font-family: "Noto Sans";
+  margin: 0px;
+  font-size: 15pt;
+  font-weight: 500;
+}
+
+#dropdown {
+  width: 370px;
+  color: grey;
+}
+
+.register-input {
+  margin: 8px 0;
+  padding: 16px 10px;
+  width: 350px;
+  outline-style: none;
+  border: none;
+  font-family: "Noto Sans";
+  font-size: 12pt;
+  font-weight: 500;
+  border-radius: 5px;
+  border: solid 1px rgb(151, 151, 151);
+}
+
+.register-input:focus {
+  border: solid 1px black;
+  transition: 0.5s;
+}
+
+.register-btn {
+  width: 370px;
+  color: white;
+  cursor: pointer;
+  outline-style: none;
+  border: none;
+  border-radius: 5px;
+  background-color: black;
+  font-weight: 100;
+  font-size: 14pt;
+  font-family: "Noto Sans";
+  padding: 16px 0px;
+  margin-top: 20px;
+}

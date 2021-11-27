@@ -1,0 +1,73 @@
+.header {
+  background-color: var(--sfu-red);
+}
+
+.login-container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin: 20vh auto;
+  width: 70vw;
+  padding-bottom: 100px;
+  background-color: #f2f2f2;
+}
+
+.login-container h1 {
+  font-size: 30pt;
+  font-weight: 100;
+  font-family: "Noto Sans";
+  margin-bottom: 0px;
+  color: black;
+}
+
+.login-container p {
+  font-family: "Noto Sans";
+  font-weight: 100;
+  font-size: 10pt;
+  color: grey;
+  margin-top: 0px;
+  margin-bottom: 40px;
+}
+
+.login-title {
+  font-family: "Noto Sans";
+  color: black;
+  font-weight: 900;
+}
+
+.login-input {
+  margin: 8px 0;
+  padding: 16px 10px;
+  width: 350px;
+  outline-style: none;
+  border: none;
+  font-family: "Noto Sans";
+  font-size: 12pt;
+  font-weight: 500;
+  border-radius: 5px;
+  border: solid 1px rgb(151, 151, 151);
+}
+.login-input:focus {
+  border: solid 1px black;
+  transition: 0.5s;
+}
+
+.login-btn {
+  width: 370px;
+  color: white;
+  cursor: pointer;
+  outline-style: none;
+  border: none;
+  background-color: black;
+  font-weight: 100;
+  font-size: 14pt;
+  font-family: "Noto Sans";
+  padding: 16px 0px;
+  margin-top: 20px;
+}
+
+#register-link {
+  margin-top: 10px;
+  font-size: 11pt;
+}
