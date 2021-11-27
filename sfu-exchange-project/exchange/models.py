@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
+from django.utils.text import slugify
+from django_extensions.db.fields import AutoSlugField
+from django.utils.translation import gettext as _
 
 
 class Faculty(models.Model):
@@ -60,6 +63,7 @@ class Question(models.Model):
     deleted = models.BooleanField(default=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True,  null=False)
     last_edited = models.DateTimeField(auto_now_add=True, null=False)
+    slug = AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
 
     # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -67,6 +71,12 @@ class Question(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    # def save(self):
+    #     if not self.id:
+    #         self.slug = slugify(self.title)
+
+    #     super(Question, self).save
 
 class Answer(models.Model):
     id = models.AutoField(primary_key=True)
