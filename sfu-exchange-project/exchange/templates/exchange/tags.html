@@ -20,9 +20,9 @@
         <p><img src="../../static/exchange/sfu_logo.png" width="120" height="60" alt="SFU Logo" /> Exchange </p>
     </header>
 
-    <h1>Tags</h1>
-
     <main>
+        <h1>Tags</h1>
+        <p>Tags are used to help refine your searches to find questions you are looking for.<br>Select relevant tags for your question to help others find it.</p>
         <div class="tags-container">
             {% if tags_list %}
               <ul class="tags-grid">
@@ -30,6 +30,7 @@
                   <li class="tag-item">
                     <div class="tag-content">
                         <span class="tag-name">{{tag.name}}</span>
+                        <p>For questions pertaining to the tag mentioned above, which is {{tag.name}}. Note that this is sample text.</p>
                     </div>
                   </li>
                 {% endfor %}
