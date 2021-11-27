@@ -1,0 +1,28 @@
+header {
+  background-color: var(--sfu-red);
+}
+
+.tags-container {
+  display: flex;
+  flex-direction: column;
+  background-color: green;
+}
+
+.tags-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color: blue;
+  list-style-type: none;
+}
+
+.tag-item {
+  padding: 30px;
+  background-color: yellow;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

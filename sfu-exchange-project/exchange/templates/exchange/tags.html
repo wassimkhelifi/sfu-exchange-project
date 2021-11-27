@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <link 
+        rel="stylesheet", 
+        type="text/css", 
+        href="{% static 'exchange/shared.css' %}"
+    >
+    <link 
+        rel="stylesheet", 
+        type="text/css", 
+        href="{% static 'exchange/tags.css' %}"
+    >
+    <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
+</head>
+<body>
+    <header>
+        <p><img src="../../static/exchange/sfu_logo.png" width="120" height="60" alt="SFU Logo" /> Exchange </p>
+    </header>
+
+    <h1>Tags</h1>
+
+    <main>
+        <div class="tags-container">
+            {% if tags_list %}
+              <ul class="tags-grid">
+                {% for tag in tags_list %}
+                  <li class="tag-item">
+                    <h2>{{tag.name}}</h2>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No questions available in database</p>
+            {% endif %}
+          </div>
+    </main>
+</body>
+</html>
