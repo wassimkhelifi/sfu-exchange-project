@@ -1,3 +1,7 @@
+body {
+  font-family: "Noto Sans";
+}
+
 header {
   background-color: var(--sfu-red);
 }
@@ -18,11 +22,24 @@ header {
 }
 
 .tag-item {
-  padding: 30px;
   background-color: yellow;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.4);
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  height: 120px;
+  width: 240px;
+}
+
+.tag-content {
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.tag-name {
+  display: block;
+  background-color: rgba(0, 252, 252, 0.363);
+  color: rgb(38, 0, 252);
+  font-weight: bold;
+  padding: 0.25em 0.5em;
 }

@@ -28,12 +28,14 @@
               <ul class="tags-grid">
                 {% for tag in tags_list %}
                   <li class="tag-item">
-                    <h2>{{tag.name}}</h2>
+                    <div class="tag-content">
+                        <span class="tag-name">{{tag.name}}</span>
+                    </div>
                   </li>
                 {% endfor %}
               </ul>
             {% else %}
-              <p>No questions available in database</p>
+              <p>No tags available in database</p>
             {% endif %}
           </div>
     </main>
