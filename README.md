@@ -29,6 +29,10 @@
 
 - For further reference on the schema, please view the 'database-schema.png' file.
 
+- Please make sure to pull from master.
+
+- The production deployment is set up with nginx and gunicorn. Please note that the app has not been thoroughly tested in a production setting so there may be bugs. As such, the development build is currently preferred.
+
 - A number of basic routes are set up in html/css with Boostrap enhancements to come later:
 
   - http://localhost:8080/ (Login)
