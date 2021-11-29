@@ -63,7 +63,7 @@ class Question(models.Model):
     deleted = models.BooleanField(default=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True,  null=False)
     last_edited = models.DateTimeField(auto_now_add=True, null=False)
-    slug = AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
+    # slug = AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
 
     # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
