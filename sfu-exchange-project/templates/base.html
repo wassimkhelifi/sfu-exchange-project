@@ -91,7 +91,8 @@
 							</div>
 						</li>
 						<!--Profile Dropdown-->
-						<li class='dropdown notification-list'>
+						{% if user.is_authenticated %}
+						<li class='notification-list'>
 							<a class='nav-link dropdown-toggle nav-user arrow-none me-0' data-bs-toggle='dropdown'>
 								<span class='account-user-avatar'>
 									<img class='rounded-circle' alt='img' src={{user.img}}>
@@ -121,6 +122,18 @@
 								</a>
 							</div>
 						</li>
+						{% else %}
+						<li class='notification-list'>
+							<div class='nav-link my-auto h-100'>
+								<a href='/' class='noti-icon fs-5'>
+									Sign In 
+								</a>/
+								<a href='/exchange/register' class='noti-icon fs-5'>
+									Register
+								</a>
+							</div>
+						</li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>
