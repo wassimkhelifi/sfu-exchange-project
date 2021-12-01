@@ -35,6 +35,10 @@ AUTH_USER_MODEL = 'exchange.User'
 
 # Application definition
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+
 INSTALLED_APPS = [
     'exchange.apps.ExchangeConfig',
     'django.contrib.admin',
