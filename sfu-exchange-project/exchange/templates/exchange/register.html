@@ -10,7 +10,8 @@
 	<div class="header">
 		<p><img src="../../static/exchange/sfu_logo.png" width="120" height="60" alt="SFU Logo" /> Exchange </p>
 	</div>
-	<form action="/">
+	<form method="POST" action="/exchange/register">
+		{% csrf_token %}
 		<p>Email</p>
 		<input type="text" name="email" placeholder="email" class="register-input" required>
 		<p>Password</p>
