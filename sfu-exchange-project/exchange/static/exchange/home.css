@@ -1,0 +1,13 @@
+.ask-question-btn {
+  width: 370px;
+  color: white;
+  cursor: pointer;
+  outline-style: none;
+  border: none;
+  background-color: black;
+  font-weight: 100;
+  font-size: 14pt;
+  font-family: "Noto Sans";
+  padding: 16px 0px;
+  margin-top: 20px;
+}

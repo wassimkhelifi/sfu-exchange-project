@@ -1,5 +1,5 @@
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 
@@ -19,7 +19,7 @@ def QuestionSubmitView(request):
         user_id=user
       )
       createdQuestion.tags.set(tags)
-      return HttpResponseRedirect('exchange/questions', kwargs={'question_id': createdQuestion.id})
+      return redirect('Questions_Detail', question_id=createdQuestion.id)
   else:
     form = QuestionForm()
 
