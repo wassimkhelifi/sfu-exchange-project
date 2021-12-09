@@ -7,7 +7,6 @@ from ..models import Question, Tag, User
 from ..forms import QuestionForm
 
 def QuestionSubmitView(request):
-  tag_list = Tag.objects.all()
   if request.method == 'POST':
     form = QuestionForm(request.POST)
 
