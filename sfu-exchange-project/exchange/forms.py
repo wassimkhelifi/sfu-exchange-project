@@ -1,21 +1,6 @@
 from django import forms
-from .models import User, Tag
-from django.contrib.auth.forms import UserCreationForm
+from .models import Tag
 from django.shortcuts import get_object_or_404
-
-class RegistrationForm(UserCreationForm):
-    bio = forms.CharField(max_length=30)
-    email = forms.EmailField(max_length=100)
-
-    class Meta:
-        model = User
-        fields = '__all__'
-
-    def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        if commit:
-            user.save()
-        return user
 
 class QuestionForm(forms.Form):
     title = forms.CharField(max_length=150)
