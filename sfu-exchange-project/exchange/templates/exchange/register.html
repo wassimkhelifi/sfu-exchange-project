@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 	{% block head %}
 		{% load static %}
 		<link rel="stylesheet" , type="text/css" , href="{% static 'exchange/shared.css' %}">
@@ -10,9 +11,9 @@
 	<div class="header">
 		<p><img src="../../static/exchange/sfu_logo.png" width="120" height="60" alt="SFU Logo" /> Exchange </p>
 	</div>
-	<form method="POST" action="/exchange/register">
+	<form method="POST">
 		{% csrf_token %}
-		<p>Email</p>
+		<!-- <p>Email</p>
 		<input type="text" name="email" placeholder="email" class="register-input" required>
 		<p>Password</p>
 		<input type="password" name="password" class="register-input" placeholder="password" required>
@@ -31,7 +32,9 @@
 			<option>Environment</option>
 		</select>
 		<p>Bio</p>
-		<textarea type="text" name="bio" placeholder="hello I'm John" class="register-input" required></textarea>
+		<textarea type="text" name="bio" placeholder="hello I'm John" class="register-input" required></textarea> -->
+
+		{{ form|crispy }}
 		<input type="submit" value="Register" class="register-btn">
 	</form>
 {% endblock %}
