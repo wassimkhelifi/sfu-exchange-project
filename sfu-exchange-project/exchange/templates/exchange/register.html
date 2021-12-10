@@ -11,28 +11,8 @@
 	<div class="header">
 		<p><img src="../../static/exchange/sfu_logo.png" width="120" height="60" alt="SFU Logo" /> Exchange </p>
 	</div>
-	<form method="POST">
+	<form class="register-form" method="POST">
 		{% csrf_token %}
-		<!-- <p>Email</p>
-		<input type="text" name="email" placeholder="email" class="register-input" required>
-		<p>Password</p>
-		<input type="password" name="password" class="register-input" placeholder="password" required>
-		<p>Confirm Password</p>
-		<input type="password" name="password" class="register-input" placeholder="password" required>
-		<p>Faculty</p>
-		<select id="dropdown" type="text" name="faculty" placeholder="select an item" class="register-input" required>
-			<option value="" selected disabled hidden>Choose here</option>
-			<option>Applied Sciences</option>
-			<option>Beedie School of Business</option>
-			<option>Health Sciences</option>
-			<option>Arts and Social Sciences </option>
-			<option>Communication, Art and Technology</option>
-			<option>Science</option>
-			<option>Education</option>
-			<option>Environment</option>
-		</select>
-		<p>Bio</p>
-		<textarea type="text" name="bio" placeholder="hello I'm John" class="register-input" required></textarea> -->
 
 		{{ form|crispy }}
 		<input type="submit" value="Register" class="register-btn">
