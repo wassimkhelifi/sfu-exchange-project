@@ -6,16 +6,9 @@ class RegistrationForm(UserCreationForm):
     # Fields we redefine here overwrite those in the form. By default, they are 'required'
     first_name = forms.CharField(max_length=150)
     last_name = forms.CharField(max_length=150)
-    #bio = forms.CharField(max_length=30)
     email = forms.EmailField(max_length=100)
 
     class Meta:
         model = User
 
         fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2', 'faculty_id', 'bio']
-
-    def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        if commit:
-            user.save()
-        return user
