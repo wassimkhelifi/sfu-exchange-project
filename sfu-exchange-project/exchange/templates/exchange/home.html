@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+  {% block head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'exchange/home.css' %}" />
+  {% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <div class="header">
+    <a href="/exchange/questions/add">
+      <input type="button" value="Ask a Question" class="ask-question-btn">
+    </a>
+  </div>
+  <div class="header">
+    <a href="/exchange/profile">
+      <input type="button" value="View Profile" class="ask-question-btn">
+    </a>
+  </div>
+{% endblock %}
