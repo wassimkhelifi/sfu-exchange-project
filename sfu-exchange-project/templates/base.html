@@ -139,9 +139,44 @@
 			</div>
 		</div>
 	</div>
-	{% comment %} Main Page Content {% endcomment %}
-	{% block content %}{% endblock %}
+	<div classname='container-fluid'>
+		<!--Sidebar -->	
+		<div class='leftside-menu'>
+			<ul class='side-nav'>
+				<li class='side-nav-item'>
+					<a href="{% url 'Home' %}" class='side-nav-link'><i class='uil-home-alt'></i><span>Home</span></a>
+				</li>
+				
+				<li class='side-nav-title side-nav-item'>Forum</li>
+				<ul class='side-nav-second-level'>
+					<li class="{% if request.path == "/exchange/questions/" %}menuitem-active{% endif %}">
+						<a href="{% url 'Questions' %}">Questions</a>
+					</li>
+					<li class="{% if request.path == "/exchange/tags/" %}menuitem-active{% endif %}">
+						<a href="{% url 'Tags' %}">Tags</a>
+					</li>
+					<li class="{% if request.path == "/exchange/users/" %}menuitem-active{% endif %}">
+						<a href="{% url 'Users' %}">Users</a>
+					</li>
+				</ul>
+				<li class='side-nav-title side-nav-item'>Profile</li>
+				<ul class='side-nav-second-level'>
+					<li class="{% if page == "Questions" %}menu-item-active{% endif %}">
+						<a href='/'>Your Questions</a>
+					</li>
+					<li>
+						<a href='/'>Your Answers</a>
+					</li>
+				</ul>
+			</ul>
+		</div>
+
+
+		{% comment %} Main Page Content {% endcomment %}
+		{% block content %}{% endblock %}
 
 	{% comment %} Footer?  {% endcomment %}
+
+	</div>
 </body>
 </html>
