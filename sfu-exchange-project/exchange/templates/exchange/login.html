@@ -1,4 +1,5 @@
 {% extends "base.html" %} 
+{% load crispy_forms_tags %}
   	{% block head %}
     	{% load static %}
 			<link rel="stylesheet" type="text/css" href="{% static 'exchange/shared.css' %}">
@@ -9,15 +10,25 @@
 {% block content %}
 	<div class="header"></div>
 	<div class="login-container">
+
 		<h1><img src="../../static/exchange/sfu_logo.png" width="120" height="60" alt="SFU Logo" /> SFU <span
 				class="login-title">Exchange</span></h1>
 		<p>Q&amp;A for SFU students past and present</p>
-		<input type="text" name="email" placeholder="email" class="login-input" required>
+
+		<form class="login-form" method="POST">
+			{% csrf_token %}
+
+			{{ form|crispy }}
+
+			<button type="submit">Login</button>
+		</form>
+
+		<!-- <input type="text" name="email" placeholder="email" class="login-input" required>
 		<input type="password" name="password" class="login-input" placeholder="password" required>
 		<a href="/exchange/"><input type="button" value="Login" class="login-btn"></a>
 		<a href="/exchange/register">
 			<p id="register-link"> First time? Click to register</p>
-		</a>
+		</a> -->
 	</div>
 {% endblock %}
 

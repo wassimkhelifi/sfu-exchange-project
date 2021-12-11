@@ -36,7 +36,17 @@
   font-weight: 900;
 }
 
-.login-input {
+#register-link {
+  margin-top: 10px;
+  font-size: 11pt;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form input {
   margin: 8px 0;
   padding: 16px 10px;
   width: 350px;
@@ -48,13 +58,12 @@
   border-radius: 5px;
   border: solid 1px rgb(151, 151, 151);
 }
-.login-input:focus {
+.login-form input:focus {
   border: solid 1px black;
   transition: 0.5s;
 }
 
-.login-btn {
-  width: 370px;
+.login-form button {
   color: white;
   cursor: pointer;
   outline-style: none;
@@ -65,9 +74,4 @@
   font-family: "Noto Sans";
   padding: 16px 0px;
   margin-top: 20px;
-}
-
-#register-link {
-  margin-top: 10px;
-  font-size: 11pt;
 }
