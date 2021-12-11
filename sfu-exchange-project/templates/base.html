@@ -21,7 +21,7 @@
 				<div class='col-1 my-auto'>
 					<a href='/exchange/' class=''>
 						<img class="topnav-logo-lg d-none d-lg-block" src='logo-big' alt='SFUExchange' height="16"/>
-						<img class="topnav-logo-sm d-none " src='logo-small' alt='SFUExchange' height="16"/>
+						<img class="topnav-logo-sm d-none " src='logo-small' alt='SFUE' height="16"/>
 					</a>
 				</div>
 				
@@ -124,13 +124,19 @@
 						</li>
 						{% else %}
 						<li class='notification-list'>
-							<div class='nav-link my-auto h-100'>
-								<a href='/' class='noti-icon fs-5'>
-									Sign In 
-								</a>/
-								<a href='/exchange/register' class='noti-icon fs-5'>
+							<div class='d-none d-md-flex nav-link my-auto h-100'>
+								<a href="{% url 'Home' %}" class='noti-icon fs-5'>
+									Login
+								</a>
+								<span class='my-auto'>&nbsp;/&nbsp;</span>
+								<a href="{%url "Register"  %}" class='noti-icon fs-5'>
 									Register
 								</a>
+							</div>
+							<div class='d-md-none d-sm-flex nav-link my-auto h-100'>
+								<a href="{% url 'Home' %}" class='noti-icon'>
+									<i class='uil-user'></i>
+								<a>
 							</div>
 						</li>
 						{% endif %}
