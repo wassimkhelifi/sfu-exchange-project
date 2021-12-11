@@ -1,7 +1,7 @@
 {% extends "base.html" %}
   {% block head %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}">
   {% endblock %}
 {% block title %}Question Detail{% endblock %}
 {% block content %}
@@ -12,5 +12,31 @@
       <p>{{ question.question_text }}</p>
       <p>{{ question.created_at }}</p>
     </div>
+  </div>
+
+  {% comment %} Answers listed {% endcomment %}
+  <div> 
+    {% if answers is None %} 
+      <p> no answers </p>
+    {% endif %}
+    {% if answers %}
+      {% for answer in answers %}
+        <p> {{ answer.answer_text }} </p>
+        <div>
+          <p> Answered by: {{ answer.user_id }} </p>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  {% comment %} Answer Submission {% endcomment %}
+  <div>
+    <form action="" method=post>
+      {% csrf_token %}
+      <table>
+        {{ answerForm.as_table }}
+      </table>
+      <input type="submit" value="Submit">
+    </form>
   </div>
 {% endblock %}

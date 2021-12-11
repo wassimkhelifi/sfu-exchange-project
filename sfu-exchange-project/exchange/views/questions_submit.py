@@ -11,6 +11,7 @@ def QuestionSubmitView(request):
     form = QuestionForm(request.POST)
 
     if form.is_valid():
+      # TODO: Get the latest user for now until we have user login completed to get the current user posting
       user = User.objects.latest('id')
       tags = form.cleaned_data.get('tags')
       createdQuestion = Question.objects.create(

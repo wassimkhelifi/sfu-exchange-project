@@ -17,3 +17,7 @@ class QuestionForm(forms.Form):
     def clean_questions_text(self):
         data = self.cleaned_data['question_text']
         return data
+
+class AnswerForm(forms.Form):
+    answer_text = forms.CharField(max_length=3000)
+    anonymous = forms.BooleanField(required=False)
