@@ -30,7 +30,7 @@ def QuestionsDetailView(request, question_id,):
   if not answers:
     answers = None
   else:
-    answers = AnonymizeAnswers(answers)
+    answers = anonymizeAnswers(answers)
 
   current_question = anonymizeQuestion(current_question)
 
@@ -49,7 +49,7 @@ def anonymizeUser(user):
 
   return user
 
-def AnonymizeAnswers(answers):
+def anonymizeAnswers(answers):
   for answer in answers:
     if (answer.anonymous == True):
       anon_user = anonymizeUser(answer.user_id)
