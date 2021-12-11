@@ -12,5 +12,7 @@ urlpatterns = [
     path('exchange/users/', views.UsersView, name="Users"),
     path('exchange/tags/', views.TagsView, name="Tags"),
     path('exchange/questions/', views.QuestionsView, name='Questions'),
-    path('exchange/questions/<int:question_id>/<slug:slug>/', views.QuestionsDetailView, name="Questions Detail"),
+    path('exchange/questions/add', views.QuestionSubmitView, name='Submit Question'),
+    # path('exchange/questions/<int:question_id>/<slug:slug>/', views.QuestionsDetailView, name="Questions Detail"),
+    path('exchange/questions/<int:question_id>/', views.QuestionsDetailView, name="Questions_Detail"),
 ]

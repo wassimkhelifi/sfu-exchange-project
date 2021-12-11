@@ -4,4 +4,5 @@ from django.http import HttpResponse
 
 
 def HomeView(request):
-    return HttpResponse('<h1>Home Page</h1>')
+    return render(request, 'exchange/home.html')
+
