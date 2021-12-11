@@ -1,7 +1,7 @@
 {% extends "base.html" %}
   {% block head %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}" />
   {% endblock %}
 {% block title %}Question Detail{% endblock %}
 {% block content %}
@@ -16,7 +16,7 @@
   </div>
 
   {% comment %} Answers listed {% endcomment %}
-  <div> 
+  <div class="answers-grid"> 
     {% if answers is None %}
       <hr>
       <p> no answers </p>
@@ -24,9 +24,15 @@
     {% if answers %}
       {% for answer in answers %}
         <hr>
-        <p> {{ answer.answer_text }} </p>
-        <div>
-          <p> Answered by: {{ answer.user_id }} | Created at: {{ answer.created_at }} | Last modified: {{ answer.last_edited }}</p>
+        <div class="vote-grid">
+          <p>&#9651;</p>
+          <p>&#9661;</p>
+        </div>
+        <div class="answer-grid">
+          <p> {{ answer.answer_text }} </p>
+          <div>
+            <p> Answered by: {{ answer.user_id }} | Created at: {{ answer.created_at }} | Last modified: {{ answer.last_edited }}</p>
+          </div>
         </div>
       {% endfor %}
     {% endif %}
