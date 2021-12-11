@@ -8,6 +8,7 @@ class QuestionForm(forms.Form):
     question_text = forms.CharField(max_length=3000)
     tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple)
     user_id = 1
+    anonymous = forms.BooleanField(required=False)
     
     # TODO: Potentially provide validation if needed, otherwise we can remove these functions
     def clean_title(self):

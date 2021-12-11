@@ -11,24 +11,27 @@
       <h2>{{ question.title }}</h2>
       <p>{{ question.question_text }}</p>
       <p>{{ question.created_at }}</p>
+      <p> {{ question.user_id }} </p>
     </div>
   </div>
 
   {% comment %} Answers listed {% endcomment %}
   <div> 
-    {% if answers is None %} 
+    {% if answers is None %}
+      <hr>
       <p> no answers </p>
     {% endif %}
     {% if answers %}
       {% for answer in answers %}
+        <hr>
         <p> {{ answer.answer_text }} </p>
         <div>
-          <p> Answered by: {{ answer.user_id }} </p>
+          <p> Answered by: {{ answer.user_id }} | Created at: {{ answer.created_at }} | Last modified: {{ answer.last_edited }}</p>
         </div>
       {% endfor %}
     {% endif %}
   </div>
-
+  <hr>
   {% comment %} Answer Submission {% endcomment %}
   <div>
     <form action="" method=post>

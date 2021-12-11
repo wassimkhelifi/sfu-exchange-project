@@ -29,9 +29,37 @@ def QuestionsDetailView(request, question_id,):
   answers = Answer.objects.filter(question_id=question_id)
   if not answers:
     answers = None
+  else:
+    answers = AnonymizeAnswers(answers)
+
+  current_question = anonymizeQuestion(current_question)
 
   return render(request, 'exchange/questions_detail.html', {
     'question': current_question,
     'answers': answers,
     'answerForm': answerForm
   })
+
+def anonymizeUser(user):
+  user = User.objects.get(id=user.id)
+  user.username = 'anonymous'
+  user.first_name = 'anonymous'
+  user.last_name = 'anonymous'
+  user.email = 'anonymous@sfu.ca'
+
+  return user
+
+def AnonymizeAnswers(answers):
+  for answer in answers:
+    if (answer.anonymous == True):
+      anon_user = anonymizeUser(answer.user_id)
+      answer.user_id = anon_user
+
+  return answers
+
+def anonymizeQuestion(question):
+  if (question.anonymous == True):
+    anon_user = anonymizeUser(question.user_id)
+    question.user_id = anon_user
+
+  return question

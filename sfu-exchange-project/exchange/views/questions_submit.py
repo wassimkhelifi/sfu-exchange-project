@@ -14,6 +14,7 @@ def QuestionSubmitView(request):
       createdQuestion = Question.objects.create(
         title=form.cleaned_data['title'], 
         question_text=form.cleaned_data['question_text'],
+        anonymous=form.cleaned_data['anonymous'],
         user_id=user
       )
       createdQuestion.tags.set(tags)
