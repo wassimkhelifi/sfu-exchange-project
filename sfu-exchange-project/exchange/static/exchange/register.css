@@ -9,13 +9,14 @@
   color: white;
 }
 
-form {
+.register-form {
   display: flex;
   flex-direction: column;
-  margin-left: 40vw;
+  padding: 10px 20px;
+  row-gap: 20px;
 }
 
-form p {
+.register-form p {
   font-family: "Noto Sans";
   margin: 0px;
   font-size: 15pt;
@@ -47,6 +48,7 @@ form p {
 
 .register-btn {
   width: 370px;
+  align-self: center;
   color: white;
   cursor: pointer;
   outline-style: none;
