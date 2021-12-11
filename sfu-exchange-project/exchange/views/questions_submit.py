@@ -1,9 +1,6 @@
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.http import HttpResponse, Http404
-from django.urls import reverse
 
-from ..models import Question, Tag, User
+from ..models import Question, User
 from ..forms import QuestionForm
 
 def QuestionSubmitView(request):
