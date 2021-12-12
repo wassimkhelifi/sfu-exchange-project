@@ -12,20 +12,18 @@
       {% if user_list %}
         <div class='row'>
           {% for user in user_list %}
-            <div class='col-lg-3 col-md-6 col-sm-6'>
-              <div class='card'>
-                <div class='card-body'>
+            <div class='col-lg-3 col-md-4 col-sm-6 flex-grow-1'>
+              <div class='py-3'>
                   <div class='d-flex'>
                       <img class='rounded-circle' src={% static 'exchange/img/icon_f.png' %} alt='img' height='48'/>
                       <div class='d-flex flex-column'>
                         <div>
-                          <span><strong>{{user.username}}</strong> {{user.num_points}}<i class='uil-award-alt'></i></span>
+                          <span><strong>{{user.username}}</strong> {{user.num_points}}<i class='uil-award-alt text-primary'></i></span>
                         </div>
-                        <span>Posts: {{user.num_posts}}</span>
-                        <span>Answers: {{user.num_answers}}</span>
+                        <span class='text-muted'>Posts: {{user.num_posts}}</span>
+                        <span class='text-muted'>Answers: {{user.num_answers}}</span>
                       </div>
-                  </div>
-                </div>
+                    </div>
               </div>
             </div>
           {% endfor %}
