@@ -23,7 +23,7 @@ def QuestionSubmitView(request):
         user_id=user
       )
       createdQuestion.tags.set(tags)
-      return redirect('Questions_Detail', question_id=createdQuestion.id)
+      return redirect('Questions_Detail', question_id=createdQuestion.id, slug=createdQuestion.slug)
   else:
     form = QuestionForm()
 

@@ -115,7 +115,7 @@
 										</h6>
 								</div>
 								<!-- Dropdown Items -->
-								<a href="#" class="dropdown-item notify-item">
+								<a href="{% url 'Profile' %}" class="dropdown-item notify-item">
 									<i class="dripicons-user me-1"></i>
 									<span>Profile</span>
 								</a>
@@ -163,6 +163,9 @@
 					</li>
 					<li class='side-nav-title side-nav-item'>Forum</li>
 					<ul class='side-nav-second-level'>
+						<li class="{% if request.path == '/exchange/questions/ask'%}menuitem-active{% endif %}">
+							<a href="{% url 'Submit_Question' %}">Ask a Question</a>
+						</li>
 						<li class="{% if request.path == '/exchange/questions/'%}menuitem-active{% endif %}">
 							<a href="{% url 'Home' %}">Questions</a>
 						</li>
