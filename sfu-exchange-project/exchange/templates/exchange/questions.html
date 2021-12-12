@@ -32,16 +32,13 @@
     <div class="menu-grid">
       <ul>
         <li>
-          <a class="questions-link" href="/exchange/questions/">Questions</a>
+          <a class="users-link" href="{% url 'Users' %}">Users</a>
         </li>
         <li>
-          <a class="users-link" href="/exchange/users/">Users</a>
+          <a class="tags-link" href="{% url 'Tags' %}">Tags</a>
         </li>
         <li>
-          <a class="tags-link" href="/exchange/tags/">Tags</a>
-        </li>
-        <li>
-          <a class="ask-link" href="/exchange/questions/ask">Ask a Question</a>
+          <a class="ask-link" href="{% url 'Submit_Question' %}">Ask a Question</a>
         </li>
       </ul>
     </div>
