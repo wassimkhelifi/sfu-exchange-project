@@ -19,18 +19,16 @@
 			<div class='row'>
 				<!--Navbar Logo-->
 				<div class='col-2 my-auto'>
-						<a href="{% url 'Home' %}">
-							<img class="topnav-logo-lg d-none d-md-block" src='logo-big' alt='SFUExchange' height="16"/>
-						</a>
+					<div class='d-flex'>
 						<div class='d-flex d-xs-flex d-md-none'>
 							<a class="nav-link dropdown-toggle arrow-none fs-3" data-bs-toggle='collapse' href='#collapseSidebar' role='button' href='#'>
 								<i class='uil-bars'></i>
 							</a>
-							<a href="{% url 'Home' %}">
-								<img class="topnav-logo-sm" src='logo-small' alt='SFUE' height="16"/>
-							</a>
 						</div>
-
+						<a href="{% url 'Home' %}">
+							<img class="topnav-logo-sm" src="{% static 'exchange/sfu_logo.png' %}" alt='SFUExchange' height="48"/>
+						</a>
+					</div>
 					</a>
 				</div>
 
@@ -166,7 +164,7 @@
 					<li class='side-nav-title side-nav-item'>Forum</li>
 					<ul class='side-nav-second-level'>
 						<li class="{% if request.path == '/exchange/questions/'%}menuitem-active{% endif %}">
-							<a href="{% url 'Questions' %}">Questions</a>
+							<a href="{% url 'Home' %}">Questions</a>
 						</li>
 						<li class="{% if request.path == '/exchange/tags/' %}menuitem-active{% endif %}">
 							<a href="{% url 'Tags' %}">Tags</a>
