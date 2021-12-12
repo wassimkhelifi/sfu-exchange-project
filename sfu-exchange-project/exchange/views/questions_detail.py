@@ -5,7 +5,7 @@ from django.http import Http404
 from ..models import Question, Answer, User
 from ..forms import AnswerForm
 
-def QuestionsDetailView(request, question_id,):
+def QuestionsDetailView(request, question_id, slug):
   try:
     current_question = Question.objects.get(pk=question_id)
     answerForm = AnswerForm()

@@ -163,6 +163,9 @@
 					</li>
 					<li class='side-nav-title side-nav-item'>Forum</li>
 					<ul class='side-nav-second-level'>
+						<li class="{% if request.path == '/exchange/questions/ask'%}menuitem-active{% endif %}">
+							<a href="{% url 'Submit_Question' %}">Ask a Question</a>
+						</li>
 						<li class="{% if request.path == '/exchange/questions/'%}menuitem-active{% endif %}">
 							<a href="{% url 'Home' %}">Questions</a>
 						</li>
