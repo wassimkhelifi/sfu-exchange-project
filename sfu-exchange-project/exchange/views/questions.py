@@ -1,8 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-
-# def QuestionsView(request):
-#     return HttpResponse('<h1>Questions Page</h1>')
+from django.http import JsonResponse
+from django.db.models import F
 
 from ..models import Question
 

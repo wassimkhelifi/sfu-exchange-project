@@ -86,6 +86,7 @@ class Answer(models.Model):
     deleted = models.BooleanField(default=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True,  null=False)
     last_edited = models.DateTimeField(auto_now_add=True, null=False)
+    voted = models.ManyToManyField(User, related_name='voted', default=None, blank=True)
 
     # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -103,9 +104,17 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True,  null=False)
     last_edited = models.DateTimeField(auto_now_add=True, null=False)
 
-     # Relationships 
+    # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     answer_id = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f"A: {self.answer_id} - C: {self.comment_text}"
+
+class AnswerVotes(models.Model):
+    id = models.AutoField(primary_key=True)
+
+    # Relationships
+    answer_id = models.ForeignKey(Answer, on_delete=models.CASCADE, default=None, blank=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=None, blank=True)
+    is_upvote = models.BooleanField(default=None, blank=True)

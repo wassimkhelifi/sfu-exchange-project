@@ -25,8 +25,23 @@
       {% for answer in answers %}
         <hr>
         <div class="vote-grid">
-          <p>&#9651;</p>
-          <p>&#9661;</p>
+          <form action="{% url 'Answer_Upvote' answer.id %}" method="POST">
+            {% csrf_token %}
+            <div> 
+              <button type="submit" name="answer_id", value="{{ answer.id }}"> Upvote </button>
+              <p>&#9651;</p> 
+            </div>
+            <p>&#9661;</p>
+          </form>
+          {{ answer.votes }}
+          <form action="{% url 'Answer_Downvote' answer.id %}" method="POST">
+            {% csrf_token %}
+            <div> 
+              <button type="submit" name="answer_id", value="{{ answer.id }}"> Downvote </button>
+              <p>&#9651;</p> 
+            </div>
+            <p>&#9661;</p>
+          </form>
         </div>
         <div class="answer-grid">
           <p> {{ answer.answer_text }} </p>
