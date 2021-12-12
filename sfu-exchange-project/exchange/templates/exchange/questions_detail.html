@@ -78,58 +78,71 @@
     </div>
 
     <hr/>
-  </div>
 
-
-
-
-  <!-- <div class="question-detail-grid">
-    <div class="header-grid">Header</div>
-    <div class="question-grid">
-      <h2>{{ question.title }}</h2>
-      <p>{{ question.question_text }}</p>
-      <p>{{ question.created_at }}</p>
-      <p> {{ question.user_id }} </p>
-    </div>
-  </div>
-
-  {% comment %} Answers listed {% endcomment %}
-  <div class="answers-grid"> 
-    {% if answers is None %}
-      <hr>
-      <p> no answers </p>
-    {% endif %}
+    <!--All Answers-->
     {% if answers %}
       {% for answer in answers %}
-        <hr>
-        <div class="vote-grid">
-          <p>&#9651;</p>
-          <p>&#9661;</p>
-        </div>
-        <div class="answer-grid">
-          <p> {{ answer.answer_text }} </p>
-          <div>
-            <p> Answered by: {{ answer.user_id }} | Created at: {{ answer.created_at }} | Last modified: {{ answer.last_edited }}</p>
+        <div class="row mb-4">
+          <div class="col-sm-1">
+            <div class="d-flex align-items-center flex-column">
+              <div class="col">
+                <div class="upvote">
+                  <svg width="36" height="36">
+                    <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
+                  </svg>
+                </div>
+                <div class="text-center">{{ question.votes }}</div>
+                <div class="downvote">
+                  <svg width="36" height="36">
+                    <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-11 p-2">
+            <div class="row pb-2">
+              {{ answer.answer_text }}
+            </div>
+            <div class="row justify-content-end">
+              <div class="col">
+                <div class="d-flex align-items-end flex-column">
+                  <div class="col" id="user-box" style="background-color: hsl(206deg 65% 91%); padding: 5px;">
+                    <div class="text-left">answered {{ answer.created_at }}</div>
+                    <div class="text-left">last modified {{ answer.last_edited }}</div>
+                    <div class="text-left"><b>{{ answer.user_id }}</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       {% endfor %}
+    {% else %}
+        <p>No Answers to This Question</p>
     {% endif %}
+
+    <hr />
+
+    <!--Your Answer-->
+    <div class="row">
+      <div class="col">
+        <h3>Your Answer</h3>
+        {% if user.is_authenticated %}
+          <form action="" method=post>
+            {% csrf_token %}
+            <textarea class="w-100" style="height:200px"></textarea>
+            <div class="w-100 pb-3">
+              <input type="checkbox" name="anonymous" value="Anonymous" />
+              <label>Anonymous</label>
+            </div>
+            <input type="button" class="btn btn-primary" type="submit" value="Submit" />
+          </form>
+        {% else %}
+          <p>Please login to Post a Reply</p>
+        {% endif %}
+      </div>
+    </div>
   </div>
-  <hr>
-  {% comment %} Answer Submission {% endcomment %}
-  {% if user.is_authenticated %}
-  <div>
-    <form action="" method=post>
-      {% csrf_token %}
-      <table>
-        {{ answerForm.as_table }}
-      </table>
-      <input type="submit" value="Submit">
-    </form>
-  </div>
-  {% else %}
-  <div>
-    <p>Please login to post a reply</p>
-  </div>
-  {% endif %} -->
+
 {% endblock %}
