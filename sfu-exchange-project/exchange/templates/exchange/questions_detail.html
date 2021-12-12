@@ -1,7 +1,7 @@
 {% extends "base.html" %}
   {% block head %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}" />
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}" /> {% endcomment %}
   {% endblock %}
 {% block title %}Question Detail{% endblock %}
 {% block content %}
@@ -11,6 +11,47 @@
       <h2>{{ question.title }}</h2>
       <p>{{ question.question_text }}</p>
       <p>{{ question.created_at }}</p>
+      <p> {{ question.user_id }} </p>
     </div>
   </div>
+
+  {% comment %} Answers listed {% endcomment %}
+  <div class="answers-grid"> 
+    {% if answers is None %}
+      <hr>
+      <p> no answers </p>
+    {% endif %}
+    {% if answers %}
+      {% for answer in answers %}
+        <hr>
+        <div class="vote-grid">
+          <p>&#9651;</p>
+          <p>&#9661;</p>
+        </div>
+        <div class="answer-grid">
+          <p> {{ answer.answer_text }} </p>
+          <div>
+            <p> Answered by: {{ answer.user_id }} | Created at: {{ answer.created_at }} | Last modified: {{ answer.last_edited }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <hr>
+  {% comment %} Answer Submission {% endcomment %}
+  {% if user.is_authenticated %}
+  <div>
+    <form action="" method=post>
+      {% csrf_token %}
+      <table>
+        {{ answerForm.as_table }}
+      </table>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+  {% else %}
+  <div>
+    <p>Please login to post a reply</p>
+  </div>
+  {% endif %}
 {% endblock %}
