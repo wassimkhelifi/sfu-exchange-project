@@ -8,6 +8,15 @@
 {% block title %}Users{% endblock %}
 {% block content %}
     <h1>Users</h1>
+
+
+    <form action="{% url 'Users' %}" method='get'>
+      <div class='input-group'>
+        <input class='form-control' name='q' type='text' placeholder='Search...'>
+        <button class='btn btn-primary' type='submit'>Search</button>
+      </div>
+    </from> 
+
     <div>
       {% if user_list %}
         <div class='row'>
@@ -32,32 +41,32 @@
         <!--Simple Pagination-->
         <ul class='pagination d-flex justify-content-center'>
           <li class='page-item'>
-            <a class='page-link' href='?page=1'>First</a>
+            <a class='page-link' href="?page=1 {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">First</a>
           </li>
           
           {% if user_list.has_previous %}
           <li class='page-item'>
-            <a class='page-link' href="?page={{user_list.previous_page_number}}">{{user_list.previous_page_number}}</a>
+            <a class='page-link' href="?page={{user_list.previous_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{user_list.previous_page_number}}</a>
           </li>
           {% endif %}
           
           <li class='page-item active'>
-            <a class='page-link' href="?page={{user_list.number}}">{{user_list.number}}</a>
+            <a class='page-link' href="?page={{user_list.number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{user_list.number}}</a>
           </li>
           
           {% if user_list.has_next %}
           <li class='page-item'>
-            <a class='page-link' href="?page={{user_list.next_page_number}}">{{user_list.next_page_number}}</a>
+            <a class='page-link' href="?page={{user_list.next_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{user_list.next_page_number}}</a>
           </li>
           {% endif %}
           
           <li class='page-item'>
-            <a class='page-link' href='?page={{user_list.paginator.num_pages}}'>Last</a>
+            <a class='page-link' href='?page={{user_list.paginator.num_pages}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}'>Last</a>
           </li>
         </ul>
 
       {% else %}
-        <p>Looks like there are no users, become the first by creating an account!</p>
+        <p>Looks like there are no user matching this search criteria!</p>
       {% endif %}
     </div>
 {% endblock %}
