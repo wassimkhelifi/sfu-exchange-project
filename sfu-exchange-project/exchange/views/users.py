@@ -19,6 +19,7 @@ def UsersView(request, page=""):
                 | Q(last_name__icontains=query_params)
                 | Q(email__icontains=query_params)
             )
+            print("@@@USERSVIEW: search query:", query_params)
         else:
             users = User.objects
         users = users.annotate(
@@ -33,4 +34,4 @@ def UsersView(request, page=""):
 
         page = request.GET.get("page")
         paginated_users = paginator.get_page(page)
-        return render(request, "exchange/users.html", {"user_list": paginated_users})
+        return render(request, "exchange/users.html", {"user_list": paginated_users, "search_text": query_params})
