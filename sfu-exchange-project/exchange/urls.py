@@ -9,6 +9,7 @@ urlpatterns = [
     path('exchange/profile/', views.ProfileView, name='Profile'),
     path('exchange/profile/edit/', views.ProfileEditView, name='Profile Edit'),
     path('exchange/users', views.UsersView, name="Users"),
+    path('exchange/user/<str:username>', views.UsersView, name="User"),
     path('exchange/search/', views.SearchView, name='Search'),
     path('exchange/tags/', views.TagsView, name="Tags"),
     path('exchange/questions/ask', views.QuestionSubmitView, name='Submit_Question'),
