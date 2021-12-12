@@ -1,42 +1,17 @@
-.questions-grid {
-  top: 0;
-  right: 0; 
-  left: 0;
-  bottom: 0;
+/* .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color: #CC0633 !important;
+} */
 
-  display: grid;
-  grid-template-areas: 
-    'header header header header header header'
-    'menu menu questions questions questions questions'
-    'menu menu questions questions questions questions';
-  grid-gap: 2px;
-
+#ask-button {
+  background-color: #CC0633 !important;
+  box-shadow: none;
 }
 
-
-
-.all-questions-grid {
-  grid-area: questions;
+hr {
+  margin: 2px;
 }
 
-.menu-grid {
-  grid-area: menu;
+a {
+  padding: 0 !important;
 }
 
-.question-detail-grid {
-  display: grid;
-  grid-template-areas:
-    'vote question question'
-    'vote question question'
-    'vote question question';
-  grid-gap: 2px;
-}
-
-.vote-grid {
-  grid-area: vote;
-}
-
-.question-grid {
-  grid-area: question;
-  padding-top: 20px;
-}
