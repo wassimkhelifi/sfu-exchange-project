@@ -28,11 +28,11 @@
 				<!--Search Bar-->
 				<div class='col-8 my-auto'>
 					<div class='d-none d-md-block'>
-						<form>
+						<form action={% url 'Search' %} method='GET'>
 							<div class='input-group'>
-								<input type="text" class='form-control' style='padding-left:40px;background-color:#f1f3fa;border:none' placeholder="Search..."></input>
-								<span class='position-absolute dripicons-search search-icon' style='left:10px;font-size:20px;z-index:9;'></span>
-								<button class='input-group-text btn-primary' type='submit'>Search</button>
+                                <input name="q" type="text" class='form-control' style='padding-left:40px;background-color:#f1f3fa;border:none' placeholder="Search..." type='submit'></input>
+                                <span class='position-absolute dripicons-search search-icon' style='left:10px;font-size:20px;z-index:9;'></span>
+                                <button class='input-group-text btn-primary' type='submit'>Search</button>
 							</div>
 						</form>
 					</div>
