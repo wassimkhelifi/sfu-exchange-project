@@ -1,4 +1,4 @@
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.http import Http404
 
@@ -14,11 +14,11 @@ def QuestionsDetailView(request, question_id,):
     raise Http404('Question does not exist!')
   
   if request.method == 'POST':
+    if not request.user.is_authenticated:
+      return HttpResponse('Unauthorized', status=401)
     answerSubmission = AnswerForm(request.POST)
-
     if answerSubmission.is_valid():
-      # TODO: Get a the latest user for now until we have user login completed to get the current user posting
-      current_user = User.objects.latest('id')
+      current_user = User.objects.get(username=request.user)
       Answer.objects.create(
         answer_text = answerSubmission.cleaned_data['answer_text'],
         anonymous = answerSubmission.cleaned_data['anonymous'],

@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Tag
+from .models import User, Tag, Answer
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
 
