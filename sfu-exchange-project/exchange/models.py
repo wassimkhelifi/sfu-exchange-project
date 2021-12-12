@@ -23,13 +23,13 @@ class Role(models.Model):
 
 # Create your models here.
 class User(AbstractUser):
-    bio = models.TextField(max_length=500, blank=True)
+    bio = models.TextField("Biography", max_length=500, blank=True)
     img = models.CharField(max_length=255)
     deleted = models.BooleanField(default=False)
     last_login = models.DateTimeField(auto_now_add=True, blank=True)
 
     # Relationships 
-    faculty_id = models.ForeignKey(Faculty, null=True, on_delete=models.SET_NULL)
+    faculty_id = models.ForeignKey( Faculty, null=True, on_delete=models.SET_NULL, verbose_name="Faculty")
     roles = models.ManyToManyField(Role)
 
 
