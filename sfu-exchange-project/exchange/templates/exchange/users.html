@@ -8,40 +8,51 @@
 {% block title %}Users{% endblock %}
 {% block content %}
     <h1>Users</h1>
-    <div class="tags-container">
+    <div>
       {% if user_list %}
-        <ul >
+        <div class='row'>
           {% for user in user_list %}
-            <li>{{user.username}}</li>
+            <div class='col-lg-3 col-md-4 col-sm-6'>
+              <div class='card'>
+                <div class='card-img'>
+                  <img src={{user.img}} alt='img'/>
+                </div>
+                <div class='card-body'>
+                  <strong>{{user.username}}</strong>
+                  <span>Posts: {{user.num_posts}}</span>
+                  <span>Answers: {{user.num_answers}}</span>
+                  <span>Points: {{user.num_points}}</span>
+                </div>
+              </div>
+            </div>
           {% endfor %}
-        </ul>
+        </div>
         
         <!--Simple Pagination-->
-        <ul class='pagination'>
-            <li class='page-item'>
-              <a class='page-link' href='?page=1'>First</a>
-            </li>
-            
-            {% if user_list.has_previous %}
-            <li class='page-item'>
-              <a class='page-link' href="?page={{user_list.previous_page_number}}">{{user_list.previous_page_number}}</a>
-            </li>
-            {% endif %}
-            
-            <li class='page-item active'>
-              <a class='page-link' href="?page={{user_list.number}}">{{user_list.number}}</a>
-            </li>
-            
-            {% if user_list.has_next %}
-            <li class='page-item'>
-              <a class='page-link' href="?page={{user_list.next_page_number}}">{{user_list.next_page_number}}</a>
-            </li>
-            {% endif %}
-            
-            <li class='page-item'>
-              <a class='page-link' href='?page={{user_list.paginator.num_pages}}'>Last</a>
-            </li>
-            
+        <ul class='pagination d-flex justify-content-center'>
+          <li class='page-item'>
+            <a class='page-link' href='?page=1'>First</a>
+          </li>
+          
+          {% if user_list.has_previous %}
+          <li class='page-item'>
+            <a class='page-link' href="?page={{user_list.previous_page_number}}">{{user_list.previous_page_number}}</a>
+          </li>
+          {% endif %}
+          
+          <li class='page-item active'>
+            <a class='page-link' href="?page={{user_list.number}}">{{user_list.number}}</a>
+          </li>
+          
+          {% if user_list.has_next %}
+          <li class='page-item'>
+            <a class='page-link' href="?page={{user_list.next_page_number}}">{{user_list.next_page_number}}</a>
+          </li>
+          {% endif %}
+          
+          <li class='page-item'>
+            <a class='page-link' href='?page={{user_list.paginator.num_pages}}'>Last</a>
+          </li>
         </ul>
 
       {% else %}
