@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Tag
+from .models import User, Tag, Answer
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
 
@@ -11,7 +11,6 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-
         fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2', 'faculty_id', 'bio']
 
 class QuestionForm(forms.Form):
@@ -20,6 +19,7 @@ class QuestionForm(forms.Form):
     question_text = forms.CharField(max_length=3000)
     tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple)
     user_id = 1
+    anonymous = forms.BooleanField(required=False)
     
     # TODO: Potentially provide validation if needed, otherwise we can remove these functions
     def clean_title(self):
@@ -29,3 +29,7 @@ class QuestionForm(forms.Form):
     def clean_questions_text(self):
         data = self.cleaned_data['question_text']
         return data
+
+class AnswerForm(forms.Form):
+    answer_text = forms.CharField(max_length=3000)
+    anonymous = forms.BooleanField(required=False)
