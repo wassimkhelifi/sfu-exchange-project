@@ -5,7 +5,85 @@
   {% endblock %}
 {% block title %}Question Detail{% endblock %}
 {% block content %}
-  <div class="question-detail-grid">
+  <div class="container-fluid">
+    <!--Title and Ask Question Button-->
+    <div class="row" id="header-row">
+      <div class="col">
+        <h1 class="title">{{ question.title }}</h1>
+      </div>
+      <div class="col" style="padding-top: 12px;">
+        <div class="d-flex justify-content-end">
+          <a href="/exchange/questions/ask">
+            <button type="button" class="btn btn-primary" id="ask-button">Ask A Question</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!--Date Asked-->
+    <div class="row" id="user-date-row">
+      <div class="col">
+        Asked <b>{{ question.created_at }}</b>
+      </div>
+    </div>
+
+    <hr>
+
+    <!--Points, Question Description, User-->
+    <div class="row mb-4" id="votes-description-row">
+      <div class="col-sm-1">
+        <div class="d-flex align-items-center flex-column">
+          <div class="col">
+            <div class="upvote">
+              <svg width="36" height="36">
+                <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
+              </svg>
+            </div>
+            <div class="text-center">{{ question.votes }}</div>
+            <div class="downvote">
+              <svg width="36" height="36">
+                <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-11 p-2">
+        <div class="row pb-2">
+          {{ question.question_text }}
+        </div>
+        <div class="row">
+          {% for tag in question.tags.all %}
+            <a href="#" class="badge bg-secondary d-inline-flex align-items-center justify-content-center me-1 my-1" style="width: 4rem; height: 1rem;">
+              {{ tag }}
+            </a>
+          {% endfor %}
+        </div>
+        <div class="row justify-content-end">
+          <div class="col">
+            <div class="d-flex align-items-end flex-column">
+              <div class="col" id="user-box" style="background-color: hsl(206deg 65% 91%); padding: 5px;">
+                <div class="text-left">asked {{ question.created_at }}</div>
+                <div class="text-left"><b>{{ question.user_id }}</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Answers Header-->
+    <div class="row">
+      <h3>Answers</h3>
+    </div>
+
+    <hr/>
+  </div>
+
+
+
+
+  <!-- <div class="question-detail-grid">
     <div class="header-grid">Header</div>
     <div class="question-grid">
       <h2>{{ question.title }}</h2>
@@ -53,5 +131,5 @@
   <div>
     <p>Please login to post a reply</p>
   </div>
-  {% endif %}
+  {% endif %} -->
 {% endblock %}
