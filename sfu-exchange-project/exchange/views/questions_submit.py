@@ -1,15 +1,20 @@
 from django.shortcuts import redirect, render
+from django.http.response import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from ..models import Question, User
 from ..forms import QuestionForm
 
+@login_required(login_url='Login')
 def QuestionSubmitView(request):
   if request.method == 'POST':
+    if not request.user.is_authenticated:
+      return HttpResponse('Unauthorized', status=401)
+
     form = QuestionForm(request.POST)
 
     if form.is_valid():
-      # TODO: Get the latest user for now until we have user login completed to get the current user posting
-      user = User.objects.latest('id')
+      user = User.objects.get(username=request.user)
       tags = form.cleaned_data.get('tags')
       createdQuestion = Question.objects.create(
         title=form.cleaned_data['title'], 
