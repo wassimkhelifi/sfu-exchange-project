@@ -14,5 +14,7 @@ def create_notification(user, content):
         user_id=user,
     )
 
-def delete_notification(notification_id):
-    Notification.objects.filter(id=notification_id).update(deleted=True)
+def delete_notification(user, notification_id):
+    Notification.objects.filter(
+        Q(id=notification_id) & Q(user_id=user.id)
+    ).update(deleted=True)

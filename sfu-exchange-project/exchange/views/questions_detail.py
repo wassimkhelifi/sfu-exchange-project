@@ -14,8 +14,8 @@ def QuestionsDetailView(request, question_id, slug, notification_id=''):
     except Question.DoesNotExist:
         raise Http404("Question does not exist!")
     
-    if notification_id:
-        notification_helper.delete_notification(notification_id)
+    if notification_id and request.user.is_authenticated:
+        notification_helper.delete_notification(request.user, notification_id)
 
     if request.method == "POST":
         if not request.user.is_authenticated:
