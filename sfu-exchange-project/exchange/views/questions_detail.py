@@ -4,7 +4,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 from django.db.models import Q
 
-from ..models import AnswerVotes, Question, Answer, User
+from ..models import AnswerVotes, Question, Answer, User, QuestionVotes
 from ..forms import AnswerForm
 
 def QuestionsDetailView(request, question_id, slug):
@@ -35,32 +35,62 @@ def QuestionsDetailView(request, question_id, slug):
         answers = None
     else:
         answers = anonymizeAnswers(answers)
+        isAnswerUpvoted(answers, request.user.id)
+
+    isQuestionedUpvoted = QuestionVotes.objects.filter(question_id=question_id).filter(user_id=request.user.id)
+    if not isQuestionedUpvoted:
+        questionVoteState = None
+    else:
+        questionVoteState = isQuestionUpvoted(question_id, request.user.id)
 
     current_question = anonymizeQuestion(current_question)
-    print("WE MADE IT HERE")
     return render(request, 'exchange/questions_detail.html', {
         'question': current_question,
         'answers': answers,
-        'answerForm': answerForm
+        'answerForm': answerForm,
+        'questionVoteAction': questionVoteState
     })
+
+def isAnswerUpvoted(answers, user_id):
+    for answer in answers:
+        isAnswerUpvoted = AnswerVotes.objects.filter(answer_id=answer).filter(user_id=user_id)
+        print('ISANSWERUPVOTED @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        print(isAnswerUpvoted)
+        if not isAnswerUpvoted:
+            answer.is_upvote = None
+        else:
+            voted = AnswerVotes.objects.get(answer_id=answer, user_id=user_id)
+            if voted.is_upvote:
+                answer.is_upvote = 'UPVOTED'
+            else:
+                answer.is_upvote = 'DOWNVOTED'
+            print('WE ASSIGN SOMETHING @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            print(answer)
+    return answers
+
+def isQuestionUpvoted(question_id, user_id):
+    voted = QuestionVotes.objects.get(question_id=question_id, user_id=user_id)
+    if voted.is_upvote:
+        return 'UPVOTED'
+    return 'DOWNVOTED'
 
 def AnswerUpvote(request, answer_id):
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized, please login to vote', status=401)  
-    args = performVoteActions(request, True)
+    args = processAnswerVoteActions(request, True)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
 def AnswerDownvote(request, answer_id):
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized, please login to vote', status=401)
-    args = performVoteActions(request, False)
+    args = processAnswerVoteActions(request, False)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
-def performVoteActions(requestFromVote, isUpvoteClicked):
+def processAnswerVoteActions(requestFromVote, isUpvoteClicked):
     answer = get_object_or_404(Answer, id=requestFromVote.POST.get('answer_id'))
-
+    print("INSIDE HERE@@@@@@@@@@@@@@@@@@@@@@@@")
     # If user has already voted
     if answer.voted.filter(id=requestFromVote.user.id).exists():
         currentUserVote = AnswerVotes.objects.get(Q(answer_id=answer) & Q(user_id=requestFromVote.user))
@@ -105,6 +135,8 @@ def performVoteActions(requestFromVote, isUpvoteClicked):
             newVote = AnswerVotes(answer_id=answer, user_id=requestFromVote.user, is_upvote=False)
             newVote.save()
     
+    print('@@@@@@@@@ VOTE NUMBER @@@@@@@@@')
+    print(answer.votes)
     args = {}
     args['question_id'] = answer.question_id.id
     args['slug'] = answer.question_id.slug

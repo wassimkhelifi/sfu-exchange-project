@@ -1,7 +1,7 @@
 {% extends "base.html" %}
   {% block head %}
     {% load static %}
-    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}" /> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}" />
   {% endblock %}
 {% block title %}Question Detail{% endblock %}
 {% block content %}
@@ -38,24 +38,26 @@
               <form action="{% url 'Question_Upvote' question.id question.slug %}" method="POST">
                 {% csrf_token %}
                 <div> 
-                  <button type="submit" name="question_id", value="{{ question.id }}"> &#9651; </button>
+                  <button type="submit" name="question_id", value="{{ question.id }}">
+                    <svg width="36" height="36" style="{% if questionVoteAction == 'UPVOTED'%} color: red {% endif %}">
+                      <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
+                    </svg>
+                  </button>
                 </div>
               </form>
-              <svg width="36" height="36">
-                <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
-              </svg>
             </div>
             <div class="text-center">{{ question.votes }}</div>
             <div class="downvote">
               <form action="{% url 'Question_Downvote' question.id question.slug %}" method="POST">
                 {% csrf_token %}
                 <div> 
-                  <button type="submit" name="question_id", value="{{ question.id }}"> &#9661; </button>
+                  <button type="submit" name="question_id", value="{{ question.id }}">               
+                    <svg width="36" height="36" style="{% if questionVoteAction == 'DOWNVOTED'%} color: red {% endif %}">
+                      <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
+                    </svg>
+                  </button>
                 </div>
               </form>
-              <svg width="36" height="36">
-                <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
-              </svg>
             </div>
           </div>
         </div>
@@ -102,24 +104,26 @@
                   <form action="{% url 'Answer_Upvote' answer.id %}" method="POST">
                     {% csrf_token %}
                     <div> 
-                      <button type="submit" name="answer_id", value="{{ answer.id }}"> &#9651; </button>
+                      <button type="submit" name="answer_id", value="{{ answer.id }}">
+                        <svg width="36" height="36" style="{% if answer.is_upvoted == 'UPVOTED'%} color: red {% endif %}">
+                          <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
+                        </svg>
+                      </button>
                     </div>
                   </form>
-                  <svg width="36" height="36">
-                    <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
-                  </svg>
                 </div>
-                <div class="text-center">{{ question.votes }}</div>
+                <div class="text-center">{{ answer.votes }}</div>
                 <div class="downvote">
                   <form action="{% url 'Answer_Downvote' answer.id %}" method="POST">
                     {% csrf_token %}
                     <div> 
-                      <button type="submit" name="answer_id", value="{{ answer.id }}"> &#9661; </button>
+                      <button type="submit" name="answer_id", value="{{ answer.id }}">
+                        <svg width="36" height="36" style="{% if answer.is_upvoted == 'DOWNVOTED'%} color: red {% endif %}">
+                          <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
+                        </svg>
+                      </button>
                     </div>
                   </form>
-                  <svg width="36" height="36">
-                    <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
-                  </svg>
                 </div>
               </div>
             </div>
