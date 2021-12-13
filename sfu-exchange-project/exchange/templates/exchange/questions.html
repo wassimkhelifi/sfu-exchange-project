@@ -1,6 +1,7 @@
 {% extends "base.html" %}
   {% block head %}
     {% load static %}
+    {% load my_tags %}
     <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions.css' %}" />
   {% endblock %}
 {% block title %}Questions{% endblock %}
@@ -17,6 +18,13 @@
           </a>
         </div>
       </div>
+    </div>
+
+
+    <div class='btn-group justify-content-end'>
+      <a type="button" href="?filter='new'" class="btn btn-light">Newest</a>
+      <a type="button" href="?filter='popular'" class="btn btn-light">Popular</a>
+      <a type="button" href="?filter='unanswered'" class="btn btn-light">Unanswered</a>
     </div>
 
     <hr/>
@@ -55,7 +63,7 @@
                     <div class="d-flex align-items-end flex-column">
                       <div class="col">
                         <div class="text-left">Asked {{ question.created_at }}</div>
-                        <div class="text-left">{{ question.user_id }}</div>
+                        <div class="text-left fw-bold">{{ question.user_id }}</div>
                       </div>
                     </div>
                   </div>
@@ -66,35 +74,38 @@
           {% endfor %}
         </ul>
       </div>
-      {% else %}
-        <p>No Questions have been asked yet</p>
-      {% endif %}
 
       <ul class='pagination d-flex justify-content-center'>
         <li class='page-item'>
-          <a class='page-link' href='?page=1'>First</a>
+          <a class='page-link' href="?{% param_replace page=1%}">First</a>
         </li>
         
         {% if questions_list.has_previous %}
         <li class='page-item'>
-          <a class='page-link' href="?page={{questions_list.previous_page_number}}">{{questions_list.previous_page_number}}</a>
+          <a class='page-link' href="?{% param_replace page=questions_list.previous_page_number%}">{{questions_list.previous_page_number}}</a>
         </li>
         {% endif %}
         
         <li class='page-item active'>
-          <a class='page-link' href="?page={{questions_list.number}}">{{questions_list.number}}</a>
+          <a class='page-link' href="?{% param_replace page=questions_list.number%}">{{questions_list.number}}</a>
         </li>
         
-        {% if questions_list.has_next %}
+        {% if questions_list.has_next%}
         <li class='page-item'>
-          <a class='page-link' href="?page={{questions_list.next_page_number}}">{{questions_list.next_page_number}}</a>
+          <a class='page-link' href="?{% param_replace page=questions_list.next_page_number%}">{{questions_list.next_page_number}}</a>
         </li>
         {% endif %}
         
         <li class='page-item'>
-          <a class='page-link' href='?page={{questions_list.paginator.num_pages}}'>Last</a>
+          <a class='page-link' href="?{% param_replace page=questions_list.num_pages%}">Last</a>
         </li>            
-    </ul>
+      </ul>
+
+
+      {% else %}
+        <p>No Questions have been asked yet</p>
+      {% endif %}
+
 
     </div>
   </div>

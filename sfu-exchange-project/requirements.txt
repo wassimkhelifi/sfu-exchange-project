@@ -5,4 +5,3 @@ django-extensions
 django-crispy-forms
 django-summernote
 django-select2==7.9.0
-django-redis
