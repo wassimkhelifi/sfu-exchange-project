@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+  {% block head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'exchange/notifications.css' %}" />
+  {% endblock %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row" id="header">
+      <div class="col">
+        <h1 class="title">All Notifications</h1>
+      </div>
+    </div>
+
+
+    <div class="row" id="notifications">
+        <div>
+          {% if notifications %}
+          {% for notification in notifications %}
+          <hr>
+              <div class='row' id="notification-row">
+                  <div class="col" id="notification-row">
+                    <div class="col-sm-11" id="notification-row">
+                        <div class="row" id="notification-title">
+                          <a href="{{ notification.url }}"><h4>{{ notification.notification_title }}</h4></a>
+                        </div>
+                        <div class="row px-4">
+                          {{ notification.notification_text }}
+                         
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="d-flex align-items-end flex-column py-3">
+                        <div> {{ notification.notification_type }}</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="d-flex align-items-end flex-column py-3">
+                        <div>{{ notification.created_at }}</div>
+                    </div>
+                  </div>
+              </div>
+          </hr>
+          {% endfor %}
+        </div>
+    </div>
+          
+    <!--Simple Pagination-->
+    <ul class='pagination d-flex justify-content-center'>
+      <li class='page-item'>
+        <a class='page-link' href="?page=1 {% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">First</a>
+      </li>
+      
+      {% if notifications.has_previous %}
+      <li class='page-item'>
+        <a class='page-link' href="?page={{notifications.previous_page_number}} {% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{notifications.previous_page_number}}</a>
+      </li>
+      {% endif %}
+      
+      <li class='page-item active'>
+        <a class='page-link' href="?page={{notifications.number}} {% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{notifications.number}}</a>
+      </li>
+      
+      {% if notifications.has_next %}
+      <li class='page-item'>
+        <a class='page-link' href="?page={{notifications.next_page_number}} {% if request.GET.query %}&q={{ request.GET.query }}{% endif %}">{{notifications.next_page_number}}</a>
+      </li>
+      {% endif %}
+      
+      <li class='page-item'>
+        <a class='page-link' href='?page={{notifications.paginator.num_pages}} {% if request.GET.query %}&q={{ request.GET.query }}{% endif %}'>Last</a>
+      </li>
+    </ul>
+    {% else %}
+      <p>No notifications available in database</p>
+    {% endif %}
+  </div>
+{% endblock %}
+
