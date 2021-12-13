@@ -15,9 +15,11 @@ def QuestionsDetailView(request, question_id, slug):
     except Question.DoesNotExist:
         raise Http404('Question does not exist!')
     
-    if request.method == 'POST':
+    if slug == 'SKIP':
+        print('we need this skip from QuestionsUpvote and QuestionsDownvote fn')
+    elif request.method == 'POST':
         if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
+            return HttpResponse('Unauthorized, please login to vote', status=401)
         answerSubmission = AnswerForm(request.POST)
         if answerSubmission.is_valid():
             current_user = User.objects.get(username=request.user)
@@ -35,7 +37,7 @@ def QuestionsDetailView(request, question_id, slug):
         answers = anonymizeAnswers(answers)
 
     current_question = anonymizeQuestion(current_question)
-
+    print("WE MADE IT HERE")
     return render(request, 'exchange/questions_detail.html', {
         'question': current_question,
         'answers': answers,
@@ -44,14 +46,14 @@ def QuestionsDetailView(request, question_id, slug):
 
 def AnswerUpvote(request, answer_id):
     if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized', status=401)  
+        return HttpResponse('Unauthorized, please login to vote', status=401)  
     args = performVoteActions(request, True)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
 def AnswerDownvote(request, answer_id):
     if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized', status=401)
+        return HttpResponse('Unauthorized, please login to vote', status=401)
     args = performVoteActions(request, False)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))

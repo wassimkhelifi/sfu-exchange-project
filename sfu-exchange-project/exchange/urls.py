@@ -13,6 +13,8 @@ urlpatterns = [
     path('exchange/tags/', views.TagsView, name='Tags'),
     path('exchange/questions/ask', views.QuestionSubmitView, name='Submit_Question'),
     path('exchange/questions/<int:question_id>/<slug:slug>/', views.QuestionsDetailView, name='Questions_Detail'),
+    path('exchange/questions/<int:question_id>/<slug:slug>/upvote', views.QuestionUpvote, name='Question_Upvote'),
+    path('exchange/questions/<int:question_id>/<slug:slug>/downvote', views.QuestionDownvote, name='Question_Downvote'),
     path('exchange/answers/upvote/<int:answer_id>', views.AnswerUpvote, name='Answer_Upvote'),
     path('exchange/answers/downvote/<int:answer_id>', views.AnswerDownvote, name='Answer_Downvote'),
 ]

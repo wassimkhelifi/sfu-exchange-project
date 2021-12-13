@@ -9,6 +9,19 @@
     <div class="header-grid">Header</div>
     <div class="question-grid">
       <h2>{{ question.title }}</h2>
+      <form action="{% url 'Question_Upvote' question.id question.slug %}" method="POST">
+        {% csrf_token %}
+        <div> 
+          <button type="submit" name="question_id", value="{{ question.id }}"> &#9651; </button>
+        </div>
+      </form>
+      {{ question.votes }}
+      <form action="{% url 'Question_Downvote' question.id question.slug %}" method="POST">
+        {% csrf_token %}
+        <div> 
+          <button type="submit" name="question_id", value="{{ question.id }}"> &#9661; </button>
+        </div>
+      </form>
       <p>{{ question.question_text }}</p>
       <p>{{ question.created_at }}</p>
       <p> {{ question.user_id }} </p>
@@ -28,21 +41,16 @@
           <form action="{% url 'Answer_Upvote' answer.id %}" method="POST">
             {% csrf_token %}
             <div> 
-              <button type="submit" name="answer_id", value="{{ answer.id }}"> Upvote </button>
-              <p>&#9651;</p> 
+              <button type="submit" name="answer_id", value="{{ answer.id }}"> &#9651; </button>
             </div>
-            <p>&#9661;</p>
           </form>
           {{ answer.votes }}
           <form action="{% url 'Answer_Downvote' answer.id %}" method="POST">
             {% csrf_token %}
             <div> 
-              <button type="submit" name="answer_id", value="{{ answer.id }}"> Downvote </button>
-              <p>&#9651;</p> 
+              <button type="submit" name="answer_id", value="{{ answer.id }}"> &#9661; </button>
             </div>
-            <p>&#9661;</p>
           </form>
-        </div>
         <div class="answer-grid">
           <p> {{ answer.answer_text }} </p>
           <div>

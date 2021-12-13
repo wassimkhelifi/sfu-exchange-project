@@ -64,6 +64,7 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True,  null=False)
     last_edited = models.DateTimeField(auto_now_add=True, null=False)
     slug = AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
+    voted = models.ManyToManyField(User, related_name='question_voted', default=None, blank=True)
 
     # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -86,7 +87,7 @@ class Answer(models.Model):
     deleted = models.BooleanField(default=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True,  null=False)
     last_edited = models.DateTimeField(auto_now_add=True, null=False)
-    voted = models.ManyToManyField(User, related_name='voted', default=None, blank=True)
+    voted = models.ManyToManyField(User, related_name='answer_voted', default=None, blank=True)
 
     # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -116,5 +117,13 @@ class AnswerVotes(models.Model):
 
     # Relationships
     answer_id = models.ForeignKey(Answer, on_delete=models.CASCADE, default=None, blank=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=None, blank=True)
+    is_upvote = models.BooleanField(default=None, blank=True)
+
+class QuestionVotes(models.Model):
+    id = models.AutoField(primary_key=True)
+
+    # Relationships
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE, default=None, blank=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=None, blank=True)
     is_upvote = models.BooleanField(default=None, blank=True)
