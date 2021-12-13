@@ -38,6 +38,7 @@ def QuestionsDetailView(request, question_id, slug):
     answers = Answer.objects.filter(question_id=question_id)
     if not answers:
         answers = None
+        mappedVotedAnswers = None
     else:
         answers = anonymizeAnswers(answers)
         mappedVotedAnswers = mapVotedAnswers(answers, request.user.id)
