@@ -51,11 +51,12 @@ def QuestionsDetailView(request, question_id, slug):
         'questionVoteAction': questionVoteState
     })
 
+# Not sure if this works since can't test as adding comments is disabled with Wassim's changes
+# Basically trying to create a new property called is_upvote in the answer and sending it back to the HTML
+# so we can check to see if it is upvoted or downvoted and highlight the button accordingly
 def isAnswerUpvoted(answers, user_id):
     for answer in answers:
         isAnswerUpvoted = AnswerVotes.objects.filter(answer_id=answer).filter(user_id=user_id)
-        print('ISANSWERUPVOTED @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        print(isAnswerUpvoted)
         if not isAnswerUpvoted:
             answer.is_upvote = None
         else:
@@ -64,8 +65,6 @@ def isAnswerUpvoted(answers, user_id):
                 answer.is_upvote = 'UPVOTED'
             else:
                 answer.is_upvote = 'DOWNVOTED'
-            print('WE ASSIGN SOMETHING @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            print(answer)
     return answers
 
 def isQuestionUpvoted(question_id, user_id):
