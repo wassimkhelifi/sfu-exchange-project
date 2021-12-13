@@ -18,9 +18,7 @@ def NotificationsView(request, page=""):
     )
 
     if query_param:
-        notifications = notifications.filter(search=query_param).order_by("-rank", "-created_at")
-    else:
-        notifications = notifications.order_by("-created_at")
+        notifications = notifications.filter(search=query_param).order_by("-rank")
 
     paginator = Paginator(notifications, 10)
 

@@ -1,7 +1,7 @@
 from ..models import Notification
 
 def get_notifications(user):
-    return Notification.objects.filter(user_id=user.id)
+    return Notification.objects.filter(user_id=user.id).order_by("-created_at")
 
 def create_notification(user, content):
     Notification.objects.create(
