@@ -86,4 +86,3 @@ class ProfileEditForm(forms.ModelForm):
             "img": forms.Select(choices=IMG_CHOICES, attrs={"class": "form-control"}),
             "faculty_id": forms.Select(attrs={"class": "form-control"}),
         }
-

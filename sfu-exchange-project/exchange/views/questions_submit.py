@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http.response import HttpResponse
 from django.contrib.auth.decorators import login_required
+from ..helpers import notification_helper
 
 from ..models import Question, User
 from ..forms import QuestionForm
@@ -22,13 +23,24 @@ def QuestionSubmitView(request):
         anonymous=form.cleaned_data['anonymous'],
         user_id=user
       )
+      notification_helper.create_notification(
+          request.user, 
+          {
+              'notification_title': createdQuestion.title,
+              'notification_text': 'question created!',
+              'notification_type': 'new question',
+              'url': f"/exchange/questions/{createdQuestion.id}/{createdQuestion.slug}",
+          }
+      )
       createdQuestion.tags.set(tags)
       return redirect('Questions_Detail', question_id=createdQuestion.id, slug=createdQuestion.slug)
   else:
     form = QuestionForm()
 
+  notification_list = notification_helper.get_notifications(request.user)
   context = {
     'form': form,
+    'notifications': notification_list,
   }
 
   return render(request, 'exchange/questions_submit.html', context)

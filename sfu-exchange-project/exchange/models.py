@@ -32,11 +32,12 @@ class User(AbstractUser):
     faculty_id = models.ForeignKey( Faculty, null=True, on_delete=models.SET_NULL, verbose_name="Faculty")
     roles = models.ManyToManyField(Role)
 
-
 class Notification(models.Model):
     id = models.AutoField(primary_key=True)
     read = models.BooleanField(default=False)
     url = models.CharField(max_length=256)
+    notification_type = models.CharField(max_length=256, default='')
+    notification_title = models.TextField(max_length=256, blank=False, default='Title')
     notification_text = models.TextField(max_length=500, blank=False)
     created_at = models.DateTimeField(auto_now_add=True, blank=False)
     deleted = models.BooleanField(default=False)
@@ -64,6 +65,7 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True,  null=False)
     last_edited = models.DateTimeField(auto_now_add=True, null=False)
     slug = AutoSlugField(_('slug'), max_length=50, unique=True, populate_from=('title',))
+    voted = models.ManyToManyField(User, related_name='question_voted', default=None, blank=True)
 
     # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -86,6 +88,7 @@ class Answer(models.Model):
     deleted = models.BooleanField(default=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True,  null=False)
     last_edited = models.DateTimeField(auto_now_add=True, null=False)
+    voted = models.ManyToManyField(User, related_name='answer_voted', default=None, blank=True)
 
     # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -103,9 +106,25 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True,  null=False)
     last_edited = models.DateTimeField(auto_now_add=True, null=False)
 
-     # Relationships 
+    # Relationships 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     answer_id = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f"A: {self.answer_id}"
+
+class AnswerVotes(models.Model):
+    id = models.AutoField(primary_key=True)
+
+    # Relationships
+    answer_id = models.ForeignKey(Answer, on_delete=models.CASCADE, default=None, blank=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=None, blank=True)
+    is_upvote = models.BooleanField(default=None, blank=True)
+
+class QuestionVotes(models.Model):
+    id = models.AutoField(primary_key=True)
+
+    # Relationships
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE, default=None, blank=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=None, blank=True)
+    is_upvote = models.BooleanField(default=None, blank=True)
