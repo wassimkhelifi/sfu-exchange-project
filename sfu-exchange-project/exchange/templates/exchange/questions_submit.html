@@ -13,22 +13,13 @@
     </div>
 
     <hr />
-
     <div class="row">
       <form action="" method="post">
         {% csrf_token %}
-        <h4 class="title">Title</h4>
-        {{ form.title }}
-        <h4 class="body">Body</h4>
-        {{ form.question_text }}
-        <div class="d-flex flex-row">
-          Ask Anonymously 
-          <div style="padding-top: 2px; margin-left: 2px;">{{ form.anonymous }}</div>
-        </div>
-        <h4 class="tags">Tags</h4>
-        {{ form.tags }}
+        {{form.as_p}}
         <input class="btn btn-primary" type="submit" value="Submit" />
       </form>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </div>
   </div>
 {% endblock %}

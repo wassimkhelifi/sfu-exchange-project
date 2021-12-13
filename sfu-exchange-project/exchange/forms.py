@@ -1,7 +1,8 @@
 from django import forms
 from .models import  Tag, User, Tag, Answer, Question
 from django.contrib.auth.forms import UserCreationForm
-from django_summernote.widgets import SummernoteWidget
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+from django_select2 import forms as s2forms
 
 
 IMG_CHOICES = (
@@ -37,6 +38,11 @@ class RegistrationForm(UserCreationForm):
             "img": forms.Select(choices=IMG_CHOICES, attrs={"class": "form-control"}),
         }
 
+class TagWidget(s2forms.ModelSelect2MultipleWidget):
+    search_fields = [
+        'name__icontains',
+    ]
+
 
 class QuestionForm(forms.ModelForm):
     class Meta:
@@ -50,14 +56,15 @@ class QuestionForm(forms.ModelForm):
         widgets = {
             "title": forms.TextInput(attrs={'class': 'form-control', "placeholder":"Title"}),
             "question_text": SummernoteWidget(),
-            "tags": forms.CheckboxSelectMultiple(attrs={'class': 'tags-field'}),
+            "tags": TagWidget,
             "anonymous": forms.CheckboxInput(attrs={'class': 'anonymous-field'}),
         }
 
 
 
+
 class AnswerForm(forms.Form):
-    answer_text = forms.CharField(widget=forms.Textarea(attrs={'style': 'width: 100%'}))
+    answer_text = forms.CharField(widget=SummernoteWidget(), min_length=5)
     anonymous = forms.BooleanField(required=False)
 
 
