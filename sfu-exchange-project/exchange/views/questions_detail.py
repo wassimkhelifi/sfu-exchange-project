@@ -3,10 +3,15 @@ from django.shortcuts import get_object_or_404, render
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 from django.db.models import Q
+from django.template.defaultfilters import register
 
 from ..models import AnswerVotes, Question, Answer, User, QuestionVotes
 from ..forms import AnswerForm
 
+# Custom template filter for lookup, thank you: https://stackoverflow.com/questions/8000022/django-template-how-to-look-up-a-dictionary-value-with-a-variable
+@register.filter(name='dict_key')
+def get_item(dictionary, key):
+    return dictionary.get(key)
 
 def QuestionsDetailView(request, question_id, slug):
     try:
@@ -15,7 +20,7 @@ def QuestionsDetailView(request, question_id, slug):
     except Question.DoesNotExist:
         raise Http404('Question does not exist!')
     
-    if slug == 'SKIP':
+    if slug == 'FROM_QUESTION_VOTE_TO_RENDERING_Q_DETAIL_VIEW':
         print('we need this skip from QuestionsUpvote and QuestionsDownvote fn')
     elif request.method == 'POST':
         if not request.user.is_authenticated:
@@ -23,20 +28,19 @@ def QuestionsDetailView(request, question_id, slug):
         answerSubmission = AnswerForm(request.POST)
         if answerSubmission.is_valid():
             current_user = User.objects.get(username=request.user)
-        Answer.objects.create(
-            answer_text = answerSubmission.cleaned_data['answer_text'],
-            anonymous = answerSubmission.cleaned_data['anonymous'],
-            user_id = current_user,
-            question_id = current_question
-        )
-        return HttpResponseRedirect(request.path_info)
+            Answer.objects.create(
+                answer_text = answerSubmission.cleaned_data['answer_text'],
+                anonymous = answerSubmission.cleaned_data['anonymous'],
+                user_id = current_user,
+                question_id = current_question
+            )
 
     answers = Answer.objects.filter(question_id=question_id)
     if not answers:
         answers = None
     else:
         answers = anonymizeAnswers(answers)
-        isAnswerUpvoted(answers, request.user.id)
+        mappedVotedAnswers = mapVotedAnswers(answers, request.user.id)
 
     isQuestionedUpvoted = QuestionVotes.objects.filter(question_id=question_id).filter(user_id=request.user.id)
     if not isQuestionedUpvoted:
@@ -49,48 +53,45 @@ def QuestionsDetailView(request, question_id, slug):
         'question': current_question,
         'answers': answers,
         'answerForm': answerForm,
-        'questionVoteAction': questionVoteState
+        'questionVoteState': questionVoteState,
+        'mappedVotedAnswers': mappedVotedAnswers,
     })
 
 # Not sure if this works since can't test as adding comments is disabled with Wassim's changes
 # Basically trying to create a new property called is_upvote in the answer and sending it back to the HTML
 # so we can check to see if it is upvoted or downvoted and highlight the button accordingly
-def isAnswerUpvoted(answers, user_id):
+def mapVotedAnswers(answers, user_id):
+    votedAnswersInQuestionByCurrentUser = {}
     for answer in answers:
-        isAnswerUpvoted = AnswerVotes.objects.filter(answer_id=answer).filter(user_id=user_id)
-        if not isAnswerUpvoted:
-            answer.is_upvote = None
-        else:
-            voted = AnswerVotes.objects.get(answer_id=answer, user_id=user_id)
-            if voted.is_upvote:
-                answer.is_upvote = 'UPVOTED'
-            else:
-                answer.is_upvote = 'DOWNVOTED'
-    return answers
+        votedAnswerInQueryObject = AnswerVotes.objects.filter(answer_id=answer).filter(user_id=user_id)
+        for answerVotesObj in votedAnswerInQueryObject:
+            votedAnswersInQuestionByCurrentUser[answerVotesObj.answer_id] = answerVotesObj.is_upvote
+
+    return votedAnswersInQuestionByCurrentUser
 
 def isQuestionUpvoted(question_id, user_id):
     voted = QuestionVotes.objects.get(question_id=question_id, user_id=user_id)
     if voted.is_upvote:
         return 'UPVOTED'
+
     return 'DOWNVOTED'
 
 def AnswerUpvote(request, answer_id):
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized, please login to vote', status=401)  
-    args = processAnswerVoteActions(request, True)
+    args = processAnswerVoteAction(request, True)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
 def AnswerDownvote(request, answer_id):
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized, please login to vote', status=401)
-    args = processAnswerVoteActions(request, False)
+    args = processAnswerVoteAction(request, False)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
-def processAnswerVoteActions(requestFromVote, isUpvoteClicked):
+def processAnswerVoteAction(requestFromVote, isUpvoteClicked):
     answer = get_object_or_404(Answer, id=requestFromVote.POST.get('answer_id'))
-    print("INSIDE HERE@@@@@@@@@@@@@@@@@@@@@@@@")
     # If user has already voted
     if answer.voted.filter(id=requestFromVote.user.id).exists():
         currentUserVote = AnswerVotes.objects.get(Q(answer_id=answer) & Q(user_id=requestFromVote.user))
@@ -135,8 +136,6 @@ def processAnswerVoteActions(requestFromVote, isUpvoteClicked):
             newVote = AnswerVotes(answer_id=answer, user_id=requestFromVote.user, is_upvote=False)
             newVote.save()
     
-    print('@@@@@@@@@ VOTE NUMBER @@@@@@@@@')
-    print(answer.votes)
     args = {}
     args['question_id'] = answer.question_id.id
     args['slug'] = answer.question_id.slug

@@ -18,19 +18,19 @@ def QuestionsView(request):
 def QuestionUpvote(request, question_id, slug):
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized, please login to vote', status=401)  
-    performVoteActions(request, True)
-    slug = 'SKIP'
+    processQuestionVoteAction(request, True)
+    slug = 'FROM_QUESTION_VOTE_TO_RENDERING_Q_DETAIL_VIEW'
     return QuestionsDetailView(request, question_id, slug)
 
 def QuestionDownvote(request, question_id, slug):
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized, please login to vote', status=401)  
-    performVoteActions(request, False)
-    slug = 'SKIP'
+    processQuestionVoteAction(request, False)
+    slug = 'FROM_QUESTION_VOTE_TO_RENDERING_Q_DETAIL_VIEW'
 
     return QuestionsDetailView(request, question_id, slug)
 
-def performVoteActions(requestFromVote, isUpvoteClicked):
+def processQuestionVoteAction(requestFromVote, isUpvoteClicked):
     question = get_object_or_404(Question, id=requestFromVote.POST.get('question_id'))
 
     # If user has already voted
