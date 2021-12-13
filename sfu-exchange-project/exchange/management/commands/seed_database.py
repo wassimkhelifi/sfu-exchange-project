@@ -30,6 +30,14 @@ MAX_ANSWERS_PER_QUESTION = 5
 COMMENTS_PER_ANSWER = 5
 TAGS = 15
 
+IMGS = [
+    'racoon.png',
+    'bear.png',
+    'beaver.png',
+    'orca.png',
+    'moose.png',
+]
+
 
 class Command(BaseCommand):
     help = "Generate Dummy data for the database"
@@ -84,7 +92,7 @@ class Command(BaseCommand):
                 first_name=f_name,
                 last_name=l_name,
                 password="password",  # not unique but this way we can login to everyones account
-                img="https://www.deviantart.com/moist-toad/art/Knackles-675515746",  # sorry for memeing
+                img=random.choice(IMGS),  
                 faculty_id=random.choice(faculties),
             )
             user.save()
