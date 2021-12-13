@@ -4,137 +4,182 @@
 		<link rel="stylesheet" , type="text/css" , href="{% static 'exchange/shared.css' %}">
 		<link rel="stylesheet" , type="text/css" , href="{% static 'exchange/profile.css' %}">
 	{% endblock %}
-{% block title%}User{% endblock %}
-
+{% block title%}User Profile{% endblock %}
 {% block content %}
-  <div class="container-fluid">
-    <div class="row mt-2 mb-2">
-      <div class="col-2 align-self-center">
-        <img src="{% static '/exchange/img/'|add:user.img %}" alt="profile" class="rounded-circle border" style="width:112px;height:112px;"/>
-      </div>
-      <div class="col-10 align-self-center">
-        <h1 class="title">{{ user.username }}</h1>
-        <div>
-          {{ user.email }} | Member since {{ user.date_joined }}
-        </div>
-        <a href="{% url 'Profile Edit' %}"> <i class="fa fa-edit"></i> Edit Profile</a>
-      </div>
-    </div>
-
-    <div class="row justify-content-between">
-      <div class="col border me-1 p-2 rounded">
-        <h3 style="margin-top:0 !important;">Lifetime Statistics</h3>
-        <div>
-          Questions: {{ user.questions }}
-        </div>
-        <div>
-          Answers: {{ user.answers }}
-        </div>
-        <div>
-          Comments: {{ user.comments }}
-        </div>
-      </div>
-      <div class="col ms-1 border p-2 rounded">
-        <h3 style="margin-top:0 !important;">User Details</h3>
-        <div>
-          First name: {{ user.first_name }}
-        </div>
-        <div>
-          Last name: {{ user.last_name }}
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-2">
-      <div class="col border rounded p-2">
-        <h3 style="margin-top:0 !important;">Questions</h3>
+	<div class="profile_grid">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <div class="container bootstrap snippets bootdey">
         <div class="row">
-          <div class="col">
-            {% if questions %}
-              {% for question in questions %}
-                <div class="row" id="question-summary">
-                  <div class="col-sm-1 align-self-center">
-                    <div class="d-flex align-items-center flex-column">
-                      <div class="col">
-                        <div class="text-center">{{ question.votes }}</div>
-                        <div class="text-center">Votes</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-11">
-                    <div class="row" id="question-title">
-                      <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}" style="padding: 0;"><h3>{{ question.title }}</h3></a>
-                    </div>
-                    <div class="row pb-1" id="question-summary">
-                      {{ question.question_text }}
-                    </div>
-                    <div class="row" id="tags-users">
-                      <div class="col">
-                        <div class="row">
-                          {% for tag in question.tags.all %}
-                            <a href="#" class="badge bg-secondary d-inline-flex align-items-center justify-content-center me-1 my-1" style="width: 4rem; height: 1rem;">
-                              {{ tag }}
-                            </a>
-                          {% endfor %}
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="d-flex align-items-end flex-column">
-                          <div class="col">
-                            <div class="text-left">Asked {{ question.created_at }}</div>
-                            <div class="text-left">{{ question.user_id }}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+        <div class="profile-nav col-xxl-3 col-md-6">
+            <div class="panel">
+                <div class="user-heading round">
+                    <a href="#">
+                        <img src="{% static '/exchange/img/'|add:user.img %}" alt="profile">
+                    </a>
+                    <h1>{{ user.name }}</h1>
+                    <p>{{ user.email }}</p>
+                    <div class="profile-bio">{{ user.bio }}</div>
                 </div>
-                <hr class="question-divider"/>
-              {% endfor %}
-            </ul>
-          </div>
-          {% else %}
-            <p>No questions found in database</p>
-          {% endif %}
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="{% url 'Profile Edit' %}"> <i class="fa fa-edit"></i> Edit Profile</a></li>
+                </ul>
+            </div>
         </div>
-      </div>
-    </div>
+        <div class="profile-info col-xxl-9 col-mid-6">
+            <div class="panel-body bio-graph-info">
+                <h1>User Details</h1>
+                <div class="row">
+                    <div class="bio-row">
+                        <p><span>First Name: </span> {{ user.first_name }}</p>
+                    </div>
+                    <div class="bio-row">
+                        <p><span>Last Name: </span>{{ user.last_name }}</p>
+                    </div>
+                    <div class="bio-row">
+                        <p><span>Email: </span> {{ user.email }}</p>
+                    </div>
+                    <div class="bio-row">
+                        <p><span>Joined: </span> {{ user.date_joined }}</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-8">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="bio-desk">
+                                    <h4 class="red">Points</h4>
+                                    <p>Points are gained when others upvote your content</p>
+                                </div>
+                                <div class="bio-chart">
+                                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value={{ user.points }} data-fgcolor="#e06b7d" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(224, 107, 125); padding: 0px; -webkit-appearance: none; background: none;"></div>
+                                </div>
 
-    <div class="row mt-2">
-      <div class="col p-0">
-        <ul class='pagination d-flex justify-content-center'>
-          <li class='page-item'>
-            <a class='page-link' href='?page=1'>First</a>
-          </li>
-          
-          {% if questions.has_previous %}
-          <li class='page-item'>
-            <a class='page-link' href="?page={{questions.previous_page_number}}">{{questions.previous_page_number}}</a>
-          </li>
-          {% endif %}
-          
-          <li class='page-item active'>
-            <a class='page-link' href="?page={{questions.number}}">{{questions.number}}</a>
-          </li>
-          
-          {% if questions.has_next %}
-          <li class='page-item'>
-            <a class='page-link' href="?page={{questions.next_page_number}}">{{questions.next_page_number}}</a>
-          </li>
-          {% endif %}
-          
-          <li class='page-item'>
-            <a class='page-link' href='?page={{questions.paginator.num_pages}}'>Last</a>
-          </li>            
-        </ul>
-      </div>
-    </div>
-  </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-8">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="bio-desk">
+                                    <h4 class="terques">Questions</h4>
+                                    <p>Number of questions you have asked</p>
+                                </div>
+                                <div class="bio-chart">
+                                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value={{ user.questions }} data-fgcolor="#4CC5CD" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(76, 197, 205); padding: 0px; -webkit-appearance: none; background: none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-8">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="bio-desk">
+                                    <h4 class="green">Answers</h4>
+                                    <p>Number of times you have answered a question</p>
+                                </div>
+                                <div class="bio-chart">
+                                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value={{ user.answers }} data-fgcolor="#96be4b" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(150, 190, 75); padding: 0px; -webkit-appearance: none; background: none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-8">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="bio-desk">
+                                    <h4 class="purple">Comments</h4>
+                                    <p>Number of comments you have made</p>
+                                </div>
+                                <div class="bio-chart">
+                                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value={{ user.comments }} data-fgcolor="#cba4db" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(203, 164, 219); padding: 0px; -webkit-appearance: none; background: none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-questions">
+                <h1>Questions</h1>
+                <div class="row" id="questions">
+                    <div class="col">
+                      {% if questions %}
+                        {% for question in questions %}
+                          <div class="row" id="question-summary">
+                            <div class="col-sm-1 align-self-center">
+                              <div class="d-flex align-items-center flex-column">
+                                <div class="col">
+                                  <div class="text-center">{{ question.votes }}</div>
+                                  <div class="text-center">Votes</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-11">
+                              <div class="row" id="question-title">
+                                <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}" style="padding: 0;"><h3>{{ question.title }}</h3></a>
+                              </div>
+                              <div class="row pb-1" id="question-summary">
+                                {{ question.question_text }}
+                              </div>
+                              <div class="row" id="tags-users">
+                                <div class="col">
+                                  <div class="row">
+                                    {% for tag in question.tags.all %}
+                                      <a href="#" class="badge bg-secondary d-inline-flex align-items-center justify-content-center me-1 my-1" style="width: 4rem; height: 1rem;">
+                                        {{ tag }}
+                                      </a>
+                                    {% endfor %}
+                                  </div>
+                                </div>
+                                <div class="col">
+                                  <div class="d-flex align-items-end flex-column">
+                                    <div class="col">
+                                      <div class="text-left">Asked {{ question.created_at }}</div>
+                                      <div class="text-left">{{ question.user_id }}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <hr class="question-divider"/>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    {% else %}
+                      <p>No questions found in database</p>
+                    {% endif %}
+                  </div>
+            </div>
+            <ul class='pagination d-flex justify-content-left'>
+                <li class='page-item'>
+                  <a class='page-link' href='?page=1'>First</a>
+                </li>
+                
+                {% if questions.has_previous %}
+                <li class='page-item'>
+                  <a class='page-link' href="?page={{questions.previous_page_number}}">{{questions.previous_page_number}}</a>
+                </li>
+                {% endif %}
+                
+                <li class='page-item active'>
+                  <a class='page-link' href="?page={{questions.number}}">{{questions.number}}</a>
+                </li>
+                
+                {% if questions.has_next %}
+                <li class='page-item'>
+                  <a class='page-link' href="?page={{questions.next_page_number}}">{{questions.next_page_number}}</a>
+                </li>
+                {% endif %}
+                
+                <li class='page-item'>
+                  <a class='page-link' href='?page={{questions.paginator.num_pages}}'>Last</a>
+                </li>            
+            </ul>
+        </div>
+        </div>
+        </div>
+	</div>
 {% endblock %}
-
-
-
-
-
-
-
