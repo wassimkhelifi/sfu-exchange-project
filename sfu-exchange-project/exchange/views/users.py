@@ -12,6 +12,7 @@ from ..models import User
 def UsersView(request, page=""):
     if request.method == "GET":
         query_params = request.GET.get("q")
+        query_params = "" if not query_params else query_params
 
         # Search these fields
         search_vector = SearchVector('username', 'email', 'first_name', 'last_name', 'bio', 'roles__name', 'faculty_id__name')
