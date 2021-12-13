@@ -47,7 +47,7 @@
                   <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}" style="padding: 0;"><h3>{{ question.title }}</h3></a>
                 </div>
                 <div class="row pb-1" id="question-summary">
-                  {{ question.question_text }}
+                  {{ question.question_text | safe }}
                 </div>
                 <div class="row" id="tags-users">
                   <div class="col">
