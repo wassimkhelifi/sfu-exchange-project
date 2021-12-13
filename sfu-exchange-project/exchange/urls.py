@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,re_path
 from django.contrib.auth import views as auth_views
 from . import views
 
@@ -8,7 +8,8 @@ urlpatterns = [
     path('exchange/register/', views.RegisterView, name='Register'),
     path('exchange/profile/', views.ProfileView, name='Profile'),
     path('exchange/profile/edit/', views.ProfileEditView, name='Profile Edit'),
-    path('exchange/users/', views.UsersView, name='Users'),
+    path('exchange/users/', views.UsersView, name="Users"),
+    path('exchange/user/<str:username>', views.UsersView, name="User"),
     path('exchange/search/', views.SearchView, name='Search'),
     path('exchange/tags/', views.TagsView, name='Tags'),
     path('exchange/questions/ask', views.QuestionSubmitView, name='Submit_Question'),

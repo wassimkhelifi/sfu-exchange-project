@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+  {% block head %}
+    {% load static %}
+    <link rel="stylesheet" , type="text/css" , href="{% static 'exchange/shared.css' %}">
+		<link rel="stylesheet" , type="text/css" , href="{% static 'exchange/tags.css' %}">
+		<link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
+  {% endblock %}
+{% block title %}Users{% endblock %}
+{% block content %}
+    <h1>Users</h1>
+
+
+    <form action="{% url 'Users' %}" method='get'>
+      <div class='input-group'>
+        <input class='form-control' name='q' type='text' placeholder='Search...' value='{{ search_text }}'>
+        <button class='btn btn-primary' type='submit'>Search</button>
+      </div>
+    </from> 
+
+    <div>
+      {% if user_list %}
+        <div class='row'>
+          {% for user in user_list %}
+            <div class='col-lg-3 col-md-4 col-sm-6 flex-grow-1'>
+              <div class='py-3'>
+                  <div class='d-flex'>
+                    <img class='rounded-circle' src={% static 'exchange/img/icon_f.png' %} alt='img' height='48'/>
+                    <div class='d-flex flex-column'>
+                      <div>
+                        <span><a href="{%url 'User' user.username %}"> {{user.username}}</a> {{user.num_points}}<i class='uil-award-alt text-primary'></i></span>
+                      </div>
+                      <span class='text-muted'>Posts: {{user.num_posts}}</span>
+                      <span class='text-muted'>Answers: {{user.num_answers}}</span>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+        <!--Simple Pagination-->
+        <ul class='pagination d-flex justify-content-center'>
+          <li class='page-item'>
+            <a class='page-link' href="?page=1 {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">First</a>
+          </li>
+          
+          {% if user_list.has_previous %}
+          <li class='page-item'>
+            <a class='page-link' href="?page={{user_list.previous_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{user_list.previous_page_number}}</a>
+          </li>
+          {% endif %}
+          
+          <li class='page-item active'>
+            <a class='page-link' href="?page={{user_list.number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{user_list.number}}</a>
+          </li>
+          
+          {% if user_list.has_next %}
+          <li class='page-item'>
+            <a class='page-link' href="?page={{user_list.next_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{user_list.next_page_number}}</a>
+          </li>
+          {% endif %}
+          
+          <li class='page-item'>
+            <a class='page-link' href='?page={{user_list.paginator.num_pages}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}'>Last</a>
+          </li>
+        </ul>
+
+      {% else %}
+        <p>Looks like there are no user matching this search criteria!</p>
+      {% endif %}
+    </div>
+{% endblock %}

@@ -7,25 +7,60 @@
   {% endblock %}
 {% block title %}Tags{% endblock %}
 {% block content %}
-  <header>
-      <p><img src="../../static/exchange/sfu_logo.png" width="120" height="60" alt="SFU Logo" /> Exchange </p>
-  </header>
-
   <main>
     <h1>Tags</h1>
     <p>Tags are used to help refine your searches to find questions you are looking for.<br>Select relevant tags for your question to help others find it.</p>
-    <div class="tags-container">
-      {% if tags_list %}
-        <ul class="tags-grid">
-          {% for tag in tags_list %}
-            <li class="tag-item">
-              <div class="tag-content">
-                <span class="tag-name">{{tag.name}}</span>
-                <p>For questions pertaining to the tag mentioned above, which is {{tag.name}}. Note that this is sample text.</p>
-              </div>
-            </li>
+
+    <form action="{% url 'Tags' %}" method='get'>
+    <div class='input-group'>
+        <input class='form-control' name='q' type='text' placeholder='Search...'>
+        <button class='btn btn-primary' type='submit'>Search</button>
+    </div>
+    </from> 
+  
+    <div>
+        {% if tags_list %}
+        <div class="row">
+            {% for tag in tags_list %}
+            <div class='col-lg-3 col-md-4 col-sm-6 flex-grow-1'>
+                <div class='py-2'>
+                    <li class="tag-item">
+                    <div class="tag-content">
+                        <span class="tag-name">{{tag.name}}</span>
+                        <p>For questions pertaining to {{tag.name}}.</p>
+                    </div>
+                    </li>
+                </div>
+            </div>
           {% endfor %}
+        </div>
+
+        <ul class='pagination d-flex justify-content-center'>
+            <li class='page-item'>
+              <a class='page-link' href='?page=1'>First</a>
+            </li>
+            
+            {% if tags_list.has_previous %}
+            <li class='page-item'>
+              <a class='page-link' href="?page={{tags_list.previous_page_number}}">{{tags_list.previous_page_number}}</a>
+            </li>
+            {% endif %}
+            
+            <li class='page-item active'>
+              <a class='page-link' href="?page={{tags_list.number}}">{{tags_list.number}}</a>
+            </li>
+            
+            {% if tags_list.has_next %}
+            <li class='page-item'>
+              <a class='page-link' href="?page={{tags_list.next_page_number}}">{{tags_list.next_page_number}}</a>
+            </li>
+            {% endif %}
+            
+            <li class='page-item'>
+              <a class='page-link' href='?page={{tags_list.paginator.num_pages}}'>Last</a>
+            </li>            
         </ul>
+
       {% else %}
         <p>No tags available in database</p>
       {% endif %}
