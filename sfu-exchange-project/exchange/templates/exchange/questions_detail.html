@@ -50,7 +50,7 @@
       </div>
       <div class="col-sm-11 p-2">
         <div class="row pb-2">
-          {{ question.question_text }}
+          {{ question.question_text | safe }}
         </div>
         <div class="row">
           {% for tag in question.tags.all %}

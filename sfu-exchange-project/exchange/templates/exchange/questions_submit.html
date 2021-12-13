@@ -5,11 +5,35 @@
   {% endblock %}
 {% block title %}Submit Question{% endblock %}
 {% block content %}
+  <h1>Create Post</h1>
   <form action="" method="post">
     {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit">
+    <div class='row'>
+      <div class='col-8'>
+        <div class='mb-3'>
+          <label class="form-label">Title</label>
+          {{form.title}}
+        </div>
+      </div>
+      <div class='col-12'>
+        <div class='mb-3'>
+          <label class="form-label">Question</label>
+          {{form.question_text}}
+        </div>
+      </div>
+      <div class='col-6'>
+        <div class='mb-3'>
+          <label class="form-label">Tags</label>
+          {{form.tags}}
+        </div>
+      </div>
+      <div class='col-6'>
+        <div class='mb-3'>
+          <label class="form-label">Anonymous</label>
+          {{form.anonymous}}
+        </div>
+      </div>
+    </div>
+    <input class='btn btn-primary' type="submit" value="Submit">
   </form>
 {% endblock %}

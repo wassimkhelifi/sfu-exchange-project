@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import widgets
-from .models import Faculty, User, Tag, Answer
+from .models import Faculty, Question, User, Tag, Answer
 from django.contrib.auth.forms import UserCreationForm
-from django.core.validators import RegexValidator
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 
 IMG_CHOICES = (
@@ -39,24 +39,20 @@ class RegistrationForm(UserCreationForm):
         }
 
 
-class QuestionForm(forms.Form):
-    title = forms.CharField(max_length=150)
-    # TODO: Max length of stackoverflow body is 30k characters, need to change model limit. : https://meta.stackexchange.com/questions/176445/knowing-your-limits-what-is-the-maximum-length-of-a-question-title-post-image
-    question_text = forms.CharField(max_length=3000)
-    tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple
-    )
-    user_id = 1
-    anonymous = forms.BooleanField(required=False)
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = [
+            "title",
+            "question_text",
+            "tags",
+            "anonymous"
+        ]
+        widgets = {
+            "title": forms.TextInput(attrs={"class": "form-control", "placeholder":"Post Title"}),
+            "question_text": SummernoteWidget(),
+        }
 
-    # TODO: Potentially provide validation if needed, otherwise we can remove these functions
-    def clean_title(self):
-        data = self.cleaned_data["title"]
-        return data
-
-    def clean_questions_text(self):
-        data = self.cleaned_data["question_text"]
-        return data
 
 
 class AnswerForm(forms.Form):

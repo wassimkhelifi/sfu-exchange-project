@@ -40,6 +40,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 INSTALLED_APPS = [
+    'django_summernote',
     'crispy_forms',
     'exchange.apps.ExchangeConfig',
     'django.contrib.admin',
