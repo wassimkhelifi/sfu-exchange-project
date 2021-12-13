@@ -73,7 +73,9 @@
 								role="button" 
 								>
 									<i class="dripicons-bell noti-icon"></i>
-									<span class="noti-icon-badge"></span>	 <!--TTODO: Make Dynamic (load only when there are notifs)-->
+                                    {% if notifications %}
+									<span class="noti-icon-badge"></span>
+                                    {% endif %}
 							</a>
 							<div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg" style="">
 									<!-- Title -->
