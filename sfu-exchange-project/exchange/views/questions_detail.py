@@ -6,13 +6,16 @@ from ..models import Question, Answer, User
 from ..forms import AnswerForm
 from ..helpers import notification_helper
 
-def QuestionsDetailView(request, question_id, slug):
+def QuestionsDetailView(request, question_id, slug, notification_id=''):
     try:
         current_question = Question.objects.get(pk=question_id)
         answerForm = AnswerForm()
 
     except Question.DoesNotExist:
         raise Http404("Question does not exist!")
+    
+    if notification_id:
+        notification_helper.delete_notification(notification_id)
 
     if request.method == "POST":
         if not request.user.is_authenticated:
