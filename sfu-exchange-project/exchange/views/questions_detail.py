@@ -43,12 +43,15 @@ def QuestionsDetailView(request, question_id, slug):
         answers = anonymizeAnswers(answers)
 
     current_question = anonymizeQuestion(current_question)
+    notification_list = notification_helper.get_notifications(request.user)
+    context = {
+        "question": current_question,
+        "answers": answers,
+        "answerForm": answerForm,
+        "notifications": notification_list
+    }
 
-    return render(
-        request,
-        "exchange/questions_detail.html",
-        {"question": current_question, "answers": answers, "answerForm": answerForm},
-    )
+    return render(request, "exchange/questions_detail.html", context)
 
 
 def anonymizeUser(user):

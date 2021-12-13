@@ -36,8 +36,10 @@ def QuestionSubmitView(request):
   else:
     form = QuestionForm()
 
+  notification_list = notification_helper.get_notifications(request.user)
   context = {
     'form': form,
+    'notifications': notification_list,
   }
 
   return render(request, 'exchange/questions_submit.html', context)
