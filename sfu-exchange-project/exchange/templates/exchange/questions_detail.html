@@ -140,28 +140,6 @@
         <p>Please login to post a reply.</p>
       {% endif %}
     </div>
-
-
-
-
-    <!-- <div class="row">
-      <div class="col">
-        <h3>Your Answer</h3>
-        {% if user.is_authenticated %}
-          <form action="" method=post>
-            {% csrf_token %}
-            <textarea class="w-100" style="height:200px"></textarea>
-            <div class="w-100 pb-3">
-              <input type="checkbox" name="anonymous" value="Anonymous" />
-              <label>Anonymous</label>
-            </div>
-            <input type="button" class="btn btn-primary" type="submit" value="Submit" />
-          </form>
-        {% else %}
-          <p>Please login to Post a Reply</p>
-        {% endif %}
-      </div>
-    </div> -->
   </div>
 
 {% endblock %}
