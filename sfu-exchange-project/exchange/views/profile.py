@@ -1,5 +1,7 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from ..helpers import user_helper, notification_helper
@@ -14,11 +16,15 @@ def ProfileView(request):
     user_helper.format_user(user)
     notification_list = notification_helper.get_notifications(request.user)
 
+    paginator = Paginator(questions, 2)
+    page = request.GET.get('page')
+    paginated_questions = paginator.get_page(page)
+
     context = { 
         'user': user or {},
-        'questions': questions or {},
-        'tags': tags or {},
         'notifications': notification_list or {},
+        'questions': paginated_questions or {},
+        'tags': tags or {}
     }
     return render(request, 'exchange/profile.html', context)
 
