@@ -35,7 +35,7 @@ class QuestionForm(forms.Form):
 
 
 class AnswerForm(forms.Form):
-    answer_text = forms.CharField(widget=forms.Textarea(attrs={'class': 'answer-field'}))
+    answer_text = forms.CharField(widget=forms.Textarea(attrs={'style': 'width: 100%'}))
     anonymous = forms.BooleanField(required=False)
 
     class Meta:
