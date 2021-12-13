@@ -32,8 +32,8 @@ def SearchView(request):
         notification_list = notification_helper.get_notifications(request.user)
         context = {
             'query': query_params if query_params != None else "",
-            'search_results': questions,
+            'questions_list': questions,
             'notifications': notification_list,
         }
 
-        return render(request, 'exchange/search.html', context)
+        return render(request, 'exchange/questions.html', context)
