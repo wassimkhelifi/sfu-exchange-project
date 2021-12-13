@@ -2,22 +2,9 @@ from ..models import Question, Answer, Comment, Tag
 
 
 
-#TODO: remove
-lorem = \
-""" 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-sed do eiusmod tempor incididunt ut labore et dolore 
-magna aliqua. Ut enim ad minim veniam, quis nostrud 
-exercitation ullamco laboris nisi ut aliquip ex ea 
-commodo consequat. Duis aute irure dolor in 
-reprehenderit in voluptate velit esse cillums aute irure
-dolor in reprehenderit in voluptate velit esse cillum...
-"""
 
 def format_user(user):
     user.name = user.first_name + ' ' + user.last_name
-    user.img  = 'exchange/img/icon_f.png' #TODO: remove
-    user.bio  = user.bio or lorem #TODO: remove lorem
 
     questions = get_user_questions(user)
     answers   = get_user_answers(user)
