@@ -18,5 +18,6 @@ def ProfileView(request):
     }
     return render(request, 'exchange/profile.html', context)
 
+
 def ProfileEditView(request):
     return render(request, 'exchange/profileEdit.html')

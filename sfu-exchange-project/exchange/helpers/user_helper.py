@@ -30,6 +30,7 @@ def format_user(user):
     user.points = sum(questions.values_list('votes', flat=True)) + \
                   sum(answers.values_list('votes', flat=True)) + \
                   sum(comments.values_list('votes', flat=True))
+    return user
 
 def get_user_questions(user) -> Question:
     return Question.objects.filter(user_id=user)
