@@ -7,6 +7,7 @@ from django.template.defaultfilters import register
 
 from ..models import AnswerVotes, Question, Answer, User, QuestionVotes
 from ..forms import AnswerForm
+from ..helpers import vote_helper
 
 # Custom template filter for lookup, thank you: https://stackoverflow.com/questions/8000022/django-template-how-to-look-up-a-dictionary-value-with-a-variable
 @register.filter(name='dict_key')
@@ -21,6 +22,7 @@ def QuestionsDetailView(request, question_id, slug):
         raise Http404('Question does not exist!')
     
     if slug == 'FROM_QUESTION_VOTE_TO_RENDERING_Q_DETAIL_VIEW':
+        # there is probably a cleaner way to do this, but going with a "flag" for now.
         print('we need this skip from QuestionsUpvote and QuestionsDownvote fn')
     elif request.method == 'POST':
         if not request.user.is_authenticated:
@@ -96,30 +98,9 @@ def processAnswerVoteAction(requestFromVote, isUpvoteClicked):
         existingVoteIsUpvote = currentUserVote.is_upvote
 
         if existingVoteIsUpvote == True:
-            if isUpvoteClicked:
-                answer.votes = answer.votes - 1
-                answer.voted.remove(requestFromVote.user)
-                answer.save()
-                answer.refresh_from_db()
-                currentUserVote.delete()
-            else: 
-                # Because we already have a existing upvote, we need to -1 to negate existing upvote and -1 for the downvotw
-                answer.votes = answer.votes - 2
-                answer.save()
-                currentUserVote.is_upvote = False
-                currentUserVote.save()
+            vote_helper.processNewVoteActionOnUpvotedPost(answer, isUpvoteClicked, currentUserVote, requestFromVote.user)
         else:
-            if isUpvoteClicked:
-                answer.votes = answer.votes + 2
-                answer.save()
-                currentUserVote.is_upvote = True
-                currentUserVote.save()
-            else:
-                answer.votes = answer.votes + 1
-                answer.voted.remove(requestFromVote.user)
-                answer.save()
-                answer.refresh_from_db()
-                currentUserVote.delete()
+            vote_helper.processNewVoteActionOnDownvotedPost(answer, isUpvoteClicked, currentUserVote, requestFromVote.user)
     else:
         if isUpvoteClicked:
             answer.votes = answer.votes + 1

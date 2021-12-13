@@ -1,12 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from django.db.models import F
-from django.http.response import HttpResponseRedirect, HttpResponse
+from django.http.response import HttpResponse
 from django.db.models import Q
-from django.urls import reverse
 
 from ..models import Question, QuestionVotes
 from .questions_detail import QuestionsDetailView
+from ..helpers import vote_helper
 
 # Creating the questions view
 def QuestionsView(request):
@@ -36,33 +34,13 @@ def processQuestionVoteAction(requestFromVote, isUpvoteClicked):
     # If user has already voted
     if question.voted.filter(id=requestFromVote.user.id).exists():
         currentUserVote = QuestionVotes.objects.get(Q(question_id=question) & Q(user_id=requestFromVote.user))
-        existingVoteIsUpvote = currentUserVote.is_upvote
+        existingVoteIsUpvoteByUser = currentUserVote.is_upvote
 
-        if existingVoteIsUpvote == True:
-            if isUpvoteClicked:
-                question.votes = question.votes - 1
-                question.voted.remove(requestFromVote.user)
-                question.save()
-                question.refresh_from_db()
-                currentUserVote.delete()
-            else: 
-                # Because we already have a existing upvote, we need to -1 to negate existing upvote and -1 for the downvotw
-                question.votes = question.votes - 2
-                question.save()
-                currentUserVote.is_upvote = False
-                currentUserVote.save()
+        if existingVoteIsUpvoteByUser == True:
+            vote_helper.processNewVoteActionOnUpvotedPost(question, isUpvoteClicked, currentUserVote, requestFromVote.user)
         else:
-            if isUpvoteClicked:
-                question.votes = question.votes + 2
-                question.save()
-                currentUserVote.is_upvote = True
-                currentUserVote.save()
-            else:
-                question.votes = question.votes + 1
-                question.voted.remove(requestFromVote.user)
-                question.save()
-                question.refresh_from_db()
-                currentUserVote.delete()
+            vote_helper.processNewVoteActionOnDownvotedPost(question, isUpvoteClicked, currentUserVote, requestFromVote.user)
+    # otherwise user has not voted yet:
     else:
         if isUpvoteClicked:
             question.votes = question.votes + 1
