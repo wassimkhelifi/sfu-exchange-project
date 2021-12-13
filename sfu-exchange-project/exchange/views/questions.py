@@ -12,8 +12,10 @@ from django.views.generic.list import ListView
 # Creating the questions view
 def QuestionsView(request):
     f = request.GET.get('filter','').strip("'")
-
+    tag = request.GET.get('tag','').strip("'")
     # Hella jank but it was the fastest way of doing this 
+        
+
     if f == 'popular':
         questions_list = Question.objects.order_by('-votes')
     elif f =='unanswered':
@@ -23,11 +25,12 @@ def QuestionsView(request):
     else:
         questions_list = Question.objects.order_by('-created_at')
 
-    print(questions_list[0])
+    if tag:
+        questions_list = questions_list.filter(tags__id = tag)
+
 
     paginator = Paginator(questions_list, 10)
     page = request.GET.get("page")
-    print(page)
     paginated_questions = paginator.get_page(page)
 
     return render(request, 'exchange/questions.html', {
