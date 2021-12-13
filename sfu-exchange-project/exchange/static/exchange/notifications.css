@@ -1,0 +1,18 @@
+/* .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color: #CC0633 !important;
+} */
+
+#ask-button {
+  background-color: #CC0633 !important;
+  box-shadow: none;
+}
+
+hr {
+  margin: 2px;
+}
+
+/* a {
+  padding: 0 !important;
+} */
+
+
