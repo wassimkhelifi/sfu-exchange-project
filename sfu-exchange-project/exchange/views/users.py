@@ -17,9 +17,14 @@ def UsersView(request, page=""):
         search_vector = SearchVector('username', 'email', 'first_name', 'last_name', 'bio', 'roles__name', 'faculty_id__name')
         
         # Make the search inclusive OR for each term in the query
-        or_query_params = ' | '.join(query_params.split() if query_params != None else "")
-        search_query = SearchQuery(or_query_params, search_type='raw')
+        or_query_params = []
+        or_query_params = '* | '.join(query_params.split() if query_params != None else "")
 
+        search_query = SearchQuery("")
+        for param in query_params.split():
+            search_query = search_query | SearchQuery(param)
+
+        print("@@SEARCH: search_query:", search_query)
         # Perform the search
         users = User.objects.annotate(
             search=search_vector, 
@@ -30,7 +35,7 @@ def UsersView(request, page=""):
         )
         
         if query_params:
-            users = users.filter(search=search_query).order_by("-rank", "username")
+            users = users.filter(search=query_params).order_by("-rank", "username")
         else:
             users = users.order_by("username")
 

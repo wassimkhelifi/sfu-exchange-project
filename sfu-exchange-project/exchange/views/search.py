@@ -16,8 +16,9 @@ def SearchView(request):
             search_vector = SearchVector('title', 'question_text', 'tags__name')
             
             # Make the search inclusive OR for each term in the query
-            or_query_params = ' | '.join(query_params.split())
-            search_query = SearchQuery(or_query_params, search_type='raw')
+            search_query = SearchQuery("")
+            for param in query_params.split():
+                search_query = search_query | SearchQuery(param)
 
             # Perform the search
             questions = Question.objects.annotate(
