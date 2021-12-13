@@ -14,7 +14,6 @@ def TagsView(request):
             tags = Tag.objects.filter(
                 Q(name__icontains=query_params)
             )
-
         else:
             tags = Tag.objects.all()
 

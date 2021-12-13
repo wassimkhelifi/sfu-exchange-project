@@ -1,3 +1,6 @@
+from django.db.models.aggregates import Count
+from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.http.response import HttpResponse
 from django.db.models import Q
@@ -5,16 +8,36 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from ..models import Question, QuestionVotes
-from .questions_detail import QuestionsDetailView
 from ..helpers import vote_helper, notification_helper
+
 
 # Creating the questions view
 def QuestionsView(request):
-    questions_list = Question.objects.all()
-    # TODO: can this be removed?
+    f = request.GET.get('filter','').strip("'")
+    tag = request.GET.get('tag','').strip("'")
+    # Hella jank but it was the fastest way of doing this 
+        
+
+    if f == 'popular':
+        questions_list = Question.objects.order_by('-votes')
+    elif f =='unanswered':
+        questions_list = Question.objects.annotate(count = Count('answer')).filter(
+            Q(count=0)
+        )
+    else:
+        questions_list = Question.objects.order_by('-created_at')
+
+    if tag:
+        questions_list = questions_list.filter(tags__id = tag)
+
+
+    paginator = Paginator(questions_list, 10)
+    page = request.GET.get("page")
+    paginated_questions = paginator.get_page(page)
     notification_list = notification_helper.get_notifications(request.user)
+
     return render(request, 'exchange/questions.html', {
-        'questions_list': questions_list,
+        'questions_list': paginated_questions,
         'notifications': notification_list,
     })
 

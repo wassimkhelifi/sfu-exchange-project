@@ -1,11 +1,12 @@
 {% extends "base.html" %}
   {% block head %}
     {% load static %}
+    {% load my_tags %}
     <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions.css' %}" />
   {% endblock %}
 {% block title %}Questions{% endblock %}
 {% block content %}
-  <div class="container-fluid">
+  <div class="container-fluid mt-2">
     <div class="row" id="header">
       <div class="col">
         <h1 class="title">All Questions</h1>
@@ -17,6 +18,13 @@
           </a>
         </div>
       </div>
+    </div>
+
+
+    <div class='btn-group justify-content-end'>
+      <a type="button" href="?filter='new'" class="btn btn-light">Newest</a>
+      <a type="button" href="?filter='popular'" class="btn btn-light">Popular</a>
+      <a type="button" href="?filter='unanswered'" class="btn btn-light">Unanswered</a>
     </div>
 
     <hr/>
@@ -45,7 +53,7 @@
                   <div class="col">
                     <div class="row">
                       {% for tag in question.tags.all %}
-                        <a href="#" class="badge bg-secondary d-inline-flex align-items-center justify-content-center me-1 my-1" style="width: 4rem; height: 1rem;">
+                        <a href="?{% param_replace tag=tag.id%}" class="badge bg-secondary d-inline-flex align-items-center justify-content-center me-1 my-1" style="width: 4rem; height: 1rem;">
                           {{ tag }}
                         </a>
                       {% endfor %}
@@ -74,9 +82,39 @@
           {% endfor %}
         </ul>
       </div>
+
+      <ul class='pagination d-flex justify-content-center'>
+        <li class='page-item'>
+          <a class='page-link' href="?{% param_replace page=1%}">First</a>
+        </li>
+        
+        {% if questions_list.has_previous %}
+        <li class='page-item'>
+          <a class='page-link' href="?{% param_replace page=questions_list.previous_page_number%}">{{questions_list.previous_page_number}}</a>
+        </li>
+        {% endif %}
+        
+        <li class='page-item active'>
+          <a class='page-link' href="?{% param_replace page=questions_list.number%}">{{questions_list.number}}</a>
+        </li>
+        
+        {% if questions_list.has_next%}
+        <li class='page-item'>
+          <a class='page-link' href="?{% param_replace page=questions_list.next_page_number%}">{{questions_list.next_page_number}}</a>
+        </li>
+        {% endif %}
+        
+        <li class='page-item'>
+          <a class='page-link' href="?{% param_replace page=questions_list.num_pages%}">Last</a>
+        </li>            
+      </ul>
+
+
       {% else %}
-        <p>No questions available in database</p>
+        <p>No Questions have been asked yet</p>
       {% endif %}
+
+
     </div>
   </div>
 {% endblock %}

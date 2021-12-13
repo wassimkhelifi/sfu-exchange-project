@@ -68,7 +68,7 @@
         </div>
         <div class="row">
           {% for tag in question.tags.all %}
-            <a href="#" class="badge bg-secondary d-inline-flex align-items-center justify-content-center me-1 my-1" style="width: 4rem; height: 1rem;">
+            <a href="/exchange?tag={{tag.id}}" class="badge bg-secondary d-inline-flex align-items-center justify-content-center me-1 my-1" style="width: 4rem; height: 1rem;">
               {{ tag }}
             </a>
           {% endfor %}
