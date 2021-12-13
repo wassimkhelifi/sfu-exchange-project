@@ -38,8 +38,8 @@
               <form action="{% url 'Question_Upvote' question.id question.slug %}" method="POST">
                 {% csrf_token %}
                 <div> 
-                  <button type="submit" name="question_id", value="{{ question.id }}">
-                    <svg width="36" height="36" style="{% if questionVoteAction == 'UPVOTED'%} color: red {% endif %}">
+                  <button type="submit" name="question_id" value="{{ question.id }}" style="background: transparent; border: none !important;">
+                    <svg width="36" height="36" style="{% if questionVoteAction == 'UPVOTED'%} color: #CC0633 {% endif %}">
                       <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
                     </svg>
                   </button>
@@ -51,7 +51,7 @@
               <form action="{% url 'Question_Downvote' question.id question.slug %}" method="POST">
                 {% csrf_token %}
                 <div> 
-                  <button type="submit" name="question_id", value="{{ question.id }}">               
+                  <button type="submit" name="question_id" value="{{ question.id }}" style="background: transparent; border: none !important;">               
                     <svg width="36" height="36" style="{% if questionVoteAction == 'DOWNVOTED'%} color: red {% endif %}">
                       <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
                     </svg>
@@ -104,7 +104,7 @@
                   <form action="{% url 'Answer_Upvote' answer.id %}" method="POST">
                     {% csrf_token %}
                     <div> 
-                      <button type="submit" name="answer_id", value="{{ answer.id }}">
+                      <button type="submit" name="answer_id", value="{{ answer.id }}" style="background: transparent; border: none !important;">
                         <svg width="36" height="36" style="{% if answer.is_upvoted == 'UPVOTED'%} color: red {% endif %}">
                           <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
                         </svg>
@@ -117,7 +117,7 @@
                   <form action="{% url 'Answer_Downvote' answer.id %}" method="POST">
                     {% csrf_token %}
                     <div> 
-                      <button type="submit" name="answer_id", value="{{ answer.id }}">
+                      <button type="submit" name="answer_id", value="{{ answer.id }}" style="background: transparent; border: none !important;">
                         <svg width="36" height="36" style="{% if answer.is_upvoted == 'DOWNVOTED'%} color: red {% endif %}">
                           <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
                         </svg>
