@@ -58,9 +58,6 @@ def QuestionsDetailView(request, question_id, slug):
         'mappedVotedAnswers': mappedVotedAnswers,
     })
 
-# Not sure if this works since can't test as adding comments is disabled with Wassim's changes
-# Basically trying to create a new property called is_upvote in the answer and sending it back to the HTML
-# so we can check to see if it is upvoted or downvoted and highlight the button accordingly
 def mapVotedAnswers(answers, user_id):
     votedAnswersInQuestionByCurrentUser = {}
     for answer in answers:
