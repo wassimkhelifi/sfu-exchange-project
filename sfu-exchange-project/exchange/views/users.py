@@ -6,7 +6,9 @@ from django.db.models import Count, Sum, query
 from django.db.models.functions import Coalesce
 from django.db.models import Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+
 from ..models import User
+from ..helpers import notification_helper
 
 
 def UsersView(request, page=""):
@@ -46,4 +48,11 @@ def UsersView(request, page=""):
         page = request.GET.get("page")
         paginated_users = paginator.get_page(page)
         search_text = query_params if query_params != None else ""
-        return render(request, "exchange/users.html", {"user_list": paginated_users, "search_text": search_text })
+        notification_list = notification_helper.get_notifications(request.user)
+        context = {
+            "user_list": paginated_users,
+            "search_text": search_text,
+            "notifications": notification_list,
+        }
+
+        return render(request, "exchange/users.html", context)

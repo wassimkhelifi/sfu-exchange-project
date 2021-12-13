@@ -32,11 +32,11 @@ class User(AbstractUser):
     faculty_id = models.ForeignKey( Faculty, null=True, on_delete=models.SET_NULL, verbose_name="Faculty")
     roles = models.ManyToManyField(Role)
 
-
 class Notification(models.Model):
     id = models.AutoField(primary_key=True)
     read = models.BooleanField(default=False)
     url = models.CharField(max_length=256)
+    notification_title = models.TextField(max_length=256, blank=False, default='Title')
     notification_text = models.TextField(max_length=500, blank=False)
     created_at = models.DateTimeField(auto_now_add=True, blank=False)
     deleted = models.BooleanField(default=False)

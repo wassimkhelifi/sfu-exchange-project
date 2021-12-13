@@ -7,7 +7,7 @@ from django.template.defaultfilters import register
 
 from ..models import AnswerVotes, Question, Answer, User, QuestionVotes
 from ..forms import AnswerForm
-from ..helpers import vote_helper
+from ..helpers import vote_helper, notification_helper
 
 # Custom template filter for lookup, thank you: https://stackoverflow.com/questions/8000022/django-template-how-to-look-up-a-dictionary-value-with-a-variable
 @register.filter(name='dict_key')
@@ -27,17 +27,29 @@ def QuestionsDetailView(request, question_id, slug):
 
         answerSubmission = AnswerForm(request.POST)
         if answerSubmission.is_valid():
-            createAnswerToQuestion(current_question, answerSubmission, request.user)
+            current_user = User.objects.get(username=request.user)
+            createAnswerToQuestion(current_question, answerSubmission, current_user)
+            notification_helper.create_notification(current_question.user_id, 
+                {
+                    "notification_title" : current_user.username + " answered your question!", 
+                    "notification_text" : current_question.title + " has been answered.",
+                    "url" : f"/exchange/questions/{current_question.id }/{ current_question.slug }",
+                }
+            )
+            return HttpResponseRedirect(request.path_info)
 
     answers = getAnswersToCurrentQuestion(question_id)
     answers, mappedVotedAnswers = processAnswers(answers, request.user.id)
     questionVoteState = getQuestionVoteState(question_id, request.user.id)
 
     current_question = anonymizeQuestion(current_question)
+    notification_list = notification_helper.get_notifications(request.user)
+
     return render(request, 'exchange/questions_detail.html', {
         'question': current_question,
         'answers': answers,
         'answerForm': answerForm,
+        "notifications": notification_list,
         'questionVoteState': questionVoteState,
         'mappedVotedAnswers': mappedVotedAnswers,
     })
@@ -58,8 +70,7 @@ def AnswerDownvote(request, answer_id):
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
-def createAnswerToQuestion(current_question, answerSubmission, user):
-    current_user = User.objects.get(username=user)
+def createAnswerToQuestion(current_question, answerSubmission, current_user):
     Answer.objects.create(
         answer_text = answerSubmission.cleaned_data['answer_text'],
         anonymous = answerSubmission.cleaned_data['anonymous'],
