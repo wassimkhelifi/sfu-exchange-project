@@ -14,12 +14,15 @@ from ..helpers import vote_helper, notification_helper
 def get_item(dictionary, key):
     return dictionary.get(key)
 
-def QuestionsDetailView(request, question_id, slug):
+def QuestionsDetailView(request, question_id, slug, notification_id=''):
     try:
         current_question = Question.objects.get(pk=question_id)
         answerForm = AnswerForm()
     except Question.DoesNotExist:
-        raise Http404('Question does not exist!')
+        raise Http404("Question does not exist!")
+    
+    if notification_id and request.user.is_authenticated:
+        notification_helper.delete_notification(request.user, notification_id)
     
     if request.method == 'POST':
         if not request.user.is_authenticated:
