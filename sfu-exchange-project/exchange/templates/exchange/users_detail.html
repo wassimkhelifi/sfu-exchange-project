@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+	{% block head %}
+		{% load static %}
+		<link rel="stylesheet" , type="text/css" , href="{% static 'exchange/shared.css' %}">
+		<link rel="stylesheet" , type="text/css" , href="{% static 'exchange/users_detail.css' %}">
+	{% endblock %}
+{% block title%}User{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row mt-2 mb-2">
+      <div class="col-2 align-self-center">
+        <img src="{% static '/exchange/img/'|add:userProfile.img %}" alt="profile" class="rounded-circle border" style="width:112px;height:112px;"/>
+      </div>
+      <div class="col-10 align-self-center">
+        <h1 class="title">{{ userProfile.username }}</h1>
+        <div>
+          {{ userProfile.email }} | Member since {{ userProfile.date_joined }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-between">
+      <div class="col border me-1 p-2 rounded">
+        <h3 style="margin-top:0 !important;">Lifetime Statistics</h3>
+        <div>
+          Questions: {{ userProfile.questions }}
+        </div>
+        <div>
+          Answers: {{ userProfile.answers }}
+        </div>
+        <div>
+          Comments: {{ userProfile.comments }}
+        </div>
+      </div>
+      <div class="col border ms-1 p-2 rounded">
+        <h3 style="margin-top:0 !important;">User Details</h3>
+        <div>
+          First name: {{ userProfile.first_name }}
+        </div>
+        <div>
+          Last name: {{ userProfile.last_name }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col border rounded p-2">
+        <h3 style="margin-top:0 !important;">Questions</h3>
+        <div class="row">
+          <div class="col">
+            {% if questions %}
+              {% for question in questions %}
+                <div class="row" id="question-summary">
+                  <div class="col-sm-1 align-self-center">
+                    <div class="d-flex align-items-center flex-column">
+                      <div class="col">
+                        <div class="text-center">{{ question.votes }}</div>
+                        <div class="text-center">Votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-11">
+                    <div class="row" id="question-title">
+                      <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}" style="padding: 0;"><h3>{{ question.title }}</h3></a>
+                    </div>
+                    <div class="row pb-1" id="question-summary">
+                      {{ question.question_text }}
+                    </div>
+                    <div class="row" id="tags-users">
+                      <div class="col">
+                        <div class="row">
+                          {% for tag in question.tags.all %}
+                            <a href="#" class="badge bg-secondary d-inline-flex align-items-center justify-content-center me-1 my-1" style="width: 4rem; height: 1rem;">
+                              {{ tag }}
+                            </a>
+                          {% endfor %}
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="d-flex align-items-end flex-column">
+                          <div class="col">
+                            <div class="text-left">Asked {{ question.created_at }}</div>
+                            <div class="text-left">{{ question.user_id }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="question-divider"/>
+              {% endfor %}
+            </ul>
+          </div>
+          {% else %}
+            <p>No questions found in database</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col p-0">
+        <ul class='pagination d-flex justify-content-center'>
+          <li class='page-item'>
+            <a class='page-link' href='?page=1'>First</a>
+          </li>
+          
+          {% if questions.has_previous %}
+          <li class='page-item'>
+            <a class='page-link' href="?page={{questions.previous_page_number}}">{{questions.previous_page_number}}</a>
+          </li>
+          {% endif %}
+          
+          <li class='page-item active'>
+            <a class='page-link' href="?page={{questions.number}}">{{questions.number}}</a>
+          </li>
+          
+          {% if questions.has_next %}
+          <li class='page-item'>
+            <a class='page-link' href="?page={{questions.next_page_number}}">{{questions.next_page_number}}</a>
+          </li>
+          {% endif %}
+          
+          <li class='page-item'>
+            <a class='page-link' href='?page={{questions.paginator.num_pages}}'>Last</a>
+          </li>            
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
