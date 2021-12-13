@@ -9,7 +9,7 @@ def NotificationsView(request, page=""):
     query_param = request.GET.get("q")
     query_param = "" if not query_param else query_param
 
-    search_vector = SearchVector('notification_title', 'notification_text', 'created_at')
+    search_vector = SearchVector('notification_title', 'notification_text', 'notification_type', 'created_at')
     search_query = SearchQuery(query_param)
 
     notifications = notification_helper.get_notifications(request.user).annotate(

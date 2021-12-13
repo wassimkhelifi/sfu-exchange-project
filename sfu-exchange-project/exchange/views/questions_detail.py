@@ -30,6 +30,7 @@ def QuestionsDetailView(request, question_id, slug):
                 {
                     "notification_title" : current_user.username + " answered your question!", 
                     "notification_text" : current_question.title + " has been answered.",
+                    "notification_type" : "answer",
                     "url" : f"/exchange/questions/{current_question.id }/{ current_question.slug }",
                 }
             )

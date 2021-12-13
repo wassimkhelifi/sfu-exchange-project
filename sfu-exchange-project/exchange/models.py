@@ -36,6 +36,7 @@ class Notification(models.Model):
     id = models.AutoField(primary_key=True)
     read = models.BooleanField(default=False)
     url = models.CharField(max_length=256)
+    notification_type = models.CharField(max_length=256, default='')
     notification_title = models.TextField(max_length=256, blank=False, default='Title')
     notification_text = models.TextField(max_length=500, blank=False)
     created_at = models.DateTimeField(auto_now_add=True, blank=False)

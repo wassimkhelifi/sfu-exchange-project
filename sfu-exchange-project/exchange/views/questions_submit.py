@@ -26,8 +26,9 @@ def QuestionSubmitView(request):
       notification_helper.create_notification(
           request.user, 
           {
-              'notification_title': form.cleaned_data['title'] + 'created!',
-              'notification_text': 'you created a question',
+              'notification_title': form.cleaned_data['title'] + ' created!',
+              'notification_text': 'You created a question',
+              'notification_type': 'new post',
               'url': 'https://tesla.com',
           }
       )
