@@ -5,35 +5,30 @@
   {% endblock %}
 {% block title %}Submit Question{% endblock %}
 {% block content %}
-  <h1>Create Post</h1>
-  <form action="" method="post">
-    {% csrf_token %}
-    <div class='row'>
-      <div class='col-8'>
-        <div class='mb-3'>
-          <label class="form-label">Title</label>
-          {{form.title}}
-        </div>
-      </div>
-      <div class='col-12'>
-        <div class='mb-3'>
-          <label class="form-label">Question</label>
-          {{form.question_text}}
-        </div>
-      </div>
-      <div class='col-6'>
-        <div class='mb-3'>
-          <label class="form-label">Tags</label>
-          {{form.tags}}
-        </div>
-      </div>
-      <div class='col-6'>
-        <div class='mb-3'>
-          <label class="form-label">Anonymous</label>
-          {{form.anonymous}}
-        </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h1 class="header">Ask a Question</h1>
       </div>
     </div>
-    <input class='btn btn-primary' type="submit" value="Submit">
-  </form>
+
+    <hr />
+
+    <div class="row">
+      <form action="" method="post">
+        {% csrf_token %}
+        <h4 class="title">Title</h4>
+        {{ form.title }}
+        <h4 class="body">Body</h4>
+        {{ form.question_text }}
+        <div class="d-flex flex-row">
+          Ask Anonymously 
+          <div style="padding-top: 2px; margin-left: 2px;">{{ form.anonymous }}</div>
+        </div>
+        <h4 class="tags">Tags</h4>
+        {{ form.tags }}
+        <input class="btn btn-primary" type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
 {% endblock %}

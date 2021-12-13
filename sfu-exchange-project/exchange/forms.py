@@ -1,8 +1,7 @@
 from django import forms
-from django.forms import widgets
-from .models import Faculty, Question, User, Tag, Answer
+from .models import  Tag, User, Tag, Answer, Question
 from django.contrib.auth.forms import UserCreationForm
-from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+from django_summernote.widgets import SummernoteWidget
 
 
 IMG_CHOICES = (
@@ -49,14 +48,16 @@ class QuestionForm(forms.ModelForm):
             "anonymous"
         ]
         widgets = {
-            "title": forms.TextInput(attrs={"class": "form-control", "placeholder":"Post Title"}),
+            "title": forms.TextInput(attrs={'class': 'form-control', "placeholder":"Title"}),
             "question_text": SummernoteWidget(),
+            "tags": forms.CheckboxSelectMultiple(attrs={'class': 'tags-field'}),
+            "anonymous": forms.CheckboxInput(attrs={'class': 'anonymous-field'}),
         }
 
 
 
 class AnswerForm(forms.Form):
-    answer_text = forms.CharField(max_length=3000)
+    answer_text = forms.CharField(widget=forms.Textarea(attrs={'style': 'width: 100%'}))
     anonymous = forms.BooleanField(required=False)
 
 
