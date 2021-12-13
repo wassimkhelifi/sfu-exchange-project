@@ -1,7 +1,6 @@
 {% extends "base.html" %}
   {% block head %}
     {% load static %}
-    {% load crispy_forms_tags %}
     {{ form.media.css }}
     <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_submit.css' %}" />
   {% endblock %}
@@ -28,11 +27,9 @@
         </div>
         <h4 class="tags">Tags</h4>
         {{ form.tags }}
-        
         <input class="btn btn-primary mt-3" type="submit" value="Submit" />
       </form>
     </div>
   </div>
   {{ form.media.js }}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}
