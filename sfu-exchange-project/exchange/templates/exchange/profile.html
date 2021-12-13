@@ -11,7 +11,7 @@
 		<div class="grid_user_pane">
 			<div class="grid_user_pane_inner">
 				<div class="grid_user_pane_img">
-					<img src="{% static user.img %}">
+					<img src="{% static '/exchange/img/'|add:user.img %}">
 				</div>
 				<div class="grid_user_pane_content">
 					<h1>{{ user.name }}</h1>
