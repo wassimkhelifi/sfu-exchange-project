@@ -47,22 +47,22 @@
       
       {% if notifications.has_previous %}
       <li class='page-item'>
-        <a class='page-link' href="?page={{user_list.previous_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{notifications.previous_page_number}}</a>
+        <a class='page-link' href="?page={{notifications.previous_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{notifications.previous_page_number}}</a>
       </li>
       {% endif %}
       
       <li class='page-item active'>
-        <a class='page-link' href="?page={{user_list.number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{notifications.number}}</a>
+        <a class='page-link' href="?page={{notifications.number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{notifications.number}}</a>
       </li>
       
       {% if notifications.has_next %}
       <li class='page-item'>
-        <a class='page-link' href="?page={{user_list.next_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{notifications.next_page_number}}</a>
+        <a class='page-link' href="?page={{notifications.next_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{notifications.next_page_number}}</a>
       </li>
       {% endif %}
       
       <li class='page-item'>
-        <a class='page-link' href='?page={{user_list.paginator.num_pages}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}'>Last</a>
+        <a class='page-link' href='?page={{notifications.paginator.num_pages}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}'>Last</a>
       </li>
     </ul>
     {% else %}
