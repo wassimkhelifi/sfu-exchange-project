@@ -6,4 +6,5 @@ from .questions_submit import *
 from .search import *
 from .tags import *
 from .users import *
+from .users_detail import *
 from .notifications import *

@@ -55,7 +55,15 @@
                     <div class="d-flex align-items-end flex-column">
                       <div class="col">
                         <div class="text-left">Asked {{ question.created_at }}</div>
-                        <div class="text-left">{{ question.user_id }}</div>
+                          {% if question.anonymous %}
+                            <div class="text-left"><b>anonymous</b></div>
+                          {% else %}
+                            {% if question.user_id == user %}
+                              <a href="/exchange/profile">{{ question.user_id }}</a>
+                            {% else %}
+                              <a href="/exchange/users/{{ question.user_id.id }}/{{ question.user_id.username }}">{{ question.user_id }}</a>
+                            {% endif %}
+                          {% endif %}
                       </div>
                     </div>
                   </div>

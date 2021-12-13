@@ -78,7 +78,15 @@
             <div class="d-flex align-items-end flex-column">
               <div class="col" id="user-box" style="background-color: hsl(206deg 65% 91%); padding: 5px;">
                 <div class="text-left">asked {{ question.created_at }}</div>
-                <div class="text-left"><b>{{ question.user_id }}</b></div>
+                {% if question.anonymous %}
+                  <div class="text-left"><b>{{ question.user_id }}</b></div>
+                {% else %}
+                  {% if question.user_id == user %}
+                    <a href="/exchange/profile">{{ question.user_id }}</a>
+                  {% else %}
+                    <a href="/exchange/users/{{ question.user_id.id }}/{{ question.user_id.username }}">{{ question.user_id }}</a>
+                  {% endif %}
+                {% endif %}
               </div>
             </div>
           </div>
@@ -138,7 +146,15 @@
                   <div class="col" id="user-box" style="background-color: hsl(206deg 65% 91%); padding: 5px;">
                     <div class="text-left">answered {{ answer.created_at }}</div>
                     <div class="text-left">last modified {{ answer.last_edited }}</div>
-                    <div class="text-left"><b>{{ answer.user_id }}</b></div>
+                      {% if answer.anonymous %}
+                        <div class="text-left"><b>{{ answer.user_id }}</b></div>
+                      {% else %}
+                        {% if answer.user_id == user %}
+                          <a href="/exchange/profile">{{ answer.user_id }}</a>
+                        {% else %}
+                          <a href="/exchange/users/{{ answer.user_id.id }}/{{ answer.user_id.username }}">{{ answer.user_id }}</a>
+                        {% endif %}
+                      {% endif %}
                   </div>
                 </div>
               </div>
