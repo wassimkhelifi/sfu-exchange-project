@@ -119,7 +119,7 @@
 									<i class="dripicons-user me-1"></i>
 									<span>Profile</span>
 								</a>
-								<a href="#" class="dropdown-item notify-item">
+								<a href="{% url 'Profile Edit' %}" class="dropdown-item notify-item">
 									<i class="dripicons-toggles me-1"></i>
 									<span>Settings</span>
 								</a>
@@ -189,7 +189,7 @@
 			</div>
 
 			<!--Main Page Content -->
-			<div class='ms-2'>
+			<div class='ms-2 w-100'>
 				{% block content %}{% endblock %}
 			</div>
 		</div>
