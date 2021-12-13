@@ -5,7 +5,7 @@
   {% endblock %}
 {% block title %}Questions{% endblock %}
 {% block content %}
-  <div class="container-fluid">
+  <div class="container-fluid mt-2">
     <div class="row" id="header">
       <div class="col">
         <h1 class="title">All Questions</h1>
@@ -67,8 +67,35 @@
         </ul>
       </div>
       {% else %}
-        <p>No questions available in database</p>
+        <p>No Questions have been asked yet</p>
       {% endif %}
+
+      <ul class='pagination d-flex justify-content-center'>
+        <li class='page-item'>
+          <a class='page-link' href='?page=1'>First</a>
+        </li>
+        
+        {% if questions_list.has_previous %}
+        <li class='page-item'>
+          <a class='page-link' href="?page={{questions_list.previous_page_number}}">{{questions_list.previous_page_number}}</a>
+        </li>
+        {% endif %}
+        
+        <li class='page-item active'>
+          <a class='page-link' href="?page={{questions_list.number}}">{{questions_list.number}}</a>
+        </li>
+        
+        {% if questions_list.has_next %}
+        <li class='page-item'>
+          <a class='page-link' href="?page={{questions_list.next_page_number}}">{{questions_list.next_page_number}}</a>
+        </li>
+        {% endif %}
+        
+        <li class='page-item'>
+          <a class='page-link' href='?page={{questions_list.paginator.num_pages}}'>Last</a>
+        </li>            
+    </ul>
+
     </div>
   </div>
 {% endblock %}
