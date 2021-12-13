@@ -27,6 +27,7 @@ def ProfileEditView(request):
         form = ProfileEditForm(request.POST or None, instance=instance)
         if form.is_valid(): 
             # process form data
+            
             form.save() 
             
             return HttpResponseRedirect("/exchange/profile/")

@@ -2,7 +2,8 @@ from django import forms
 from django.forms import widgets
 from .models import Faculty, User, Tag, Answer
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import get_object_or_404
+from django.core.validators import RegexValidator
+
 
 
 class RegistrationForm(UserCreationForm):
@@ -51,11 +52,11 @@ class AnswerForm(forms.Form):
 
 
 IMG_CHOICES = (
-    ("racoon", "Racoon"),
-    ("moose", "Moose"),
-    ("beaver", "Beaver"),
-    ("deer", "Deer"),
-    ("bear", "Bear"),
+    ("racoon.png", "Racoon"),
+    ("moose.png", "Moose"),
+    ("beaver.png", "Beaver"),
+    ("orca.png", "Orca"),
+    ("bear.png", "Bear"),
 )
 
 
