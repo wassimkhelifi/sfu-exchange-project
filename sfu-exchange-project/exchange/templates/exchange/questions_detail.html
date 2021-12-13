@@ -1,7 +1,7 @@
 {% extends "base.html" %}
   {% block head %}
     {% load static %}
-    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}" /> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'exchange/questions_detail.css' %}" />
   {% endblock %}
 {% block title %}Question Detail{% endblock %}
 {% block content %}
@@ -35,15 +35,29 @@
         <div class="d-flex align-items-center flex-column">
           <div class="col">
             <div class="upvote">
-              <svg width="36" height="36">
-                <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
-              </svg>
+              <form action="{% url 'Question_Upvote' question.id question.slug %}" method="POST">
+                {% csrf_token %}
+                <div> 
+                  <button type="submit" name="question_id" value="{{ question.id }}" style="background: transparent; border: none !important;">
+                    <svg width="36" height="36" style="{% if questionVoteState == 'UPVOTED'%} color: #CC0633 {% endif %}">
+                      <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
+                    </svg>
+                  </button>
+                </div>
+              </form>
             </div>
             <div class="text-center">{{ question.votes }}</div>
             <div class="downvote">
-              <svg width="36" height="36">
-                <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
-              </svg>
+              <form action="{% url 'Question_Downvote' question.id question.slug %}" method="POST">
+                {% csrf_token %}
+                <div> 
+                  <button type="submit" name="question_id" value="{{ question.id }}" style="background: transparent; border: none !important;">               
+                    <svg width="36" height="36" style="{% if questionVoteState == 'DOWNVOTED'%} color: red {% endif %}">
+                      <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
+                    </svg>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -87,15 +101,29 @@
             <div class="d-flex align-items-center flex-column">
               <div class="col">
                 <div class="upvote">
-                  <svg width="36" height="36">
-                    <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
-                  </svg>
+                  <form action="{% url 'Answer_Upvote' answer.id %}" method="POST">
+                    {% csrf_token %}
+                    <div> 
+                      <button type="submit" name="answer_id", value="{{ answer.id }}" style="background: transparent; border: none !important;">
+                        <svg width="36" height="36" style="{% if mappedVotedAnswers|dict_key:answer is True %} color: red {% endif %}">
+                          <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </form>
                 </div>
                 <div class="text-center">{{ answer.votes }}</div>
                 <div class="downvote">
-                  <svg width="36" height="36">
-                    <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
-                  </svg>
+                  <form action="{% url 'Answer_Downvote' answer.id %}" method="POST">
+                    {% csrf_token %}
+                    <div> 
+                      <button type="submit" name="answer_id", value="{{ answer.id }}" style="background: transparent; border: none !important;">
+                        <svg width="36" height="36" style="{% if mappedVotedAnswers|dict_key:answer is False %} color: red {% endif %}">
+                          <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -124,6 +152,7 @@
 
     <hr />
 
+    <!--Your Answer-->
     <div class="row">
       {% if user.is_authenticated %}
         <form action="" method="post">
@@ -141,5 +170,6 @@
       {% endif %}
     </div>
   </div>
+
 
 {% endblock %}

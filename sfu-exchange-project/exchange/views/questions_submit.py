@@ -28,6 +28,7 @@ def QuestionSubmitView(request):
           {
               'notification_title': createdQuestion.title,
               'notification_text': 'question created!',
+              'notification_type': 'new question',
               'url': f"/exchange/questions/{createdQuestion.id}/{createdQuestion.slug}",
           }
       )
