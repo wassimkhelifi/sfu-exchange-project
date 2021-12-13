@@ -6,7 +6,7 @@ from ..helpers import notification_helper
 from ..models import Notification
 
 def NotificationsView(request, page=""):
-    query_param = request.GET.get("q")
+    query_param = request.GET.get("query")
     query_param = "" if not query_param else query_param
 
     search_vector = SearchVector('notification_title', 'notification_text', 'notification_type', 'created_at')

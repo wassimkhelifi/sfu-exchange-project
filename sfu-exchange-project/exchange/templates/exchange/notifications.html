@@ -49,27 +49,27 @@
     <!--Simple Pagination-->
     <ul class='pagination d-flex justify-content-center'>
       <li class='page-item'>
-        <a class='page-link' href="?page=1 {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">First</a>
+        <a class='page-link' href="?page=1 {% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">First</a>
       </li>
       
       {% if notifications.has_previous %}
       <li class='page-item'>
-        <a class='page-link' href="?page={{notifications.previous_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{notifications.previous_page_number}}</a>
+        <a class='page-link' href="?page={{notifications.previous_page_number}} {% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{notifications.previous_page_number}}</a>
       </li>
       {% endif %}
       
       <li class='page-item active'>
-        <a class='page-link' href="?page={{notifications.number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{notifications.number}}</a>
+        <a class='page-link' href="?page={{notifications.number}} {% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{notifications.number}}</a>
       </li>
       
       {% if notifications.has_next %}
       <li class='page-item'>
-        <a class='page-link' href="?page={{notifications.next_page_number}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{notifications.next_page_number}}</a>
+        <a class='page-link' href="?page={{notifications.next_page_number}} {% if request.GET.query %}&q={{ request.GET.query }}{% endif %}">{{notifications.next_page_number}}</a>
       </li>
       {% endif %}
       
       <li class='page-item'>
-        <a class='page-link' href='?page={{notifications.paginator.num_pages}} {% if request.GET.q %}&q={{ request.GET.q }}{% endif %}'>Last</a>
+        <a class='page-link' href='?page={{notifications.paginator.num_pages}} {% if request.GET.query %}&q={{ request.GET.query }}{% endif %}'>Last</a>
       </li>
     </ul>
     {% else %}
