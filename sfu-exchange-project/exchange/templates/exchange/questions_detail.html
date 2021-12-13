@@ -124,8 +124,27 @@
 
     <hr />
 
-    <!--Your Answer-->
     <div class="row">
+      {% if user.is_authenticated %}
+        <form action="" method="post">
+          {% csrf_token %}
+          <h3 class="title">Your Answer</h3>
+          {{ answerForm.answer_text }}
+          <div class="d-flex flex-row mb-2">
+            Ask Anonymously 
+            <div style="padding-top: 2px; margin-left: 2px;">{{ answerForm.anonymous }}</div>
+          </div>
+          <input class="btn btn-primary" type="submit" value="Submit" />
+        </form>
+      {% else %}
+        <p>Please login to post a reply.</p>
+      {% endif %}
+    </div>
+
+
+
+
+    <!-- <div class="row">
       <div class="col">
         <h3>Your Answer</h3>
         {% if user.is_authenticated %}
@@ -142,7 +161,7 @@
           <p>Please login to Post a Reply</p>
         {% endif %}
       </div>
-    </div>
+    </div> -->
   </div>
 
 {% endblock %}
