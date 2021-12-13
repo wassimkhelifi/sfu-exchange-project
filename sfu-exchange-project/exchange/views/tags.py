@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render
 
 from ..models import Tag
+from ..helpers import notification_helper
 
 # Creating the tags view
 def TagsView(request):
@@ -21,6 +22,10 @@ def TagsView(request):
         page = request.GET.get('page')
         paginated_tags = paginator.get_page(page)
 
-        return render(request, 'exchange/tags.html', {
+        notification_list = notification_helper.get_notifications(request.user)
+        context = {
             'tags_list': paginated_tags,
-        })
+            'notifications': notification_list,
+        }
+        
+        return render(request, 'exchange/tags.html', context)

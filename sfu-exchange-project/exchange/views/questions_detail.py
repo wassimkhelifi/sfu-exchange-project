@@ -4,7 +4,7 @@ from django.http import Http404
 
 from ..models import Question, Answer, User
 from ..forms import AnswerForm
-
+from ..helpers import notification_helper
 
 def QuestionsDetailView(request, question_id, slug):
     try:
@@ -26,6 +26,13 @@ def QuestionsDetailView(request, question_id, slug):
                 user_id=current_user,
                 question_id=current_question,
             )
+            notification_helper.create_notification(current_question.user_id, 
+                {
+                    "notification_title" : current_user.username + " answered your question!", 
+                    "notification_text" : current_question.title + " has been answered.",
+                    "url" : f"/exchange/questions/{current_question.id }/{ current_question.slug }",
+                }
+            )
             return HttpResponseRedirect(request.path_info)
 
           
@@ -36,12 +43,15 @@ def QuestionsDetailView(request, question_id, slug):
         answers = anonymizeAnswers(answers)
 
     current_question = anonymizeQuestion(current_question)
+    notification_list = notification_helper.get_notifications(request.user)
+    context = {
+        "question": current_question,
+        "answers": answers,
+        "answerForm": answerForm,
+        "notifications": notification_list
+    }
 
-    return render(
-        request,
-        "exchange/questions_detail.html",
-        {"question": current_question, "answers": answers, "answerForm": answerForm},
-    )
+    return render(request, "exchange/questions_detail.html", context)
 
 
 def anonymizeUser(user):

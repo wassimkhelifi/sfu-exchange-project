@@ -1,12 +1,11 @@
-import django
-from django.core import paginator
-from django.db.models import fields, query
-from django.db.models.aggregates import Count, Sum
+from django.db.models.aggregates import Count
 from django.db.models.query_utils import Q
 from django.shortcuts import render
 from django.core.paginator import Paginator
+from ..helpers import notification_helper
+
+
 from ..models import Question
-from django.views.generic.list import ListView
 
 
 # Creating the questions view
@@ -32,7 +31,9 @@ def QuestionsView(request):
     paginator = Paginator(questions_list, 10)
     page = request.GET.get("page")
     paginated_questions = paginator.get_page(page)
+    notification_list = notification_helper.get_notifications(request.user)
 
     return render(request, 'exchange/questions.html', {
         'questions_list': paginated_questions,
+        'notifications': notification_list,
     })

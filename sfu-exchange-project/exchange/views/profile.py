@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from ..helpers import user_helper
+from ..helpers import user_helper, notification_helper
 from ..models import User
 from ..forms import ProfileEditForm
 
@@ -14,6 +14,7 @@ def ProfileView(request):
     questions = user_helper.get_user_top_questions(user)
     tags = user_helper.get_user_top_tags(user)
     user_helper.format_user(user)
+    notification_list = notification_helper.get_notifications(request.user)
 
     paginator = Paginator(questions, 2)
     page = request.GET.get('page')
@@ -21,6 +22,7 @@ def ProfileView(request):
 
     context = { 
         'user': user or {},
+        'notifications': notification_list or {},
         'questions': paginated_questions or {},
         'tags': tags or {}
     }
@@ -43,8 +45,9 @@ def ProfileEditView(request):
             "first_name": user.first_name,
             "last_name": user.last_name,
             "bio": user.bio,
-            'img': user.img,
-            'faculty_id': user.faculty_id
+            "img": user.img,
+            "faculty_id": user.faculty_id
         })        
+    notification_list = notification_helper.get_notifications(request.user)
 
-    return render(request, 'exchange/profileEdit.html', {'form': form})
+    return render(request, 'exchange/profileEdit.html', {'form': form, 'notifications': notification_list})
