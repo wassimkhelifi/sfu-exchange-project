@@ -7,7 +7,11 @@
 {% block content %}
   <div class="questions-grid">
     <div class="all-questions-grid">
+      {% if query %}
       <h1>Search results for '{{ query }}'</h1>
+      {% else %}
+      <h1>Newest Questions</h1>
+      {% endif %}
       {% if search_results %}
         <ul>
           {% for question in search_results %}
@@ -28,19 +32,6 @@
       {% else %}
         <p>No results found :(</p>
       {% endif %}
-    </div>
-    <div class="menu-grid">
-      <ul>
-        <li>
-          <a class="questions-link" href="/exchange/questions/">Questions</a>
-        </li>
-        <li>
-          <a class="users-link" href="/exchange/users/">Users</a>
-        </li>
-        <li>
-          <a class="tags-link" href="/exchange/tags/">Tags</a>
-        </li>
-      </ul>
     </div>
   </div>
 {% endblock %}

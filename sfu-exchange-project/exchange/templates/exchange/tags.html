@@ -22,16 +22,18 @@
         {% if tags_list %}
         <div class="row">
             {% for tag in tags_list %}
-            <div class='col-lg-3 col-md-4 col-sm-6 flex-grow-1'>
-                <div class='py-2'>
-                    <li class="tag-item">
-                    <div class="tag-content">
-                        <span class="tag-name">{{tag.name}}</span>
-                        <p>For questions pertaining to {{tag.name}}.</p>
-                    </div>
-                    </li>
-                </div>
-            </div>
+              <div class='col-lg-3 col-md-4 col-sm-6 flex-grow-1'>
+                <a href="/exchange/search?q={{tag.name}}">
+                  <div class='py-2'>
+                      <li class="tag-item">
+                        <div class="tag-content">
+                            <span class="tag-name">{{tag.name}}</span>
+                            <p>For questions pertaining to {{tag.name}}.</p>
+                        </div>
+                      </li>
+                  </div>
+                </a>
+              </div>
           {% endfor %}
         </div>
 
