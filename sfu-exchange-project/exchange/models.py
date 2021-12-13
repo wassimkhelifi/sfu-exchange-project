@@ -94,7 +94,7 @@ class Answer(models.Model):
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"Q: {self.question_id} - A: {self.answer_text}"
+        return f"Q: {self.question_id}"
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
@@ -110,7 +110,7 @@ class Comment(models.Model):
     answer_id = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"A: {self.answer_id} - C: {self.comment_text}"
+        return f"A: {self.answer_id}"
 
 class AnswerVotes(models.Model):
     id = models.AutoField(primary_key=True)

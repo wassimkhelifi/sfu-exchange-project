@@ -7,11 +7,11 @@ from django.db.models import Q
 from ..models import AnswerVotes, Question, Answer, User, QuestionVotes
 from ..forms import AnswerForm
 
+
 def QuestionsDetailView(request, question_id, slug):
     try:
         current_question = Question.objects.get(pk=question_id)
         answerForm = AnswerForm()
-        
     except Question.DoesNotExist:
         raise Http404('Question does not exist!')
     
@@ -29,6 +29,7 @@ def QuestionsDetailView(request, question_id, slug):
             user_id = current_user,
             question_id = current_question
         )
+        return HttpResponseRedirect(request.path_info)
 
     answers = Answer.objects.filter(question_id=question_id)
     if not answers:

@@ -3,3 +3,6 @@ psycopg2-binary==2.9.1
 gunicorn==20.1.0
 django-extensions
 django-crispy-forms
+django-summernote
+django-select2==7.9.0
+django-redis

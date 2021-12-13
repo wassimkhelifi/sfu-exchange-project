@@ -6,6 +6,8 @@
 	<link rel="stylesheet" href="{% static 'css/app.css' %}">
 	<link rel="stylesheet" href="{% static 'css/icons.min.css' %}">
 	{% comment %} <script src="{% static 'js/bootstrap.js' %}"/> {% endcomment %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   {% block head %}{% endblock %}
   <title>{% block title %}SFU Exchange{% endblock %}</title>
 </head>
@@ -102,7 +104,7 @@
 						<li class='notification-list'>
 							<a class='nav-link dropdown-toggle nav-user arrow-none me-0' data-bs-toggle='dropdown'>
 								<span class='account-user-avatar'>
-									<img class='rounded-circle' alt='img' src={{user.img}}>
+									<img class='rounded-circle' alt='img' src="{% static '/exchange/img/'|add:user.img %}">
 								</span>
 								<span class='account-user-name'>{{user.first_name}} {{user.last_name}}</span>
 								<span class='account-position'>{{user.username}}</span>
@@ -119,7 +121,7 @@
 									<i class="dripicons-user me-1"></i>
 									<span>Profile</span>
 								</a>
-								<a href="#" class="dropdown-item notify-item">
+								<a href="{% url 'Profile Edit' %}" class="dropdown-item notify-item">
 									<i class="dripicons-toggles me-1"></i>
 									<span>Settings</span>
 								</a>
@@ -192,6 +194,7 @@
 			<div class='ms-2 w-100'>
 				{% block content %}{% endblock %}
 			</div>
+		</div>
 	</div>
 	{% comment %} Footer?  {% endcomment %}
 
