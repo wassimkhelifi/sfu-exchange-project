@@ -27,7 +27,7 @@
                     <img class='rounded-circle' src="{% static '/exchange/img/'|add:user.img %}" alt='img' height='48'/>
                     <div class='d-flex flex-column'>
                       <div>
-                        <span><a href="{%url 'User' "username" %}"> {{user.username}}</a> {{user.num_points}}<i class='uil-award-alt text-primary'></i></span>
+                        <span><a href="/exchange/users/{{ user.id }}/{{ user.username }}"> {{user.username}}</a> {{user.num_points}}<i class='uil-award-alt text-primary'></i></span>
                       </div>
                       <span class='text-muted'>Posts: {{user.num_posts}}</span>
                       <span class='text-muted'>Answers: {{user.num_answers}}</span>

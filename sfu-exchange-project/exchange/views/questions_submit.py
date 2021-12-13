@@ -26,9 +26,10 @@ def QuestionSubmitView(request):
       notification_helper.create_notification(
           request.user, 
           {
-              'notification_title': form.cleaned_data['title'] + 'created!',
-              'notification_text': 'you created a question',
-              'url': 'https://tesla.com',
+              'notification_title': createdQuestion.title,
+              'notification_text': 'question created!',
+              'notification_type': 'new question',
+              'url': f"/exchange/questions/{createdQuestion.id}/{createdQuestion.slug}",
           }
       )
       createdQuestion.tags.set(tags)

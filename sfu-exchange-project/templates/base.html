@@ -73,31 +73,34 @@
 								role="button" 
 								>
 									<i class="dripicons-bell noti-icon"></i>
-									<span class="noti-icon-badge"></span>	 <!--TTODO: Make Dynamic (load only when there are notifs)-->
+                                    {% if notifications %}
+									<span class="noti-icon-badge"></span>
+                                    {% endif %}
 							</a>
 							<div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg" style="">
 									<!-- Title -->
 									<div class="dropdown-item noti-title">
 											<h5 class="m-0">
 													<span class="float-end">
-															<a href="#" class="text-dark">	<!-- TODO: Add functionality -->
-																	<small>Clear All</small>
-															</a>
+														<small>{{ notifications|length }} Unread</small>
 													</span>
 													Notifications
 											</h5>
 									</div>
 									<!--TODO: Notifications go here-->
-                                    <ul>
+                                    <div>
                                         {% for notification in notifications %}
-                                        <li>
-                                            <a href="{{ notification.url }}">
-                                                <h4>{{ notification.notification_title }} </h4>
-                                                <p>{{ notification.notification_text }}</p>
-                                            </a>
-                                        </li>
+                                        <a href="{{ notification.url }}/{{ notification.id }}" class="list-group-item list-group-item-action border-0">
+                                            <div class="badge bg-danger float-right">!</div>
+                                            <div class="d-flex align-items-start text-break">
+                                                <div class="flex-grow-1 ml-3 fw-normal">
+                                                    {{ notification.notification_title }}
+                                                    <div class="small fw-light"><span class="fas fa-circle chat-online"></span>{{ notification.notification_text }}</div>
+                                                </div>
+                                            </div>
+                                        </a>
                                         {% endfor %}
-                                    </ul>
+                                    </div>
                                     
 
 									<!--View All Button-->
@@ -120,12 +123,6 @@
 								<span class='account-position'>{{user.username}}</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown" style="">
-								<!-- Title -->
-								<div class="dropdown-header noti-title">
-										<h6 class="text-overflow m-0">
-											Profile
-										</h6>
-								</div>
 								<!-- Dropdown Items -->
 								<a href="{% url 'Profile' %}" class="dropdown-item notify-item">
 									<i class="dripicons-user me-1"></i>
