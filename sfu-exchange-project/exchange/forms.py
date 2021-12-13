@@ -1,9 +1,10 @@
 from django import forms
-from django.forms import widgets
-from .models import Faculty, User, Tag, Answer
+from .models import  Tag, User, Tag, Answer, Question
 from django.contrib.auth.forms import UserCreationForm
-from django.core.validators import RegexValidator
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+from django_select2 import forms as s2forms
 
+from django_select2.forms import Select2MultipleWidget
 
 IMG_CHOICES = (
     ("racoon.png", "Racoon"),
@@ -38,29 +39,33 @@ class RegistrationForm(UserCreationForm):
             "img": forms.Select(choices=IMG_CHOICES, attrs={"class": "form-control"}),
         }
 
+class TagWidget(s2forms.ModelSelect2MultipleWidget):
+    search_fields = [
+        'name__icontains',
+    ]
 
-class QuestionForm(forms.Form):
-    title = forms.CharField(max_length=150)
-    # TODO: Max length of stackoverflow body is 30k characters, need to change model limit. : https://meta.stackexchange.com/questions/176445/knowing-your-limits-what-is-the-maximum-length-of-a-question-title-post-image
-    question_text = forms.CharField(max_length=3000)
-    tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple
-    )
-    user_id = 1
-    anonymous = forms.BooleanField(required=False)
 
-    # TODO: Potentially provide validation if needed, otherwise we can remove these functions
-    def clean_title(self):
-        data = self.cleaned_data["title"]
-        return data
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = [
+            "title",
+            "question_text",
+            "tags",
+            "anonymous"
+        ]
+        widgets = {
+            "title": forms.TextInput(attrs={'class': 'form-control', "placeholder":"Title"}),
+            "question_text": SummernoteWidget(),
+            "tags": TagWidget,
+            "anonymous": forms.CheckboxInput(attrs={'class': 'anonymous-field'}),
+        }
 
-    def clean_questions_text(self):
-        data = self.cleaned_data["question_text"]
-        return data
+
 
 
 class AnswerForm(forms.Form):
-    answer_text = forms.CharField(max_length=3000)
+    answer_text = forms.CharField(widget=SummernoteWidget(), min_length=5)
     anonymous = forms.BooleanField(required=False)
 
 

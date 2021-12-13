@@ -40,6 +40,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 INSTALLED_APPS = [
+    "django_select2",
+    'django_summernote',
     'crispy_forms',
     'exchange.apps.ExchangeConfig',
     'django.contrib.admin',
@@ -94,6 +96,7 @@ DATABASES = {
         "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
+
 
 
 # Password validation

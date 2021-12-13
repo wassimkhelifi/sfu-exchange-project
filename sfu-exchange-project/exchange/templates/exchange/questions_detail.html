@@ -50,7 +50,7 @@
       </div>
       <div class="col-sm-11 p-2">
         <div class="row pb-2">
-          {{ question.question_text }}
+          {{ question.question_text | safe }}
         </div>
         <div class="row">
           {% for tag in question.tags.all %}
@@ -91,7 +91,7 @@
                     <path d="M2 26h32L18 10 2 26Z" fill="currentColor"></path>
                   </svg>
                 </div>
-                <div class="text-center">{{ question.votes }}</div>
+                <div class="text-center">{{ answer.votes }}</div>
                 <div class="downvote">
                   <svg width="36" height="36">
                     <path d="M2 10h32L18 26 2 10Z" fill="currentColor"></path>
@@ -102,7 +102,7 @@
           </div>
           <div class="col-sm-11 p-2">
             <div class="row pb-2">
-              {{ answer.answer_text }}
+              {{ answer.answer_text | safe }}
             </div>
             <div class="row justify-content-end">
               <div class="col">
@@ -124,24 +124,21 @@
 
     <hr />
 
-    <!--Your Answer-->
     <div class="row">
-      <div class="col">
-        <h3>Your Answer</h3>
-        {% if user.is_authenticated %}
-          <form action="" method=post>
-            {% csrf_token %}
-            <textarea class="w-100" style="height:200px"></textarea>
-            <div class="w-100 pb-3">
-              <input type="checkbox" name="anonymous" value="Anonymous" />
-              <label>Anonymous</label>
-            </div>
-            <input type="button" class="btn btn-primary" type="submit" value="Submit" />
-          </form>
-        {% else %}
-          <p>Please login to Post a Reply</p>
-        {% endif %}
-      </div>
+      {% if user.is_authenticated %}
+        <form action="" method="post">
+          {% csrf_token %}
+          <h3 class="title">Your Answer</h3>
+          {{ answerForm.answer_text }}
+          <div class="d-flex flex-row mb-2">
+            Ask Anonymously 
+            <div style="padding-top: 2px; margin-left: 2px;">{{ answerForm.anonymous }}</div>
+          </div>
+          <input class="btn btn-primary" type="submit" value="Submit" />
+        </form>
+      {% else %}
+        <p>Please login to post a reply.</p>
+      {% endif %}
     </div>
   </div>
 

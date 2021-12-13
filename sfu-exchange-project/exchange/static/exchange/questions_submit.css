@@ -1,0 +1,13 @@
+.title-field {
+  width: 100%;
+}
+
+.body-field {
+  width: 100%;
+}
+
+.tags-field {
+  list-style: none !important;
+  display: flex;
+  justify-content: space-between;
+}
