@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from django_select2 import forms as s2forms
 
+from django_select2.forms import Select2MultipleWidget
 
 IMG_CHOICES = (
     ("racoon.png", "Racoon"),
