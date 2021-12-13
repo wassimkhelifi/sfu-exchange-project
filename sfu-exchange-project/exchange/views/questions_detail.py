@@ -24,32 +24,18 @@ def QuestionsDetailView(request, question_id, slug):
     if slug == 'FROM_QUESTION_VOTE_TO_RENDERING_Q_DETAIL_VIEW':
         # there is probably a cleaner way to do this, but going with a "flag" for now.
         print('we need this skip from QuestionsUpvote and QuestionsDownvote fn')
+
     elif request.method == 'POST':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized, please login to vote', status=401)
+
         answerSubmission = AnswerForm(request.POST)
         if answerSubmission.is_valid():
-            current_user = User.objects.get(username=request.user)
-            Answer.objects.create(
-                answer_text = answerSubmission.cleaned_data['answer_text'],
-                anonymous = answerSubmission.cleaned_data['anonymous'],
-                user_id = current_user,
-                question_id = current_question
-            )
+            createAnswerToQuestion(current_question, answerSubmission, request.user)
 
-    answers = Answer.objects.filter(question_id=question_id)
-    if not answers:
-        answers = None
-        mappedVotedAnswers = None
-    else:
-        answers = anonymizeAnswers(answers)
-        mappedVotedAnswers = mapVotedAnswers(answers, request.user.id)
-
-    isQuestionedUpvoted = QuestionVotes.objects.filter(question_id=question_id).filter(user_id=request.user.id)
-    if not isQuestionedUpvoted:
-        questionVoteState = None
-    else:
-        questionVoteState = isQuestionUpvoted(question_id, request.user.id)
+    answers = getAnswersToCurrentQuestion(question_id)
+    answers, mappedVotedAnswers = processAnswers(answers, request.user.id)
+    questionVoteState = getQuestionVoteState(question_id, request.user.id)
 
     current_question = anonymizeQuestion(current_question)
     return render(request, 'exchange/questions_detail.html', {
@@ -60,6 +46,62 @@ def QuestionsDetailView(request, question_id, slug):
         'mappedVotedAnswers': mappedVotedAnswers,
     })
 
+# API Call
+def AnswerUpvote(request, answer_id):
+    if not request.user.is_authenticated:
+        return HttpResponse('Unauthorized, please login to vote', status=401)  
+    args = processAnswerVoteAction(request, True)
+
+    return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
+
+# API Call
+def AnswerDownvote(request, answer_id):
+    if not request.user.is_authenticated:
+        return HttpResponse('Unauthorized, please login to vote', status=401)
+    args = processAnswerVoteAction(request, False)
+
+    return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
+
+def createAnswerToQuestion(current_question, answerSubmission, user):
+    current_user = User.objects.get(username=user)
+    Answer.objects.create(
+        answer_text = answerSubmission.cleaned_data['answer_text'],
+        anonymous = answerSubmission.cleaned_data['anonymous'],
+        user_id = current_user,
+        question_id = current_question
+    )
+
+def getAnswersToCurrentQuestion(question_id):
+    return Answer.objects.filter(question_id=question_id)
+
+def processAnswers(answers, user):
+    if not answers:
+        answers = None
+        mappedVotedAnswers = None
+    else:
+        answers = anonymizeAnswers(answers)
+        mappedVotedAnswers = mapVotedAnswers(answers, user)
+
+    return answers, mappedVotedAnswers
+
+
+def anonymizeAnswers(answers):
+    for answer in answers:
+        if (answer.anonymous == True):
+            anon_user = anonymizeUser(answer.user_id)
+            answer.user_id = anon_user
+
+    return answers
+
+def anonymizeUser(user):
+    user = User.objects.get(id=user.id)
+    user.username = 'anonymous'
+    user.first_name = 'anonymous'
+    user.last_name = 'anonymous'
+    user.email = 'anonymous@sfu.ca'
+
+    return user
+
 def mapVotedAnswers(answers, user_id):
     votedAnswersInQuestionByCurrentUser = {}
     for answer in answers:
@@ -69,26 +111,19 @@ def mapVotedAnswers(answers, user_id):
 
     return votedAnswersInQuestionByCurrentUser
 
+def getQuestionVoteState(question_id, user_id):
+    isQuestionedUpvoted = QuestionVotes.objects.filter(question_id=question_id).filter(user_id=user_id)
+    if isQuestionedUpvoted:
+        return isQuestionUpvoted(question_id, user_id)
+
+    return None
+
 def isQuestionUpvoted(question_id, user_id):
     voted = QuestionVotes.objects.get(question_id=question_id, user_id=user_id)
     if voted.is_upvote:
         return 'UPVOTED'
 
     return 'DOWNVOTED'
-
-def AnswerUpvote(request, answer_id):
-    if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized, please login to vote', status=401)  
-    args = processAnswerVoteAction(request, True)
-
-    return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
-
-def AnswerDownvote(request, answer_id):
-    if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized, please login to vote', status=401)
-    args = processAnswerVoteAction(request, False)
-
-    return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
 def processAnswerVoteAction(requestFromVote, isUpvoteClicked):
     answer = get_object_or_404(Answer, id=requestFromVote.POST.get('answer_id'))
@@ -120,23 +155,6 @@ def processAnswerVoteAction(requestFromVote, isUpvoteClicked):
     args['slug'] = answer.question_id.slug
 
     return args
-
-def anonymizeUser(user):
-    user = User.objects.get(id=user.id)
-    user.username = 'anonymous'
-    user.first_name = 'anonymous'
-    user.last_name = 'anonymous'
-    user.email = 'anonymous@sfu.ca'
-
-    return user
-
-def anonymizeAnswers(answers):
-    for answer in answers:
-        if (answer.anonymous == True):
-            anon_user = anonymizeUser(answer.user_id)
-            answer.user_id = anon_user
-
-    return answers
 
 def anonymizeQuestion(question):
     if (question.anonymous == True):
