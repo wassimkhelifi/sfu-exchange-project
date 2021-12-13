@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http.response import HttpResponse
 from django.contrib.auth.decorators import login_required
+from ..helpers import notification_helper
 
 from ..models import Question, User
 from ..forms import QuestionForm
@@ -21,6 +22,14 @@ def QuestionSubmitView(request):
         question_text=form.cleaned_data['question_text'],
         anonymous=form.cleaned_data['anonymous'],
         user_id=user
+      )
+      notification_helper.create_notification(
+          request.user, 
+          {
+              'notification_title': form.cleaned_data['title'] + 'created!',
+              'notification_text': 'you created a question',
+              'url': 'https://tesla.com',
+          }
       )
       createdQuestion.tags.set(tags)
       return redirect('Questions_Detail', question_id=createdQuestion.id, slug=createdQuestion.slug)

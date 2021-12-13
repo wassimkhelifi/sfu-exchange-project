@@ -88,7 +88,17 @@
 											</h5>
 									</div>
 									<!--TODO: Notifications go here-->
-
+                                    <ul>
+                                        {% for notification in notifications %}
+                                        <li>
+                                            <a href="{{ notification.url }}">
+                                                <h4>{{ notification.notification_title }} </h4>
+                                                <p>{{ notification.notification_text }}</p>
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    
 
 									<!--View All Button-->
 									<!--TODO: Add link-->
