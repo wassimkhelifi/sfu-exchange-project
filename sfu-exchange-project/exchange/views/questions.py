@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http.response import HttpResponse
 from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from ..models import Question, QuestionVotes
 from .questions_detail import QuestionsDetailView
@@ -16,19 +18,18 @@ def QuestionsView(request):
 def QuestionUpvote(request, question_id, slug):
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized, please login to vote', status=401)  
-    processQuestionVoteAction(request, True)
-    slug = 'FROM_QUESTION_VOTE_TO_RENDERING_Q_DETAIL_VIEW'
-    return QuestionsDetailView(request, question_id, slug)
+    args = processQuestionVoteAction(request, True, question_id, slug)
+
+    return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
 def QuestionDownvote(request, question_id, slug):
     if not request.user.is_authenticated:
         return HttpResponse('Unauthorized, please login to vote', status=401)  
-    processQuestionVoteAction(request, False)
-    slug = 'FROM_QUESTION_VOTE_TO_RENDERING_Q_DETAIL_VIEW'
+    args = processQuestionVoteAction(request, False, question_id, slug)
 
-    return QuestionsDetailView(request, question_id, slug)
+    return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
-def processQuestionVoteAction(requestFromVote, isUpvoteClicked):
+def processQuestionVoteAction(requestFromVote, isUpvoteClicked, question_id, slug):
     question = get_object_or_404(Question, id=requestFromVote.POST.get('question_id'))
 
     # If user has already voted
@@ -55,4 +56,8 @@ def processQuestionVoteAction(requestFromVote, isUpvoteClicked):
             newVote = QuestionVotes(question_id=question, user_id=requestFromVote.user, is_upvote=False)
             newVote.save()
 
-    return
+    args = {}
+    args['question_id'] = question_id
+    args['slug'] = slug
+
+    return args

@@ -21,11 +21,7 @@ def QuestionsDetailView(request, question_id, slug):
     except Question.DoesNotExist:
         raise Http404('Question does not exist!')
     
-    if slug == 'FROM_QUESTION_VOTE_TO_RENDERING_Q_DETAIL_VIEW':
-        # there is probably a cleaner way to do this, but going with a "flag" for now.
-        print('we need this skip from QuestionsUpvote and QuestionsDownvote fn')
-
-    elif request.method == 'POST':
+    if request.method == 'POST':
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized, please login to vote', status=401)
 
