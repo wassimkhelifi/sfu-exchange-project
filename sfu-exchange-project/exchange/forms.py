@@ -5,6 +5,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
 
 
+IMG_CHOICES = (
+    ("racoon.png", "Racoon"),
+    ("moose.png", "Moose"),
+    ("beaver.png", "Beaver"),
+    ("orca.png", "Orca"),
+    ("bear.png", "Bear"),
+)
+
+
 
 class RegistrationForm(UserCreationForm):
     # Fields we redefine here overwrite those in the form. By default, they are 'required'
@@ -23,7 +32,11 @@ class RegistrationForm(UserCreationForm):
             "password2",
             "faculty_id",
             "bio",
+            "img"
         ]
+        widgets = {
+            "img": forms.Select(choices=IMG_CHOICES, attrs={"class": "form-control"}),
+        }
 
 
 class QuestionForm(forms.Form):
@@ -49,15 +62,6 @@ class QuestionForm(forms.Form):
 class AnswerForm(forms.Form):
     answer_text = forms.CharField(max_length=3000)
     anonymous = forms.BooleanField(required=False)
-
-
-IMG_CHOICES = (
-    ("racoon.png", "Racoon"),
-    ("moose.png", "Moose"),
-    ("beaver.png", "Beaver"),
-    ("orca.png", "Orca"),
-    ("bear.png", "Bear"),
-)
 
 
 class ProfileEditForm(forms.ModelForm):
