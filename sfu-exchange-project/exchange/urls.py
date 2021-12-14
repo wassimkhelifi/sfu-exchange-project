@@ -4,7 +4,7 @@ from . import views
 from django.urls import include, path
 
 urlpatterns = [
-    path('', auth_views.LoginView.as_view(template_name='exchange/login.html'), name='Login'),
+    path('', auth_views.LoginView.as_view(template_name='exchange/login.html', redirect_authenticated_user=True), name='Login'),
     path('exchange/', views.QuestionsView, name='Home'),
     path('exchange/register/', views.RegisterView, name='Register'),
     path('exchange/profile/', views.ProfileView, name='Profile'),
