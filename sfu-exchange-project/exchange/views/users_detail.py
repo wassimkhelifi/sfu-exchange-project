@@ -17,7 +17,6 @@ def UsersDetailView(request, user_id, user_username):
     raise Http404("User does not exist!")
 
   questions = user_helper.get_user_top_questions(user)
-  tags = user_helper.get_user_top_tags(user)
   user_helper.format_user(user)
 
   paginator = Paginator(questions, 2)
@@ -27,7 +26,6 @@ def UsersDetailView(request, user_id, user_username):
   context = { 
       'userProfile': user or {},
       'questions': paginated_questions or {},
-      'tags': tags or {}
   }
 
   return render(request, 'exchange/users_detail.html', context)
