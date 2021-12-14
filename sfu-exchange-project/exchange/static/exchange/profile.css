@@ -16,7 +16,7 @@ body {
 
 .profile-nav .user-heading {
     background: #fff;
-    color: #000;
+    color: rgb(110,117,124);
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
     padding: 30px;
@@ -26,7 +26,7 @@ body {
 .profile-nav .user-heading.round a  {
     border-radius: 50%;
     -webkit-border-radius: 50%;
-    border: 4px solid rgba(155,166,172,0.6);
+    border: 4px solid rgba(155,166,172,0.3);
     display: inline-block;
 }
 
@@ -38,8 +38,9 @@ body {
 }
 
 .profile-nav .user-heading h1 {
+    color: rgb(110,117,124);
     font-size: 22px;
-    font-weight: 300;
+    font-weight: 600;
     margin-bottom: 5px;
 }
 
@@ -126,19 +127,18 @@ body {
 }
 
 .bio-graph-info {
-    color: #89817e;
+    color: rgb(110,117,124);
 }
 
 .bio-graph-info h1 {
-    font-size: 28px;
-    font-weight: 500;
-    text-decoration: underline;
+    color: rgb(110,117,124);
     margin: 0 0 20px;
 }
 
 .bio-row {
     width: 50%;
     float: left;
+    font-size: 14px;
     margin-bottom: 10px;
     padding:0 15px;
 }
@@ -161,8 +161,12 @@ body {
 }
 
 .bio-desk h4 {
-    font-size: 15px;
+    font-size: 16px;
     font-weight:400;
+}
+
+.bio-desk p {
+    font-size: 14px;
 }
 
 .bio-desk h4.terques {
@@ -182,9 +186,7 @@ body {
 }
 
 .profile-questions h1 {    
-    font-size: 28px;
-    font-weight: 500;
-    text-decoration: underline;
+    color: rgb(110,117,124);
     margin: 0 0 20px;
 }
 
