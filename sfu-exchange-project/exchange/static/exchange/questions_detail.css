@@ -1,3 +1,7 @@
 .answer-field {
   width: 100%;
 }
+
+.row p {
+    padding-left: 0 !important;  
+}

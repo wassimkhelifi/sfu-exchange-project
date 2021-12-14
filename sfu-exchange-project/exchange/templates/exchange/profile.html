@@ -108,7 +108,7 @@
                       {% if questions %}
                         {% for question in questions %}
                           <div class="row" id="question-summary">
-                            <div class="col-sm-1 align-self-center">
+                            <div class="col-2 col-sm-1 align-self-center">
                               <div class="d-flex align-items-center flex-column">
                                 <div class="col">
                                   <div class="text-center">{{ question.votes }}</div>
@@ -116,11 +116,11 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-sm-11">
+                            <div class="col-10 col-sm-11 text-break">
                               <div class="row" id="question-title">
                                 <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}" style="padding: 0;"><h3>{{ question.title }}</h3></a>
                               </div>
-                              <div class="row pb-1" id="question-summary">
+                              <div class="row pb-1 text-break" id="question-summary">
                                 {{ question.question_text }}
                               </div>
                               <div class="row" id="tags-users">
