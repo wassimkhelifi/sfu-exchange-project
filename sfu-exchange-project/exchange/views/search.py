@@ -10,10 +10,11 @@ from ..helpers import notification_helper
 def SearchView(request):
     if request.method == 'GET':
         query_params = request.GET.get('q')
+        tag = request.GET.get('tag')
 
         if query_params:
             # Search these fields
-            search_vector = SearchVector('title', 'question_text', 'tags__name')
+            search_vector = SearchVector('title', 'question_text', 'tags__name', 'user_id__username', 'user_id__email')
             
             # Make the search inclusive OR for each term in the query
             search_query = SearchQuery("")
@@ -29,6 +30,10 @@ def SearchView(request):
             questions = questions.filter(search=search_query).order_by("-rank", "-created_at")
         else:
             questions = Question.objects.order_by("-created_at")
+        
+        if tag:
+            questions = questions.filter(tags__id = tag)
+
         notification_list = notification_helper.get_notifications(request.user)
         context = {
             'query': query_params if query_params != None else "",
