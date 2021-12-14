@@ -7,10 +7,8 @@
   justify-content: center;
   display: flex;
   flex-direction: column;
-  margin: 20vh auto;
-  width: 70vw;
+  margin-top: 15vh;
   padding-bottom: 100px;
-  background-color: #f2f2f2;
 }
 
 .login-container h1 {
@@ -74,4 +72,13 @@
   font-family: "Noto Sans";
   padding: 16px 0px;
   margin-top: 20px;
+}
+
+/* Hides the default Django error */
+.alert {
+    display:none;
+}
+
+.login-form p {
+    color: var(--sfu-red);
 }
