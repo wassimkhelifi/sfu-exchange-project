@@ -8,10 +8,10 @@
   <div class="container-fluid">
     <!--Title and Ask Question Button-->
     <div class="row" id="header-row">
-      <div class="col">
+      <div class="col-8 col-sm-10 text-break">
         <h1 class="title">{{ question.title }}</h1>
       </div>
-      <div class="col" style="padding-top: 12px;">
+      <div class="col-4 col-sm-2" style="padding-top: 12px;">
         <div class="d-flex justify-content-end">
           <a href="/exchange/questions/ask">
             <button type="button" class="btn btn-primary" id="ask-button">Ask A Question</button>
@@ -31,7 +31,7 @@
 
     <!--Points, Question Description, User-->
     <div class="row mb-4" id="votes-description-row">
-      <div class="col-sm-1">
+      <div class="col-2 col-sm-1">
         <div class="d-flex align-items-center flex-column">
           <div class="col">
             <div class="upvote">
@@ -62,7 +62,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-11 p-2">
+      <div class="col-10 col-sm-11 p-2 text-break">
         <div class="row pb-2">
           {{ question.question_text | safe }}
         </div>
@@ -136,7 +136,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-11 p-2">
+          <div class="col-sm-11 p-2 text-break">
             <div class="row pb-2">
               {{ answer.answer_text | safe }}
             </div>
@@ -174,7 +174,9 @@
         <form action="" method="post">
           {% csrf_token %}
           <h3 class="title">Your Answer</h3>
-          {{ answerForm.answer_text }}
+          <div class="col">
+            {{ answerForm.answer_text }}
+          </div>
           <div class="d-flex flex-row mb-2">
             Ask Anonymously 
             <div style="padding-top: 2px; margin-left: 2px;">{{ answerForm.anonymous }}</div>

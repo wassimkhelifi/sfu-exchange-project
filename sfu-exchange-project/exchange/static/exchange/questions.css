@@ -11,8 +11,6 @@ hr {
   margin: 2px;
 }
 
-/* a {
-  padding: 0 !important;
-} */
-
-
+.row p {
+    padding-left: 0 !important;
+}
