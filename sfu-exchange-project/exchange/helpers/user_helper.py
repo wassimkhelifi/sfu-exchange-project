@@ -30,8 +30,4 @@ def get_user_comments(user) -> Comment:
 
 def get_user_top_questions(user) -> Question:
     top_questions = Question.objects.all().filter(user_id=user).order_by('-votes')
-    if len(top_questions) > 5: top_questions = top_questions[:4]
     return top_questions
-
-def get_user_top_tags(user) -> Tag:
-    return get_user_top_questions(user).values_list('tags', flat=True)
