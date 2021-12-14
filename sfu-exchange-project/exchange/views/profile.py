@@ -17,7 +17,6 @@ def ProfileView(request, user_id='', user_username=''):
         user = User.objects.get(pk=request.user.id)
 
     questions = user_helper.get_user_top_questions(user)
-    tags = user_helper.get_user_top_tags(user)
     user_helper.format_user(user)
     notification_list = notification_helper.get_notifications(request.user)
 
@@ -30,7 +29,6 @@ def ProfileView(request, user_id='', user_username=''):
         'can_edit': user == request.user,
         'notifications': notification_list or {},
         'questions': paginated_questions or {},
-        'tags': tags or {}
     }
     return render(request, 'exchange/profile.html', context)
 
