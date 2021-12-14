@@ -21,9 +21,11 @@
                     <div class="profile-bio">{{ user.bio }}</div>
                 </div>
 
+                {% if can_edit %}
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="{% url 'Profile Edit' %}"> <i class="fa fa-edit"></i> Edit Profile</a></li>
                 </ul>
+                {% endif %}
             </div>
         </div>
         <div class="profile-info col-xxl-9 col-mid-6">
@@ -51,7 +53,11 @@
                             <div class="panel-body">
                                 <div class="bio-desk">
                                     <h4 class="red">Points</h4>
+                                    {% if can_edit %}
                                     <p>Points are gained when others upvote your content</p>
+                                    {% else %}
+                                    <p>Number of points this user has accumulated</p>
+                                    {% endif %}
                                 </div>
                                 <div class="bio-chart">
                                     <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value={{ user.points }} data-fgcolor="#e06b7d" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(224, 107, 125); padding: 0px; -webkit-appearance: none; background: none;"></div>
@@ -65,7 +71,11 @@
                             <div class="panel-body">
                                 <div class="bio-desk">
                                     <h4 class="terques">Questions</h4>
+                                    {% if can_edit %}
                                     <p>Number of questions you have asked</p>
+                                    {% else %}
+                                    <p>Number of questions this user has asked</p>
+                                    {% endif %}
                                 </div>
                                 <div class="bio-chart">
                                     <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value={{ user.questions }} data-fgcolor="#4CC5CD" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(76, 197, 205); padding: 0px; -webkit-appearance: none; background: none;"></div>
@@ -78,7 +88,11 @@
                             <div class="panel-body">
                                 <div class="bio-desk">
                                     <h4 class="green">Answers</h4>
+                                    {% if can_edit %}
                                     <p>Number of times you have answered a question</p>
+                                    {% else %}
+                                    <p>Number of questions this user has answered question</p>
+                                    {% endif %}
                                 </div>
                                 <div class="bio-chart">
                                     <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value={{ user.answers }} data-fgcolor="#96be4b" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(150, 190, 75); padding: 0px; -webkit-appearance: none; background: none;"></div>
@@ -90,8 +104,12 @@
                         <div class="panel">
                             <div class="panel-body">
                                 <div class="bio-desk">
+                                    {% if can_edit %}
                                     <h4 class="purple">Comments</h4>
                                     <p>Number of comments you have made</p>
+                                    {% else %}
+                                    <p>Number of comments this user has made</p>
+                                    {% endif %}
                                 </div>
                                 <div class="bio-chart">
                                     <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value={{ user.comments }} data-fgcolor="#cba4db" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(203, 164, 219); padding: 0px; -webkit-appearance: none; background: none;"></div>

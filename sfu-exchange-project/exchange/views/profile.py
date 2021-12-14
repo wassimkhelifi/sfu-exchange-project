@@ -9,8 +9,13 @@ from ..models import User
 from ..forms import ProfileEditForm
 
 @login_required
-def ProfileView(request):
-    user = User.objects.get(pk=request.user.id)
+def ProfileView(request, user_id='', user_username=''):
+
+    if user_id:
+        user = User.objects.get(pk=user_id)
+    else:
+        user = User.objects.get(pk=request.user.id)
+
     questions = user_helper.get_user_top_questions(user)
     tags = user_helper.get_user_top_tags(user)
     user_helper.format_user(user)
@@ -22,6 +27,7 @@ def ProfileView(request):
 
     context = { 
         'user': user or {},
+        'can_edit': user == request.user,
         'notifications': notification_list or {},
         'questions': paginated_questions or {},
         'tags': tags or {}
