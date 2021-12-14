@@ -37,9 +37,9 @@
 				<!--Search Bar-->
 				<div class='col-7 my-auto'>
 					<div class='d-none d-lg-block'>
-						<form action={% url 'Search' %} method='GET'>
+						<form action={% url 'Home' %} method='GET'>
 							<div class='input-group'>
-                                <input name="q" type="text" class='form-control' style='padding-left:40px;background-color:#f1f3fa;border:none' placeholder="Search..." type='submit'></input>
+                                <input name="q" type="text" class='form-control' style='padding-left:40px;background-color:#f1f3fa;border:none' placeholder="Search..." type='submit' value='{{query_text}}'></input>
                                 <span class='position-absolute dripicons-search search-icon' style='left:10px;font-size:20px;z-index:9;'></span>
                                 <button class='input-group-text btn-primary' type='submit'>Search</button>
 							</div>
