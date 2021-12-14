@@ -26,7 +26,8 @@ def QuestionsDetailView(request, question_id, slug, notification_id=''):
     
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized, please login to vote', status=401)
+            return HttpResponseRedirect(reverse('Login'))
+            # return HttpResponse('Unauthorized, please login to vote', status=401)
 
         answerSubmission = AnswerForm(request.POST)
         if answerSubmission.is_valid():
@@ -61,7 +62,8 @@ def QuestionsDetailView(request, question_id, slug, notification_id=''):
 # API Call
 def AnswerUpvote(request, answer_id):
     if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized, please login to vote', status=401)  
+        return HttpResponseRedirect(reverse('Login'))
+        # return HttpResponse('Unauthorized, please login to vote', status=401)  
     args = processAnswerVoteAction(request, True)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
@@ -69,7 +71,8 @@ def AnswerUpvote(request, answer_id):
 # API Call
 def AnswerDownvote(request, answer_id):
     if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized, please login to vote', status=401)
+        return HttpResponseRedirect(reverse('Login'))
+        # return HttpResponse('Unauthorized, please login to vote', status=401)
     args = processAnswerVoteAction(request, False)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))

@@ -64,14 +64,16 @@ def QuestionsView(request):
 
 def QuestionUpvote(request, question_id, slug):
     if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized, please login to vote', status=401)  
+        return HttpResponseRedirect(reverse('Login'))
+        # return HttpResponse('Unauthorized, please login to vote', status=401)  
     args = processQuestionVoteAction(request, True, question_id, slug)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
 
 def QuestionDownvote(request, question_id, slug):
     if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized, please login to vote', status=401)  
+        return HttpResponseRedirect(reverse('Login'))
+        # return HttpResponse('Unauthorized, please login to vote', status=401)  
     args = processQuestionVoteAction(request, False, question_id, slug)
 
     return HttpResponseRedirect(reverse('Questions_Detail', kwargs=args))
