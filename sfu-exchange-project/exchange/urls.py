@@ -11,7 +11,6 @@ urlpatterns = [
     path('exchange/profile/edit/', views.ProfileEditView, name='Profile Edit'),
     path('exchange/users/', views.UsersView, name="Users"),
     path('exchange/users/<int:user_id>/<str:user_username>', views.UsersDetailView, name="Users_Detail"),
-    path('exchange/search/', views.SearchView, name='Search'),
     path('exchange/tags/', views.TagsView, name='Tags'),
     path('exchange/notifications', views.NotificationsView, name='Notifications'),
     path('exchange/questions/ask', views.QuestionSubmitView, name='Submit_Question'),

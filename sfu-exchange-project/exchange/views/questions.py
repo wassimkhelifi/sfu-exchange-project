@@ -6,8 +6,8 @@ from django.http.response import HttpResponse
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
-from ..models import Question, QuestionVotes
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from ..models import Question, QuestionVotes, User
 from ..helpers import vote_helper, notification_helper
 
 
@@ -15,17 +15,36 @@ from ..helpers import vote_helper, notification_helper
 def QuestionsView(request):
     f = request.GET.get('filter','').strip("'")
     tag = request.GET.get('tag','').strip("'")
+    query_params = request.GET.get('q', '').strip("'")
     # Hella jank but it was the fastest way of doing this 
         
+    if query_params:
+        # Search these fields
+        search_vector = SearchVector('title', 'question_text', 'tags__name', 'user_id__username', 'user_id__email')
+        
+        # Make the search inclusive OR for each term in the query
+        search_query = SearchQuery("")
+        for param in query_params.split():
+            search_query = search_query | SearchQuery(param)
+
+        # Perform the search
+        questions_list = Question.objects.annotate(
+            search=search_vector, 
+            rank=SearchRank(search_vector, search_query)
+        )
+        
+        questions_list = questions_list.filter(search=search_query).order_by("-rank", "-created_at")
+    else:
+        questions_list = Question.objects
 
     if f == 'popular':
-        questions_list = Question.objects.order_by('-votes')
+        questions_list = questions_list.order_by('-votes')
     elif f =='unanswered':
-        questions_list = Question.objects.annotate(count = Count('answer')).filter(
+        questions_list = questions_list.annotate(count = Count('answer')).filter(
             Q(count=0)
         )
     else:
-        questions_list = Question.objects.order_by('-created_at')
+        questions_list = questions_list.order_by("-created_at")
 
     if tag:
         questions_list = questions_list.filter(tags__id = tag)
@@ -35,10 +54,12 @@ def QuestionsView(request):
     page = request.GET.get("page")
     paginated_questions = paginator.get_page(page)
     notification_list = notification_helper.get_notifications(request.user)
+    query_text = query_params if query_params != None else ""
 
     return render(request, 'exchange/questions.html', {
         'questions_list': paginated_questions,
         'notifications': notification_list,
+        'query_text': query_params,
     })
 
 def QuestionUpvote(request, question_id, slug):
