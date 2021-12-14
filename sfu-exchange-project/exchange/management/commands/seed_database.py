@@ -29,7 +29,14 @@ NUM_USERS = 50
 NUM_QUESTIONS = 25
 MAX_ANSWERS_PER_QUESTION = 5
 COMMENTS_PER_ANSWER = 5
-TAGS = 15
+
+TAGS = [
+    'ASK', 
+    'ADVICE', 
+    'DISCUSSION', 
+    'COMPLAINT', 
+    'SUGGESTION'
+]
 
 IMGS = [
     'racoon.png',
@@ -62,7 +69,7 @@ class Command(BaseCommand):
         self.stdout.write("Creating dummy data...")
         roles = [Role(name=role[0], description=role[1]) for role in ROLES]
         faculties = [Faculty(name=faculty) for faculty in FACULTIES]
-        tags = [Tag(name=f"Tag-{tag}") for tag in range(TAGS)]
+        tags = [Tag(name=f"{tag}") for tag in TAGS]
 
         # Commit objects to DB
         for r in roles:
@@ -113,11 +120,12 @@ class Command(BaseCommand):
 
         self.stdout.write("Creating Questions...")
         questions = []
+        question_text = open("./seed_data/random_questions.txt").read().splitlines()
         for _ in range(NUM_QUESTIONS):
             question = Question(
-                title="Lorem Ipsum Question",
-                question_text="Are sentiments apartments decisively the especially alteration. After nor you leave might share court balls.",
-                votes=random.randint(30, 1000),
+                title=random.choice(question_text),
+                question_text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing",
+                votes=random.randint(-10, 100),
                 anonymous=random.choice([True,False]),
                 user_id=random.choice(users),
             )
@@ -134,7 +142,7 @@ class Command(BaseCommand):
         for _ in range(COMMENTS_PER_ANSWER):
             answer = Answer(
                 answer_text = "Made last it seen went no just when of by. Occasional entreaties comparison me difficulty so themselves.",
-                votes=random.randint(30, 1000),
+                votes=random.randint(-15, 30),
                 anonymous=random.choice([True,False]),
                 user_id = random.choice(users),
                 question_id = random.choice(questions)
