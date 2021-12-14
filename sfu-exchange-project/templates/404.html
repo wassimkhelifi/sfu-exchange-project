@@ -1,0 +1,15 @@
+{% extends "base.html" %} 
+{% load crispy_forms_tags %}
+  	{% block head %}
+    	{% load static %}
+			<link rel="stylesheet" type="text/css" href="{% static 'exchange/shared.css' %}">
+			<link rel="stylesheet" type="text/css" href="{% static 'exchange/login.css' %}">
+			<link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
+  	{% endblock %}
+	{% block title %}Exchange Login{% endblock %}
+{% block content %}
+<div class='page-not-found'>
+    <h1>404 - Page not found</h1>
+    <p>Not all explorers are lost, but you definitely are</p>
+</div>
+{% endblock %}
