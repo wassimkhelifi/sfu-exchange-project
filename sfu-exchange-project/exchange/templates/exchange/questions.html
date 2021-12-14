@@ -8,10 +8,10 @@
 {% block content %}
   <div class="container-fluid mt-2">
     <div class="row" id="header">
-      <div class="col p-0 m-0">
+      <div class="col m-0">
         <h1 class="title">All Questions</h1>
       </div>
-      <div class="col" style="padding-top:12px;">
+      <div class="col align-self-center">
         <div class="d-flex justify-content-end">
           <a href="/exchange/questions/ask">
             <button type="button" class="btn btn-primary" id="ask-button">Ask A Question</button>
@@ -34,7 +34,7 @@
         {% if questions_list %}
           {% for question in questions_list %}
             <div class="row" id="question-summary">
-              <div class="col-1 col-sm-2 align-self-center">
+              <div class="col-2 col-sm-1 align-self-center">
                 <div class="d-flex align-items-center flex-column">
                   <div class="col">
                     <div class="text-center">{{ question.votes }}</div>
@@ -42,7 +42,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-11 col-sm-10">
+              <div class="col-10 col-sm-11">
                 <div class="row text-justify text-break" id="question-title">
                   <a href="/exchange/questions/{{ question.id }}/{{ question.slug }}" style="padding: 0;"><h3>{{ question.title }}</h3></a>
                 </div>
@@ -50,7 +50,7 @@
                   {{ question.question_text | safe }}
                 </div>
                 <div class="row" id="tags-users">
-                  <div class="col">
+                  <div class="col-7">
                     <div class="row">
                       {% for tag in question.tags.all %}
                         <a href="?{% param_replace tag=tag.id%}" class="badge bg-secondary d-inline-flex align-items-center justify-content-center me-1 my-1" style="width: 4rem; height: 1rem;">
@@ -59,7 +59,7 @@
                       {% endfor %}
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col-5">
                     <div class="d-flex align-items-end flex-column">
                       <div class="col">
                         <div class="text-left">Asked {{ question.created_at }}</div>
