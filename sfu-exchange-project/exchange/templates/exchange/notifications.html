@@ -21,21 +21,21 @@
               <div class='row' id="notification-row">
                   <div class="col" id="notification-row">
                     <div class="col-sm-11" id="notification-row">
-                        <div class="row" id="notification-title">
+                        <div class="row text-break px-3" id="notification-title">
                           <a href="{{ notification.url }}/{{ notification.id }}"><h4>{{ notification.notification_title }}</h4></a>
                         </div>
-                        <div class="row px-4">
+                        <div class="row px-4 text-break">
                           {{ notification.notification_text }}
                          
                         </div>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col-1">
                     <div class="d-flex align-items-end flex-column py-3">
                         <div> {{ notification.notification_type }}</div>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col-2">
                     <div class="d-flex align-items-end flex-column py-3">
                         <div>{{ notification.created_at }}</div>
                     </div>
@@ -77,4 +77,3 @@
     {% endif %}
   </div>
 {% endblock %}
-
