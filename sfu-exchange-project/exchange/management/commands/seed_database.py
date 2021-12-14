@@ -22,6 +22,7 @@ FACULTIES = [
     "Environment",
     "Health Sciences",
     "Science",
+    "Faculty"
 ]
 
 NUM_USERS = 50
@@ -105,6 +106,17 @@ class Command(BaseCommand):
             user.save()
             user.roles.add(random.choice(roles))
             users.append(user)
+        
+        # Custom user for my boy Greg
+        user = User.objects.create_user(
+                username="ggbaker",
+                email=f"ggbaker@sfu.ca",
+                first_name="Greg",
+                last_name="Baker",
+                password="password",  # not unique but this way we can login to everyones account
+                img=random.choice(IMGS),  
+                faculty_id=random.choice(faculties),
+            )
 
         self.stdout.write("Creating Questions...")
         questions = []

@@ -89,6 +89,9 @@
                 {% endif %}
               </div>
             </div>
+            {% if question.user_id == user %}
+                <a href='/exchange/questions/ask/{{ question.id }}/'>Edit</a>
+            {% endif %}
           </div>
         </div>
       </div>
